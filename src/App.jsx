@@ -8,17 +8,20 @@ import Founders from './components/Founders';
 import PlayerDevelopment from './components/PlayerDevelopment';
 import Gallery from './components/Gallery';
 import Footer from './components/Footer';
+import StickyFooter from './components/StickyFooter';
 import FAQPage from './pages/FAQPage';
 
 function HomePage() {
   return (
     <>
-      <Header />
-      <Hero />
-      <AboutUs />
-      <Founders />
-      <PlayerDevelopment />
-      <Gallery />
+      <div className="main-content-wrapper">
+        <Header />
+        <Hero />
+        <AboutUs />
+        <Founders />
+        <PlayerDevelopment />
+        <Gallery />
+      </div>
       <Footer />
     </>
   );
@@ -31,6 +34,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/faq" element={<FAQPage />} />
       </Routes>
+      <StickyFooter />
     </ReactLenis>
   );
 }

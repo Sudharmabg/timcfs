@@ -112,8 +112,8 @@
 }
 
 .gallery-track-prev {
-    /* Align partially outside the card */
-    left: -32px;
+    /* Align perfectly straddling the outer blue card edge */
+    left: -72px;
 }
 
 .gallery-track-prev::before {
@@ -123,8 +123,8 @@
 }
 
 .gallery-track-next {
-    /* Align partially outside the card */
-    right: -32px;
+    /* Align perfectly straddling the outer blue card edge */
+    right: -72px;
 }
 
 .gallery-track-next::before {
