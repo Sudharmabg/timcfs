@@ -4,13 +4,14 @@ import './Gallery.css';
 const Gallery = () => {
     // Array of image paths
     const galleryImages = Array.from({ length: 7 }, (_, i) => `/gallery-${i + 1}.jpeg`);
+    const extendedImages = [...galleryImages, ...galleryImages];
 
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Lightbox Controls
     const openLightbox = (index) => {
-        setCurrentIndex(index);
+        setCurrentIndex(index % galleryImages.length);
         setLightboxOpen(true);
     };
 
@@ -45,22 +46,30 @@ const Gallery = () => {
     return (
         <section id="gallery" className="gallery-section py-5 mb-5">
             <div className="container gallery-container">
-                <h2 className="gallery-title">GALLERY</h2>
-                <div className="gallery-grid">
-                    {galleryImages.map((src, index) => (
-                        <div className="gallery-card" key={index}>
-                            <div
-                                className="gallery-item"
-                                onClick={() => openLightbox(index)}
-                            >
-                                <img src={src} alt={`Football School Gallery ${index + 1}`} loading="lazy" />
-                                <div className="gallery-overlay"></div>
-                                <div className="gallery-icon">
-                                    <span>+</span>
+                <div className="gallery-header">
+                    <h2 className="gallery-title">GALLERY</h2>
+                    <h3 className="gallery-subtitle">Moments from the pitch</h3>
+                </div>
+                <div className="gallery-card-container">
+                    <button className="gallery-track-nav gallery-track-prev" onClick={showPrev}>‹</button>
+
+                    <div className="gallery-track-wrapper">
+                        <div className="gallery-track">
+                            {extendedImages.map((src, index) => (
+                                <div className="gallery-item-wrapper" key={index}>
+                                    <div
+                                        className="gallery-item"
+                                        onClick={() => openLightbox(index)}
+                                    >
+                                        <img src={src} alt={`Football School Gallery ${(index % galleryImages.length) + 1}`} loading="lazy" />
+                                        <div className="gallery-overlay"></div>
+                                    </div>
                                 </div>
-                            </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
+
+                    <button className="gallery-track-nav gallery-track-next" onClick={showNext}>›</button>
                 </div>
             </div>
 

@@ -1,30 +1,167 @@
 .gallery-section {
     padding: 80px 20px;
-    background-color: white;
-    /* Adapted perfectly to tig_man_city_2 styles */
+    background: linear-gradient(180deg, white, rgb(240, 248, 255));
+}
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 50px;
 }
 
 .gallery-title {
     color: rgb(0, 40, 94);
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 50px;
-    text-align: center;
+    margin-bottom: 10px;
     text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.gallery-grid {
+.gallery-title::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    animation: gallery-title-sparkle 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes gallery-title-sparkle {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.gallery-subtitle {
+    color: rgb(0, 40, 94);
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.8;
+    margin-top: 0;
+}
+
+.gallery-card-container {
+    background-color: rgb(152, 197, 233);
+    border-radius: 30px;
+    padding: 40px;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    container-type: inline-size;
+    box-shadow: 0 20px 40px rgba(152, 197, 233, 0.4);
+}
+
+.gallery-track-wrapper {
+    overflow: hidden;
+    position: relative;
+    /* Fade edges on the track */
+    mask-image: linear-gradient(to right,
+            transparent,
+            black 5%,
+            black 95%,
+            transparent);
+    -webkit-mask-image: linear-gradient(to right,
+            transparent,
+            black 5%,
+            black 95%,
+            transparent);
+}
+
+.gallery-track-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: none;
+    color: rgb(0, 40, 94);
+    font-size: 2rem;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    gap: 24px;
+    box-shadow: 0 4px 15px rgba(0, 40, 94, 0.2);
+    z-index: 10;
+    transition: all 0.3s ease;
 }
 
-.gallery-card {
-    flex: 1 1 calc(33.333% - 24px);
-    /* Responsive 3 column layout like bootstrap col-lg-4 */
-    min-width: 300px;
-    max-width: 400px;
+.gallery-track-nav:hover {
+    background: rgb(0, 40, 94);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.gallery-track-prev {
+    left: 10px;
+}
+
+.gallery-track-next {
+    right: 10px;
+}
+
+@media (max-width: 1440px) {
+    .gallery-track-nav {
+        display: none;
+        /* Hide on smaller screens where side-arrows might hang off the edge */
+    }
+}
+
+
+
+.gallery-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    animation: scroll-gallery 45s linear infinite;
+}
+
+.gallery-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-gallery {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-50% - 12px));
+    }
+}
+
+.gallery-item-wrapper {
+    /* 3 images visible, slightly reduced width (e.g. subtracting more padding) */
+    width: calc((100cqw - 120px) / 3);
+    flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+    .gallery-item-wrapper {
+        width: calc((100cqw - 24px) / 2);
+        /* 2 images visible */
+    }
+}
+
+@media (max-width: 600px) {
+    .gallery-item-wrapper {
+        width: 100cqw;
+        /* 1 image visible */
+    }
 }
 
 /* Gallery Grid item like KolkataGallery */
@@ -32,8 +169,52 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 20px;
     /* Slight extra polish for photos */
+}
+
+.gallery-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: gallery-image-sparkle 3s infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Staggered sparkle delays */
+.gallery-item-wrapper:nth-child(5n+1) .gallery-item::after {
+    animation-delay: 0.0s;
+}
+
+.gallery-item-wrapper:nth-child(5n+2) .gallery-item::after {
+    animation-delay: 0.6s;
+}
+
+.gallery-item-wrapper:nth-child(5n+3) .gallery-item::after {
+    animation-delay: 1.2s;
+}
+
+.gallery-item-wrapper:nth-child(5n+4) .gallery-item::after {
+    animation-delay: 1.8s;
+}
+
+.gallery-item-wrapper:nth-child(5n+5) .gallery-item::after {
+    animation-delay: 2.4s;
+}
+
+@keyframes gallery-image-sparkle {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
 }
 
 .gallery-item img {
@@ -42,7 +223,12 @@
     /* uniform boxes */
     object-fit: cover;
     display: block;
-    transition: all 0.4s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    border: 5px solid rgb(0, 40, 94);
+    border-radius: 20px;
+    box-sizing: border-box;
+    /* Inner glow effect */
+    box-shadow: inset 0 0 15px rgba(0, 40, 94, 0.5);
 }
 
 .gallery-overlay {
@@ -55,27 +241,14 @@
     transition: background 0.4s ease;
 }
 
-.gallery-icon {
-    position: absolute;
-    top: 50%;
-    left: 40%;
-    transform: translateY(-50%);
-    font-size: 3rem;
-    font-weight: 200;
-    color: #fff;
-    transition: left 0.4s ease, opacity 0.4s ease;
-    opacity: 0;
-}
-
 /* Hover Effects matching exactly */
 .gallery-item:hover .gallery-overlay {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.2);
 }
 
-.gallery-item:hover .gallery-icon {
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 1;
+.gallery-item:hover img {
+    transform: scale(1.05);
+    /* Image zoom on hover */
 }
 
 /* Lightbox Exact Mathing */
