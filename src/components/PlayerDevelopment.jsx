@@ -1,10 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './PlayerDevelopment.css';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const PlayerDevelopment = () => {
+    const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const timelineRef = useRef(null);
     const [visibleItems, setVisibleItems] = useState([]);
+
+    useGSAP(() => {
+        gsap.from(sectionRef.current, {
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 80%",
+                toggleActions: "play none none reverse"
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            delay: 0.2,
+            ease: "power3.out"
+        });
+    }, []);
 
     const milestones = [
         {
@@ -65,7 +86,7 @@ const PlayerDevelopment = () => {
     }, [milestones.length]);
 
     return (
-        <section className="player-development-section">
+        <section className="player-development-section" ref={sectionRef}>
             <div className="pd-container">
                 <h2 ref={titleRef} className="pd-title">THE MANCHESTER CITY PLAYER DEVELOPMENT MODEL</h2>
                 <div ref={timelineRef} className="timeline-container">

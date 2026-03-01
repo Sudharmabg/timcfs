@@ -1,15 +1,91 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './AboutUs.css';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const AboutUs = () => {
+  const sectionRef = useRef(null);
+  const imageRef = useRef(null);
+  const contentRef = useRef(null);
+  const titleRef = useRef(null);
+  const titleText = "WELCOME TO THE TECHNO INDIA MANCHESTER CITY FOOTBALL SCHOOL!".split(" ");
+
+  useGSAP(() => {
+    // Animate the whole section fading and sliding up
+    gsap.from(sectionRef.current, {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        toggleActions: "play none none reverse"
+      },
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      delay: 0.2,
+      ease: "power3.out"
+    });
+
+    // Image slides in from the left
+    gsap.from(imageRef.current, {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 75%",
+        toggleActions: "play none none reverse"
+      },
+      x: -50,
+      opacity: 0,
+      duration: 1,
+      delay: 0.4,
+      ease: "power3.out"
+    });
+
+    // Content slides in from the right
+    gsap.from(contentRef.current, {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 75%",
+        toggleActions: "play none none reverse"
+      },
+      x: 50,
+      opacity: 0,
+      duration: 1,
+      delay: 0.6,
+      ease: "power3.out"
+    });
+
+    // Masked Text Reveal for the Title
+    gsap.to('.mask-word', {
+      scrollTrigger: {
+        trigger: titleRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      },
+      y: "0%",
+      duration: 1,
+      stagger: 0.05,
+      ease: "power4.out"
+    });
+  }, []);
+
   return (
-    <section id="about" className="about-section">
+    <section id="about" className="about-section" ref={sectionRef}>
       <div className="about-container">
-        <div className="about-image">
+        <div className="about-image" ref={imageRef}>
           <img src="/about-us.jpeg" alt="Football School Students" />
         </div>
-        <div className="about-content">
-          <h1>WELCOME TO THE TECHNO INDIA MANCHESTER CITY FOOTBALL SCHOOL!</h1>
+        <div className="about-content" ref={contentRef}>
+          <h1 ref={titleRef} className="masked-title" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25em', marginBottom: '1rem' }}>
+            {titleText.map((word, index) => (
+              <span key={index} className="mask-word-wrap" style={{ overflow: 'hidden', display: 'inline-block', paddingBottom: '0.1em' }}>
+                <span className="mask-word" style={{ display: 'inline-block', transform: 'translateY(110%)' }}>
+                  {word}
+                </span>
+              </span>
+            ))}
+          </h1>
           <p>
             Where passion meets professional excellence. In collaboration with the renowned <strong>City Football Group</strong>, our Kolkata academy is set to revolutionize football in India for children aged 3 to 17 years.
           </p>
