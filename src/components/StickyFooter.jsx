@@ -4,27 +4,35 @@ import './StickyFooter.css';
 const StickyFooter = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [footerInView, setFooterInView] = useState(false);
+    const [heroInView, setHeroInView] = useState(false);
 
     useEffect(() => {
-        // Hide this sticky footer if they scroll all the way down to the real footer
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                setFooterInView(entry.isIntersecting);
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.target.classList.contains('site-footer')) {
+                        setFooterInView(entry.isIntersecting);
+                    } else if (entry.target.classList.contains('hero-wrapper')) {
+                        setHeroInView(entry.isIntersecting);
+                    }
+                });
             },
             { rootMargin: '0px', threshold: 0.1 }
         );
 
         const siteFooter = document.querySelector('.site-footer');
-        if (siteFooter) {
-            observer.observe(siteFooter);
-        }
+        const hero = document.querySelector('.hero-wrapper');
+
+        if (siteFooter) observer.observe(siteFooter);
+        if (hero) observer.observe(hero);
 
         return () => {
             if (siteFooter) observer.unobserve(siteFooter);
+            if (hero) observer.unobserve(hero);
         };
     }, []);
 
-    if (!isVisible || footerInView) return null;
+    if (!isVisible || footerInView || heroInView) return null;
 
     return (
         <div className="sticky-footer">

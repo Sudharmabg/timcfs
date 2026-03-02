@@ -9,6 +9,7 @@ import PlayerDevelopment from './components/PlayerDevelopment';
 import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import StickyFooter from './components/StickyFooter';
+import FloatingCTA from './components/FloatingCTA';
 import FAQPage from './pages/FAQPage';
 
 function HomePage() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/faq" element={<FAQPage />} />
       </Routes>
+      <FloatingCTA />
       <StickyFooter />
     </ReactLenis>
   );

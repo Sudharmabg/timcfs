@@ -1,0 +1,166 @@
+.floating-cta {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%) translateX(200%);
+    /* hidden off-screen initially */
+    background: rgb(0, 40, 94);
+    /* City Dark Blue */
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 998;
+    box-shadow: 0 4px 20px rgba(0, 40, 94, 0.4);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.3s ease,
+        border-color 0.3s ease,
+        opacity 0.6s ease;
+    overflow: hidden;
+    min-width: 80px;
+    height: 60px;
+    border: 3px solid rgb(152, 197, 233);
+    /* Sky Blue border */
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+.floating-cta.visible {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+    /* animate onto screen */
+    pointer-events: auto;
+}
+
+.floating-cta:hover {
+    transform: translateY(-50%) scale(1.05);
+    /* slightly scale up visually */
+    box-shadow: 0 6px 25px rgba(0, 40, 94, 0.6);
+    border-color: white;
+    /* Glow white on hover */
+}
+
+/* Expanded state smoothly grows the container */
+.floating-cta.expanded {
+    border-radius: 30px;
+    padding-right: 20px;
+}
+
+.cta-icon {
+    width: 74px;
+    /* Matches inner width to stay centered in the new 80px oval */
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.floating-cta:hover .cta-icon {
+    transform: scale(1.1);
+}
+
+.cta-text {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    /* Hidden width initially */
+    opacity: 0;
+    padding-left: 0;
+    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+.floating-cta.expanded .cta-text {
+    width: 175px;
+    /* Enough space for text */
+    opacity: 1;
+    padding-left: 5px;
+}
+
+.cta-text span {
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cta-pulse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: rgba(152, 197, 233, 0.3);
+    animation: floatingCtaPulse 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes floatingCtaPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 0;
+    }
+}
+
+.floating-cta:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Responsive adjustmts */
+@media (max-width: 768px) {
+    .floating-cta {
+        right: 15px;
+        min-width: 70px;
+        height: 50px;
+    }
+
+    .cta-icon {
+        width: 64px;
+        height: 44px;
+    }
+
+    .floating-cta.expanded .cta-text {
+        width: 145px;
+    }
+
+    .cta-text span {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-cta {
+        right: 10px;
+        min-width: 60px;
+        height: 45px;
+    }
+
+    .cta-icon {
+        width: 54px;
+        height: 39px;
+        font-size: 1rem;
+    }
+
+    .floating-cta.expanded .cta-text {
+        width: 130px;
+    }
+
+    .cta-text span {
+        font-size: 0.75rem;
+    }
+}
