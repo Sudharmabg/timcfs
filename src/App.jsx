@@ -1,6 +1,7 @@
-import React from 'react';
-import { ReactLenis } from '@studio-freight/react-lenis';
+import React, { useEffect, useRef } from 'react';
+import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 import { Routes, Route } from 'react-router-dom';
+import gsap from 'gsap';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutUs from './components/AboutUs';
@@ -29,8 +30,27 @@ function HomePage() {
 }
 
 function App() {
+  const lenisRef = useRef();
+
+  // Connect GSAP ticker to Lenis for perfect ScrollTrigger sync
+  useEffect(() => {
+    function update(time) {
+      if (lenisRef.current?.lenis) {
+        lenisRef.current.lenis.raf(time * 1000);
+      }
+    }
+
+    gsap.ticker.add(update);
+    // Prevents GSAP from doing large skips when scrolling heavily
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(update);
+    }
+  }, []);
+
   return (
-    <ReactLenis root options={{ smoothTouch: true, lerp: 0.1 }}>
+    <ReactLenis root ref={lenisRef} autoRaf={false} options={{ smoothTouch: true, lerp: 0.1 }}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/faq" element={<FAQPage />} />

@@ -9,6 +9,7 @@
   position: relative;
   overflow: hidden;
   transform-origin: center center;
+  will-change: transform, border-radius;
 }
 
 .hero-video {

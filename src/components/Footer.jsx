@@ -10,27 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Footer = () => {
     const footerRef = useRef(null);
 
-    useGSAP(() => {
-        gsap.from(footerRef.current, {
-            scrollTrigger: { trigger: footerRef.current, start: "top bottom", toggleActions: "play none none none" },
-            y: 50, opacity: 0, duration: 1, delay: 0.2, ease: "power3.out"
-        });
 
-        gsap.from('.footer-info', {
-            scrollTrigger: { trigger: footerRef.current, start: "top bottom", toggleActions: "play none none none" },
-            x: -30, opacity: 0, duration: 1, delay: 0.4, ease: "power3.out"
-        });
-
-        gsap.from('.footer-actions', {
-            scrollTrigger: { trigger: footerRef.current, start: "top bottom", toggleActions: "play none none none" },
-            y: 30, opacity: 0, duration: 1, delay: 0.6, ease: "power3.out"
-        });
-
-        gsap.from('.footer-social', {
-            scrollTrigger: { trigger: footerRef.current, start: "top bottom", toggleActions: "play none none none" },
-            x: 30, opacity: 0, duration: 1, delay: 0.8, ease: "power3.out"
-        });
-    }, { scope: footerRef });
 
     return (
         <footer className="site-footer" ref={footerRef}>

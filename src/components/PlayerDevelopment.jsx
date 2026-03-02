@@ -12,20 +12,7 @@ const PlayerDevelopment = () => {
     const timelineRef = useRef(null);
     const [visibleItems, setVisibleItems] = useState([]);
 
-    useGSAP(() => {
-        gsap.from(sectionRef.current, {
-            scrollTrigger: {
-                trigger: sectionRef.current,
-                start: "top 80%",
-                toggleActions: "play none none reverse"
-            },
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            delay: 0.2,
-            ease: "power3.out"
-        });
-    }, []);
+
 
     const milestones = [
         {

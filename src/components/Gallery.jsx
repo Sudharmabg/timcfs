@@ -12,23 +12,7 @@ const Gallery = () => {
     const [startIndex, setStartIndex] = useState(0);
     const sectionRef = useRef(null);
 
-    useGSAP(() => {
-        gsap.from(sectionRef.current, {
-            scrollTrigger: { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none reverse" },
-            y: 50, opacity: 0, duration: 1, delay: 0.2, ease: "power3.out"
-        });
 
-        gsap.from('.gallery-header', {
-            scrollTrigger: { trigger: sectionRef.current, start: "top 75%", toggleActions: "play none none reverse" },
-            y: -30, opacity: 0, duration: 1, delay: 0.4, ease: "power3.out"
-        });
-
-        gsap.from('.gallery-card-container', {
-            scrollTrigger: { trigger: sectionRef.current, start: "top 70%", toggleActions: "play none none reverse" },
-            scale: 0.95, opacity: 0, duration: 1, delay: 0.6, ease: "power3.out"
-        });
-
-    }, { scope: sectionRef });
 
     useEffect(() => {
         const interval = setInterval(() => {

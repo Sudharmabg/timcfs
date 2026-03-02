@@ -60,7 +60,6 @@
     margin: 0 auto;
     position: relative;
     box-sizing: border-box;
-    container-type: inline-size;
     box-shadow: 0 20px 40px rgba(152, 197, 233, 0.4);
 }
 

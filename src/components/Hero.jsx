@@ -12,63 +12,49 @@ const Hero = () => {
   const overlayRef = useRef(null);
 
   const text1Ref = useRef(null);
-  const text2Ref = useRef(null);
-  const text3Ref = useRef(null);
+
 
   useGSAP(() => {
-    // 3 full screens of scrolling to experience the majestic intro
-    const scrollDistance = window.innerHeight * 3;
+    // 1.5 screens of scrolling is perfect for one text reveal
+    const scrollDistance = window.innerHeight * 1.5;
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: heroWrapperRef.current,
-        // Pin exactly below the header automatically by measuring its height
-        start: () => {
-          const header = document.querySelector('.header');
-          return `top top+=${header ? header.offsetHeight : 90}`;
-        },
+        // Pin exactly below the header (90px tall) to avoid expensive layout recalculations
+        start: 'top top+=90',
         end: `+=${scrollDistance}`,
         scrub: 1,
         pin: true,
+        anticipatePin: 1,
         invalidateOnRefresh: true,
       }
     });
 
-    // Phase 1: Zoom container backwards, add border radius, and darken overlay shadow
-    tl.to(videoContainerRef.current, {
-      scale: 0.92,
-      borderRadius: '35px',
-      ease: 'power2.inOut',
-      duration: 3
-    }, 0);
+    // Phase 1: Zoom container backwards, add border radius, and darken overlay shadow 
+    // Mapped to the entire duration of this timeline (1 unit)
+    tl.fromTo(videoContainerRef.current,
+      { scale: 1, borderRadius: '0px' },
+      {
+        scale: 0.92,
+        borderRadius: '35px',
+        ease: 'none', // Use linear ease so it maps perfectly 1:1 with scrub scrolling
+        duration: 1
+      }, 0);
 
-    tl.to(overlayRef.current, {
-      backgroundColor: 'rgba(0, 40, 94, 0.5)', // Using City Blue tint for the dark overlay
-      ease: 'power2.inOut',
-      duration: 3
-    }, 0);
+    tl.fromTo(overlayRef.current,
+      { backgroundColor: 'rgba(0, 0, 0, 0)' },
+      {
+        backgroundColor: 'rgba(0, 40, 94, 0.5)', // Using City Blue tint for the dark overlay
+        ease: 'none',
+        duration: 1
+      }, 0);
 
-    // Phase 2: Reveal Text 1
+    // Phase 2: Show Text 1 cleanly in the first half of the scroll
     tl.fromTo(text1Ref.current,
-      { opacity: 0, y: 100, scale: 0.8 },
-      { opacity: 1, y: 0, scale: 1, duration: 2, ease: "power2.out" }, 2
-    )
-      .to(text1Ref.current, { opacity: 0, y: -100, scale: 1.1, duration: 2, ease: "power2.in" }, 5);
-
-    // Phase 3: Reveal Text 2
-    tl.fromTo(text2Ref.current,
-      { opacity: 0, y: 100, scale: 0.8 },
-      { opacity: 1, y: 0, scale: 1, duration: 2, ease: "power2.out" }, 7
-    )
-      .to(text2Ref.current, { opacity: 0, y: -100, scale: 1.1, duration: 2, ease: "power2.in" }, 10);
-
-    // Phase 4: Reveal Text 3 (The Punchline)
-    tl.fromTo(text3Ref.current,
-      { opacity: 0, y: 100, scale: 0.8 },
-      { opacity: 1, y: 0, scale: 1, duration: 2, ease: "power2.out" }, 12
-    )
-      // Hold the final frame briefly before unlocking the scroll to let the user process it
-      .to({}, { duration: 3 });
+      { opacity: 0, y: 30, scale: 0.95 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power2.out" }, 0.1
+    );
 
   }, { scope: heroWrapperRef });
 
@@ -82,8 +68,6 @@ const Hero = () => {
 
         <div className="hero-texts">
           <h1 className="hero-text" ref={text1Ref}>WORLD-CLASS TRAINING.</h1>
-          <h1 className="hero-text" ref={text2Ref}>IN KOLKATA.</h1>
-          <h1 className="hero-text" ref={text3Ref}>BEGINS NOW.</h1>
         </div>
       </div>
     </section>
