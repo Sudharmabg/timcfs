@@ -4,6 +4,7 @@ import AdmissionModal from './AdmissionModal';
 
 const FloatingCTA = () => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -11,7 +12,7 @@ const FloatingCTA = () => {
         // Calculate if we're past the hero section explicitly using window height 
         // to bypass any GSAP pin-spacer IntersectionObserver issues
         const handleScroll = () => {
-            if (window.scrollY > window.innerHeight * 6.5) {
+            if (window.scrollY > window.innerHeight * 11.5) {
                 setIsVisible(true);
             } else {
                 setIsVisible(false);
@@ -22,23 +23,26 @@ const FloatingCTA = () => {
         // Initial check
         handleScroll();
 
-        // Auto-expand after 3 seconds, then collapse after 8 seconds
-        const expandTimer = setTimeout(() => setIsExpanded(true), 3000);
-        const collapseTimer = setTimeout(() => setIsExpanded(false), 8000);
+        // Enlarge every 10 seconds, and stay expanded for 3 seconds before retracting
+        const expandInterval = setInterval(() => {
+            setIsExpanded(true);
+            setTimeout(() => {
+                setIsExpanded(false); // Retract after 3 seconds
+            }, 3000);
+        }, 10000); // Trigger every 10 seconds
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            clearTimeout(expandTimer);
-            clearTimeout(collapseTimer);
+            clearInterval(expandInterval);
         };
     }, []);
 
     return (
         <>
             <div
-                className={`floating-cta ${isExpanded ? 'expanded' : ''} ${isVisible ? 'visible' : ''}`}
-                onMouseEnter={() => setIsExpanded(true)}
-                onMouseLeave={() => setIsExpanded(false)}
+                className={`floating-cta ${isExpanded || isHovered ? 'expanded' : ''} ${isVisible ? 'visible' : ''}`}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
                 onClick={() => setIsModalOpen(true)}
             >
                 <div className="cta-icon">

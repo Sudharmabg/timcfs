@@ -122,6 +122,12 @@ const Gallery = () => {
 
                         <button className="gallery-track-nav gallery-track-next" onClick={slideNext}>›</button>
                     </div>
+
+                    <div className="gallery-cta-wrapper">
+                        <button className="gallery-see-more-btn">
+                            <span>SEE MORE</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 

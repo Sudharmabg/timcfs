@@ -24,7 +24,7 @@ const StickyFooter = () => {
         // Calculate if we're past the hero section explicitly using window height 
         // to bypass any GSAP pin-spacer IntersectionObserver issues
         const handleScroll = () => {
-            if (window.scrollY > window.innerHeight * 6.5) {
+            if (window.scrollY > window.innerHeight * 11.5) {
                 setHeroInView(false);
             } else {
                 setHeroInView(true);

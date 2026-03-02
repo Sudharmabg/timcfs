@@ -14,33 +14,9 @@
     font-weight: 700;
     margin-bottom: 10px;
     text-transform: uppercase;
-    position: relative;
-    overflow: hidden;
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
-}
-
-.gallery-title::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-    animation: gallery-title-sparkle 3s infinite;
-    pointer-events: none;
-}
-
-@keyframes gallery-title-sparkle {
-    0% {
-        left: -100%;
-    }
-
-    100% {
-        left: 100%;
-    }
 }
 
 .gallery-subtitle {
@@ -209,50 +185,6 @@
     /* Slight extra polish for photos */
 }
 
-.gallery-item::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    animation: gallery-image-sparkle 3s infinite;
-    pointer-events: none;
-    z-index: 2;
-}
-
-/* Staggered sparkle delays */
-.gallery-item-wrapper:nth-child(5n+1) .gallery-item::after {
-    animation-delay: 0.0s;
-}
-
-.gallery-item-wrapper:nth-child(5n+2) .gallery-item::after {
-    animation-delay: 0.6s;
-}
-
-.gallery-item-wrapper:nth-child(5n+3) .gallery-item::after {
-    animation-delay: 1.2s;
-}
-
-.gallery-item-wrapper:nth-child(5n+4) .gallery-item::after {
-    animation-delay: 1.8s;
-}
-
-.gallery-item-wrapper:nth-child(5n+5) .gallery-item::after {
-    animation-delay: 2.4s;
-}
-
-@keyframes gallery-image-sparkle {
-    0% {
-        left: -100%;
-    }
-
-    100% {
-        left: 100%;
-    }
-}
-
 .gallery-item img {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -363,4 +295,55 @@
 
 .gallery-item.flipping {
     animation: flipCard 0.6s ease-in-out forwards;
+}
+
+/* Gallery CTA Button */
+.gallery-cta-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.gallery-see-more-btn {
+    background-color: rgb(0, 40, 94);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+    animation: gallery-bounce 2s infinite;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 40, 94, 0.3);
+    transition: transform 0.3s ease;
+}
+
+@keyframes gallery-bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-5px);
+    }
+
+    75% {
+        transform: translateY(5px);
+    }
+}
+
+.gallery-see-more-btn:hover {
+    animation-play-state: paused;
+    transform: scale(1.05);
+}
+
+.gallery-see-more-btn span {
+    position: relative;
+    z-index: 1;
 }
