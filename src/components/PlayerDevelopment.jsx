@@ -55,9 +55,12 @@ const PlayerDevelopment = () => {
                         entry.target.classList.add('animate-in');
                         if (entry.target === timelineRef.current) {
                             milestones.forEach((_, index) => {
+                                // Maps the dot appearance exactly to the 6s line drawing progress
+                                const leftPos = index === milestones.length - 1 ? 85 : 5 + index * 20;
+                                const delayMs = (leftPos / 100) * 6000 + 100; // Total duration 6s
                                 setTimeout(() => {
                                     setVisibleItems(prev => [...prev, index]);
-                                }, index * 600 + 400); // Wait 400ms before starting, then 600ms per dot
+                                }, delayMs);
                             });
                         }
                     }

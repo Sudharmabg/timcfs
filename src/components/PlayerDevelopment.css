@@ -65,11 +65,13 @@
 
 .timeline-container {
     position: relative;
-    height: 500px;
+    height: 300px;
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s ease 0.3s;
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .timeline-container.animate-in {
@@ -103,7 +105,8 @@
     stroke-linejoin: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    transition: stroke-dashoffset 4.5s cubic-bezier(0.1, 0.5, 0.4, 1);
+    transition: stroke-dashoffset 6s linear;
+    /* Gradual 6 second reveal */
 }
 
 .timeline-container.animate-in .timeline-path-progress {
