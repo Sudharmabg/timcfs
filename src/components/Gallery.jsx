@@ -10,23 +10,37 @@ const Gallery = () => {
     const galleryImages = Array.from({ length: 7 }, (_, i) => `/gallery-${i + 1}.jpeg`);
 
     const [startIndex, setStartIndex] = useState(0);
+    const [isFlipping, setIsFlipping] = useState(false);
     const sectionRef = useRef(null);
 
+    const handleFlipSwap = useCallback((newIndexFunc) => {
+        if (isFlipping) return;
+        setIsFlipping(true);
 
+        // Halfway through the 600ms flip, swap the image src data
+        setTimeout(() => {
+            setStartIndex(newIndexFunc);
+        }, 300);
+
+        // Reset the animation class
+        setTimeout(() => {
+            setIsFlipping(false);
+        }, 600);
+    }, [isFlipping]);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setStartIndex(prev => (prev + 3) % galleryImages.length);
-        }, 10000); // 10 seconds
+            handleFlipSwap(prev => (prev + 3) % galleryImages.length);
+        }, 5000); // 5 seconds
         return () => clearInterval(interval);
-    }, [galleryImages.length]);
+    }, [galleryImages.length, handleFlipSwap]);
 
     const slideNext = () => {
-        setStartIndex(prev => (prev + 3) % galleryImages.length);
+        handleFlipSwap(prev => (prev + 3) % galleryImages.length);
     };
 
     const slidePrev = () => {
-        setStartIndex(prev => {
+        handleFlipSwap(prev => {
             const nextVal = prev - 3;
             if (nextVal < 0) {
                 return galleryImages.length - (Math.abs(nextVal) % galleryImages.length);
@@ -92,9 +106,9 @@ const Gallery = () => {
                                 {visibleImages.map((src, idx) => {
                                     const actualIndex = (startIndex + idx) % galleryImages.length;
                                     return (
-                                        <div className="gallery-item-wrapper" key={actualIndex}>
+                                        <div className="gallery-item-wrapper" key={idx}> {/* key idx prevents remounts during actual flip swap */}
                                             <div
-                                                className="gallery-item"
+                                                className={`gallery-item ${isFlipping ? 'flipping' : ''}`}
                                                 onClick={() => openLightbox(actualIndex)}
                                             >
                                                 <img src={src} alt={`Football School Gallery ${actualIndex + 1}`} loading="lazy" />
