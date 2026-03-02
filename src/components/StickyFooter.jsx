@@ -4,7 +4,7 @@ import './StickyFooter.css';
 const StickyFooter = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [footerInView, setFooterInView] = useState(false);
-    const [heroInView, setHeroInView] = useState(false);
+    const [heroInView, setHeroInView] = useState(true);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -12,8 +12,6 @@ const StickyFooter = () => {
                 entries.forEach((entry) => {
                     if (entry.target.classList.contains('site-footer')) {
                         setFooterInView(entry.isIntersecting);
-                    } else if (entry.target.classList.contains('hero-wrapper')) {
-                        setHeroInView(entry.isIntersecting);
                     }
                 });
             },
@@ -21,14 +19,25 @@ const StickyFooter = () => {
         );
 
         const siteFooter = document.querySelector('.site-footer');
-        const hero = document.querySelector('.hero-wrapper');
-
         if (siteFooter) observer.observe(siteFooter);
-        if (hero) observer.observe(hero);
+
+        // Calculate if we're past the hero section explicitly using window height 
+        // to bypass any GSAP pin-spacer IntersectionObserver issues
+        const handleScroll = () => {
+            if (window.scrollY > window.innerHeight * 6.5) {
+                setHeroInView(false);
+            } else {
+                setHeroInView(true);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        // Initial check
+        handleScroll();
 
         return () => {
             if (siteFooter) observer.unobserve(siteFooter);
-            if (hero) observer.unobserve(hero);
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
 
@@ -41,7 +50,7 @@ const StickyFooter = () => {
             </button>
             <div className="sticky-footer-content">
                 <span className="sticky-footer-text">Let's secure your child's future</span>
-                <div className="arrow-animation">➤</div>
+                <div className="arrow-animation">⚽</div>
                 <div className="sticky-footer-contacts">
                     <a href="tel:+917603046111" className="sticky-footer-contact-item pulse-phone">
                         {/* Using an inline SVG for phone instead of font-awesome since FA might not be loaded */}

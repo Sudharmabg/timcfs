@@ -122,11 +122,11 @@
 
     0%,
     100% {
-        transform: translateX(0);
+        transform: translateX(0) rotate(0deg);
     }
 
     50% {
-        transform: translateX(8px);
+        transform: translateX(8px) rotate(45deg);
     }
 }
 

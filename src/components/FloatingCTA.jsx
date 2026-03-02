@@ -8,27 +8,26 @@ const FloatingCTA = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        // Check if the Hero section is in view to hide the CTA
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.target.classList.contains('hero-wrapper')) {
-                        setIsVisible(!entry.isIntersecting);
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
+        // Calculate if we're past the hero section explicitly using window height 
+        // to bypass any GSAP pin-spacer IntersectionObserver issues
+        const handleScroll = () => {
+            if (window.scrollY > window.innerHeight * 6.5) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
+        };
 
-        const hero = document.querySelector('.hero-wrapper');
-        if (hero) observer.observe(hero);
+        window.addEventListener('scroll', handleScroll);
+        // Initial check
+        handleScroll();
 
         // Auto-expand after 3 seconds, then collapse after 8 seconds
         const expandTimer = setTimeout(() => setIsExpanded(true), 3000);
         const collapseTimer = setTimeout(() => setIsExpanded(false), 8000);
 
         return () => {
-            if (hero) observer.unobserve(hero);
+            window.removeEventListener('scroll', handleScroll);
             clearTimeout(expandTimer);
             clearTimeout(collapseTimer);
         };

@@ -11,12 +11,9 @@ const Hero = () => {
   const videoContainerRef = useRef(null);
   const overlayRef = useRef(null);
 
-  const text1Ref = useRef(null);
-
-
   useGSAP(() => {
-    // 1.5 screens of scrolling is perfect for one text reveal
-    const scrollDistance = window.innerHeight * 1.5;
+    // Extended scroll distance so the user can enjoy more of the 16-second video while scrolling
+    const scrollDistance = window.innerHeight * 6;
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -50,12 +47,6 @@ const Hero = () => {
         duration: 1
       }, 0);
 
-    // Phase 2: Show Text 1 cleanly in the first half of the scroll
-    tl.fromTo(text1Ref.current,
-      { opacity: 0, y: 30, scale: 0.95 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power2.out" }, 0.1
-    );
-
   }, { scope: heroWrapperRef });
 
   return (
@@ -65,10 +56,6 @@ const Hero = () => {
           <source src="/hero_video.mp4" type="video/mp4" />
         </video>
         <div className="hero-overlay" ref={overlayRef}></div>
-
-        <div className="hero-texts">
-          <h1 className="hero-text" ref={text1Ref}>WORLD-CLASS TRAINING.</h1>
-        </div>
       </div>
     </section>
   );
