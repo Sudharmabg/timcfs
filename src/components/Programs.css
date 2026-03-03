@@ -4,6 +4,7 @@
 .programs-section {
     padding: 90px 20px;
     background: #ffffff;
+    scroll-margin-top: 120px;
 }
 
 .programs-container {

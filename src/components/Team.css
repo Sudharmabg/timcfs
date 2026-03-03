@@ -4,7 +4,7 @@
 .team-section {
     padding: 80px 20px 90px;
     background: #f4f7fb;
-    /* slightly off-white to separate from Programs */
+    scroll-margin-top: 120px;
 }
 
 .team-container {
