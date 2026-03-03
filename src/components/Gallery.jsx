@@ -1,126 +1,120 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useState, useCallback, useEffect } from 'react';
 import './Gallery.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Gallery = () => {
     const galleryImages = Array.from({ length: 7 }, (_, i) => `/gallery-${i + 1}.jpeg`);
 
-    const [startIndex, setStartIndex] = useState(0);
-    const [isFlipping, setIsFlipping] = useState(false);
-    const sectionRef = useRef(null);
-
-    const handleFlipSwap = useCallback((newIndexFunc) => {
-        if (isFlipping) return;
-        setIsFlipping(true);
-
-        // Halfway through the 600ms flip, swap the image src data
-        setTimeout(() => {
-            setStartIndex(newIndexFunc);
-        }, 300);
-
-        // Reset the animation class
-        setTimeout(() => {
-            setIsFlipping(false);
-        }, 600);
-    }, [isFlipping]);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            handleFlipSwap(prev => (prev + 3) % galleryImages.length);
-        }, 5000); // 5 seconds
-        return () => clearInterval(interval);
-    }, [galleryImages.length, handleFlipSwap]);
-
-    const slideNext = () => {
-        handleFlipSwap(prev => (prev + 3) % galleryImages.length);
-    };
-
-    const slidePrev = () => {
-        handleFlipSwap(prev => {
-            const nextVal = prev - 3;
-            if (nextVal < 0) {
-                return galleryImages.length - (Math.abs(nextVal) % galleryImages.length);
-            }
-            return nextVal;
-        });
-    };
-
-    const visibleImages = [];
-    for (let i = 0; i < 3; i++) {
-        visibleImages.push(galleryImages[(startIndex + i) % galleryImages.length]);
-    }
-
-    const [lightboxOpen, setLightboxOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
-    const openLightbox = (index) => {
-        setCurrentIndex(index % galleryImages.length);
-        setLightboxOpen(true);
-    };
+    const goTo = useCallback((newIndex) => {
+        if (isTransitioning) return;
+        setIsTransitioning(true);
+        setCurrentIndex(newIndex);
+        setTimeout(() => setIsTransitioning(false), 700);
+    }, [isTransitioning]);
 
-    const closeLightbox = () => {
-        setLightboxOpen(false);
-    };
+    const slideNext = useCallback(() => {
+        goTo((currentIndex + 1) % galleryImages.length);
+    }, [currentIndex, galleryImages.length, goTo]);
 
-    const showNext = useCallback(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % galleryImages.length);
+    const slidePrev = useCallback(() => {
+        goTo(currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1);
+    }, [currentIndex, galleryImages.length, goTo]);
+
+    // Auto-scroll every 5 seconds
+    useEffect(() => {
+        const interval = setInterval(slideNext, 5000);
+        return () => clearInterval(interval);
+    }, [slideNext]);
+
+    const prevIndex = currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1;
+    const nextIndex = (currentIndex + 1) % galleryImages.length;
+
+    // Dots: 3 total cycling
+    const totalDots = 3;
+    const activeDot = currentIndex % totalDots;
+
+    // Lightbox
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
+
+    const openLightbox = (index) => { setLightboxIndex(index); setLightboxOpen(true); };
+    const closeLightbox = () => setLightboxOpen(false);
+
+    const lightboxNext = useCallback(() => {
+        setLightboxIndex((p) => (p + 1) % galleryImages.length);
     }, [galleryImages.length]);
 
-    const showPrev = useCallback(() => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? galleryImages.length - 1 : prevIndex - 1
-        );
+    const lightboxPrev = useCallback(() => {
+        setLightboxIndex((p) => p === 0 ? galleryImages.length - 1 : p - 1);
     }, [galleryImages.length]);
 
     useEffect(() => {
         if (!lightboxOpen) return;
-
-        const handleKeyDown = (e) => {
-            if (e.key === "ArrowRight") showNext();
-            else if (e.key === "ArrowLeft") showPrev();
-            else if (e.key === "Escape") closeLightbox();
+        const onKey = (e) => {
+            if (e.key === 'ArrowRight') lightboxNext();
+            else if (e.key === 'ArrowLeft') lightboxPrev();
+            else if (e.key === 'Escape') closeLightbox();
         };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [lightboxOpen, lightboxNext, lightboxPrev]);
 
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [lightboxOpen, showNext, showPrev]);
+    /* ── Build the 3-slot coverflow ── */
+    const slots = [
+        { imgIndex: prevIndex, role: 'prev' },
+        { imgIndex: currentIndex, role: 'active' },
+        { imgIndex: nextIndex, role: 'next' },
+    ];
 
     return (
-        <section id="gallery" className="gallery-section py-5 mb-5" ref={sectionRef}>
-            <div className="container gallery-container">
-                <div className="gallery-card-container">
-                    <div className="gallery-header">
-                        <h2 className="gallery-title">GALLERY</h2>
-                        <h3 className="gallery-subtitle">Moments from the pitch</h3>
-                    </div>
+        <section id="gallery" className="gallery-section">
+            <div className="gallery-container">
+                <div className="gallery-card">
 
-                    <div style={{ position: 'relative' }}>
-                        <button className="gallery-track-nav gallery-track-prev" onClick={slidePrev}>‹</button>
+                    <h2 className="gallery-title">GALLERY</h2>
 
-                        <div className="gallery-track-wrapper">
-                            <div className="gallery-track">
-                                {visibleImages.map((src, idx) => {
-                                    const actualIndex = (startIndex + idx) % galleryImages.length;
-                                    return (
-                                        <div className="gallery-item-wrapper" key={idx}> {/* key idx prevents remounts during actual flip swap */}
-                                            <div
-                                                className={`gallery-item ${isFlipping ? 'flipping' : ''}`}
-                                                onClick={() => openLightbox(actualIndex)}
-                                            >
-                                                <img src={src} alt={`Football School Gallery ${actualIndex + 1}`} loading="lazy" />
-                                                <div className="gallery-overlay"></div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                    <div className="gallery-coverflow-wrapper">
+                        <button className="gallery-arrow gallery-arrow-prev" onClick={slidePrev} aria-label="Previous">
+                            <span className="gallery-arrow-icon" />
+                        </button>
+
+                        <div className="gallery-coverflow">
+                            {slots.map(({ imgIndex, role }) => (
+                                <div
+                                    key={role}
+                                    className={`gallery-cf-card ${role}`}
+                                    onClick={() => {
+                                        if (role === 'active') openLightbox(imgIndex);
+                                        else if (role === 'prev') slidePrev();
+                                        else slideNext();
+                                    }}
+                                >
+                                    <img
+                                        src={galleryImages[imgIndex]}
+                                        alt={`Gallery ${imgIndex + 1}`}
+                                        draggable={false}
+                                    />
+                                </div>
+                            ))}
                         </div>
 
-                        <button className="gallery-track-nav gallery-track-next" onClick={slideNext}>›</button>
+                        <button className="gallery-arrow gallery-arrow-next" onClick={slideNext} aria-label="Next">
+                            <span className="gallery-arrow-icon" />
+                        </button>
+                    </div>
+
+                    {/* 3 Dots */}
+                    <div className="gallery-dots">
+                        {Array.from({ length: totalDots }, (_, i) => (
+                            <button
+                                key={i}
+                                className={`gallery-dot ${i === activeDot ? 'active' : ''}`}
+                                onClick={() => goTo(i)}
+                                aria-label={`Slide ${i + 1}`}
+                            />
+                        ))}
                     </div>
 
                     <div className="gallery-cta-wrapper">
@@ -133,35 +127,13 @@ const Gallery = () => {
 
             {lightboxOpen && (
                 <div className="gallery-lightbox" onClick={closeLightbox}>
-                    <span className="gallery-close-btn" onClick={closeLightbox}>
-                        &times;
-                    </span>
-
-                    <button
-                        className="gallery-nav-btn gallery-prev"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            showPrev();
-                        }}
-                    >
-                        ‹
-                    </button>
-
-                    <img
-                        src={galleryImages[currentIndex]}
-                        alt={`preview-${currentIndex}`}
-                        onClick={(e) => e.stopPropagation()}
-                    />
-
-                    <button
-                        className="gallery-nav-btn gallery-next"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            showNext();
-                        }}
-                    >
-                        ›
-                    </button>
+                    <span className="gallery-close-btn" onClick={closeLightbox}>&times;</span>
+                    <button className="gallery-lb-btn gallery-lb-prev"
+                        onClick={(e) => { e.stopPropagation(); lightboxPrev(); }}>‹</button>
+                    <img src={galleryImages[lightboxIndex]} alt={`preview-${lightboxIndex}`}
+                        onClick={(e) => e.stopPropagation()} />
+                    <button className="gallery-lb-btn gallery-lb-next"
+                        onClick={(e) => { e.stopPropagation(); lightboxNext(); }}>›</button>
                 </div>
             )}
         </section>
