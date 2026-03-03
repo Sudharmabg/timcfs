@@ -51,31 +51,14 @@
   border-radius: 5px;
   cursor: pointer;
   white-space: nowrap;
-  animation: bounce 2s infinite;
   position: relative;
   overflow: hidden;
-}
-
-
-
-@keyframes bounce {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  25% {
-    transform: translateY(-5px);
-  }
-
-  75% {
-    transform: translateY(5px);
-  }
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .register-btn:hover {
-  animation-play-state: paused;
+  transform: scale(1.05);
+  background-color: #003080;
 }
 
 .register-btn span {

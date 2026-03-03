@@ -3,7 +3,7 @@
    ══════════════════════════════════════ */
 .team-section {
     padding: 80px 20px 90px;
-    background: #f4f7fb;
+    background: white;
     scroll-margin-top: 120px;
 }
 
@@ -12,7 +12,7 @@
     margin: 0 auto;
 }
 
-/* ── Centered Title (matches Programs/Player Development) ── */
+/* ── Centered Title ── */
 .team-title {
     color: rgb(0, 40, 94);
     font-size: 2.5rem;
@@ -24,6 +24,9 @@
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 0px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
 }
 
 /* ══════════════════════════════════════
@@ -43,17 +46,20 @@
     border-radius: 8px;
     overflow: hidden;
     background: rgb(0, 15, 40);
-    /* Base dark blue for the card */
     display: flex;
     flex-direction: column;
     box-shadow: 0 6px 24px rgba(0, 40, 94, 0.25);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    opacity: 0;
+    transform: translateY(50px) rotateX(10deg);
+    animation: teamCardSlideIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .team-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 18px 45px rgba(0, 40, 94, 0.35);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 25px 60px rgba(0, 40, 94, 0.4);
 }
 
 /* ── Photo ── */
@@ -61,7 +67,6 @@
     position: relative;
     width: 100%;
     aspect-ratio: 1 / 1.1;
-    /* Slightly taller than square to reduce height from before */
     overflow: hidden;
     flex-shrink: 0;
 }
@@ -72,15 +77,15 @@
     object-fit: cover;
     object-position: top center;
     display: block;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     filter: brightness(0.9);
 }
 
 .team-card:hover .team-card-photo img {
-    transform: scale(1.04);
+    transform: scale(1.08);
 }
 
-/* Decorative background pattern (subtle diagonal lines like Man City cards) */
+/* Decorative background pattern */
 .team-card-bg-pattern {
     position: absolute;
     inset: 0;
@@ -95,14 +100,15 @@
 /* ── Bottom info overlay ── */
 .team-card-info {
     background: rgb(0, 20, 50);
-    /* Solid dark blue box color */
     padding: 20px 16px 22px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     flex-grow: 1;
-    /* Expand to fill bottom space consistently */
     position: relative;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
 }
 
 .team-card-row {
@@ -169,6 +175,9 @@
     flex-wrap: wrap;
     gap: 4px;
     margin-top: 6px;
+    transform: translateY(10px);
+    opacity: 0;
+    animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
 }
 
 .team-cert-badge {
@@ -182,26 +191,38 @@
     letter-spacing: 0.4px;
     white-space: nowrap;
     text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* ── Expand icon button ── */
-.team-expand-btn {
-    align-self: flex-start;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-    color: white;
-    padding: 5px 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 6px;
-    transition: background 0.2s ease;
+.team-card:hover .team-cert-badge {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
 }
 
-.team-expand-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+/* ══════════════════════════════════════
+   ANIMATIONS
+   ══════════════════════════════════════ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes teamCardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px) rotateX(10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+    }
 }
 
 /* ══════════════════════════════════════

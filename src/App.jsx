@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 import { Routes, Route } from 'react-router-dom';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutUs from './components/AboutUs';
@@ -46,8 +47,10 @@ function App() {
     }
 
     gsap.ticker.add(update);
-    // Prevents GSAP from doing large skips when scrolling heavily
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(500, 16);
+
+    ScrollTrigger.config({ ignoreMobileResize: true });
+    ScrollTrigger.refresh();
 
     return () => {
       gsap.ticker.remove(update);
@@ -55,7 +58,7 @@ function App() {
   }, []);
 
   return (
-    <ReactLenis root ref={lenisRef} autoRaf={false} options={{ smoothTouch: true, lerp: 0.1 }}>
+    <ReactLenis root ref={lenisRef} autoRaf={false} options={{ smoothTouch: true, lerp: 0.15, infinite: false, syncTouch: true }}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/faq" element={<FAQPage />} />

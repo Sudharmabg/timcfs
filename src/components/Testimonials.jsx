@@ -68,7 +68,11 @@ function Testimonials() {
 
           <div className="testimonials-grid">
             {getVisibleCards().map((testimonial, index) => (
-              <div key={`${testimonial.id}-${startIndex}-${index}`} className="testimonial-card">
+              <div 
+                key={`${testimonial.id}-${startIndex}-${index}`} 
+                className="testimonial-card"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <div className="testimonial-image">
                   <img src={testimonial.image} alt={testimonial.author} />
                 </div>

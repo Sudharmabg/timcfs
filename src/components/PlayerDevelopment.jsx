@@ -54,14 +54,8 @@ const PlayerDevelopment = () => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('animate-in');
                         if (entry.target === timelineRef.current) {
-                            milestones.forEach((_, index) => {
-                                // Maps the dot appearance exactly to the 6s line drawing progress
-                                const leftPos = index === milestones.length - 1 ? 85 : 5 + index * 20;
-                                const delayMs = (leftPos / 100) * 6000 + 100; // Total duration 6s
-                                setTimeout(() => {
-                                    setVisibleItems(prev => [...prev, index]);
-                                }, delayMs);
-                            });
+                            // Show all items immediately
+                            setVisibleItems(milestones.map((_, index) => index));
                         }
                     }
                 });

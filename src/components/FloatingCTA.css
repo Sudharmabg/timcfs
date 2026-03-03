@@ -12,6 +12,7 @@
     overflow: visible;
     opacity: 0;
     pointer-events: none;
+    will-change: transform;
 }
 
 .floating-cta.visible {

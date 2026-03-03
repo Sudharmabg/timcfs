@@ -49,10 +49,11 @@ const Team = () => {
                 <h2 className="team-title">Our Team</h2>
 
                 <div className="team-grid">
-                    {TEAM.map((member) => (
+                    {TEAM.map((member, index) => (
                         <div
                             key={member.id}
                             className={`team-card ${expandedCard === member.id ? 'expanded' : ''}`}
+                            style={{ animationDelay: `${index * 0.15}s` }}
                         >
                             {/* Photo */}
                             <div className="team-card-photo">

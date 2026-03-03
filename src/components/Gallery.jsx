@@ -22,7 +22,6 @@ const Gallery = () => {
         goTo(currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1);
     }, [currentIndex, galleryImages.length, goTo]);
 
-    // Auto-scroll every 5 seconds
     useEffect(() => {
         const interval = setInterval(slideNext, 5000);
         return () => clearInterval(interval);
@@ -31,11 +30,9 @@ const Gallery = () => {
     const prevIndex = currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1;
     const nextIndex = (currentIndex + 1) % galleryImages.length;
 
-    // Dots: 3 total cycling
     const totalDots = 3;
     const activeDot = currentIndex % totalDots;
 
-    // Lightbox
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
 
@@ -61,7 +58,6 @@ const Gallery = () => {
         return () => window.removeEventListener('keydown', onKey);
     }, [lightboxOpen, lightboxNext, lightboxPrev]);
 
-    /* ── Build the 3-slot coverflow ── */
     const slots = [
         { imgIndex: prevIndex, role: 'prev' },
         { imgIndex: currentIndex, role: 'active' },
@@ -105,7 +101,6 @@ const Gallery = () => {
                         </button>
                     </div>
 
-                    {/* 3 Dots */}
                     <div className="gallery-dots">
                         {Array.from({ length: totalDots }, (_, i) => (
                             <button

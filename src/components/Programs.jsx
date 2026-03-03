@@ -1,10 +1,5 @@
-import React, { useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
 import './Programs.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const PROGRAMS = [
     {
@@ -42,41 +37,10 @@ const PROGRAMS = [
 ];
 
 const Programs = () => {
-    const sectionRef = useRef(null);
-    const titleRef = useRef(null);
-    const cardsRef = useRef([]);
-
-    useGSAP(() => {
-        // Title animation
-        gsap.from(titleRef.current, {
-            y: 40,
-            opacity: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: titleRef.current,
-                start: 'top 85%',
-            },
-        });
-
-        // Staggered card animations
-        gsap.from(cardsRef.current, {
-            y: 60,
-            opacity: 0,
-            duration: 0.7,
-            ease: 'power3.out',
-            stagger: 0.15,
-            scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 75%',
-            },
-        });
-    }, []);
-
     return (
-        <section id="programs" className="programs-section" ref={sectionRef}>
+        <section id="programs" className="programs-section">
             <div className="programs-container">
-                <div className="programs-header" ref={titleRef}>
+                <div className="programs-header">
                     <h2 className="programs-title">Our Programmes</h2>
                 </div>
 
@@ -85,15 +49,13 @@ const Programs = () => {
                         <div
                             key={prog.id}
                             className="program-card"
-                            ref={(el) => (cardsRef.current[i] = el)}
+                            style={{ animationDelay: `${i * 0.1}s` }}
                         >
-                            {/* Image */}
                             <div className="program-card-image">
                                 <img src={prog.image} alt={prog.title} />
                                 <div className="program-card-image-overlay" />
                             </div>
 
-                            {/* Content */}
                             <div className="program-card-body">
                                 <h3 className="program-card-title">{prog.title}</h3>
                                 <p className="program-card-age">Ages {prog.ageRange}</p>
