@@ -10,6 +10,7 @@ import PlayerDevelopment from './components/PlayerDevelopment';
 import Gallery from './components/Gallery';
 import Programs from './components/Programs';
 import Team from './components/Team';
+import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import StickyFooter from './components/StickyFooter';
 import FloatingCTA from './components/FloatingCTA';
@@ -26,6 +27,7 @@ function HomePage() {
         <Programs />
         <Team />
         <Gallery />
+        <Testimonials />
       </div>
       <Footer />
     </>
