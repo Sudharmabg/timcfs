@@ -76,7 +76,7 @@ const PlayerDevelopment = () => {
     }, [milestones.length]);
 
     return (
-        <section className="player-development-section" ref={sectionRef}>
+        <section id="player-development-section" className="player-development-section" ref={sectionRef}>
             <div className="pd-container">
                 <h2 ref={titleRef} className="pd-title">THE MANCHESTER CITY PLAYER DEVELOPMENT MODEL</h2>
                 <div ref={timelineRef} className="timeline-container">
