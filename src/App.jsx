@@ -20,7 +20,6 @@ function HomePage() {
         <Header />
         <Hero />
         <AboutUs />
-        <Founders />
         <PlayerDevelopment />
         <Gallery />
       </div>

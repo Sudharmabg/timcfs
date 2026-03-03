@@ -12,7 +12,7 @@ const FloatingCTA = () => {
         // Calculate if we're past the hero section explicitly using window height 
         // to bypass any GSAP pin-spacer IntersectionObserver issues
         const handleScroll = () => {
-            if (window.scrollY > window.innerHeight * 11.5) {
+            if (window.scrollY > window.innerHeight * 8.5) {
                 setIsVisible(true);
             } else {
                 setIsVisible(false);
