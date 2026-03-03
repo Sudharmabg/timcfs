@@ -23,13 +23,13 @@ const FloatingCTA = () => {
         // Initial check
         handleScroll();
 
-        // Enlarge every 10 seconds, and stay expanded for 3 seconds before retracting
+        // Enlarge every 15 seconds, and stay expanded for 2 seconds before retracting
         const expandInterval = setInterval(() => {
             setIsExpanded(true);
             setTimeout(() => {
                 setIsExpanded(false); // Retract after 3 seconds
-            }, 3000);
-        }, 10000); // Trigger every 10 seconds
+            }, 2000);
+        }, 15000); // Trigger every 15 seconds
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -46,14 +46,12 @@ const FloatingCTA = () => {
                 onClick={() => setIsModalOpen(true)}
             >
                 <div className="cta-icon">
-                    <i className="fas fa-graduation-cap" style={{ fontSize: '24px' }}></i>
+                    ⚽
                 </div>
 
                 <div className="cta-text">
-                    <span>Admission Enquiry</span>
+                    <span>Enquiry</span>
                 </div>
-
-                <div className="cta-pulse"></div>
             </div>
 
             <AdmissionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
