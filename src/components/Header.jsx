@@ -1,12 +1,11 @@
 import React, { useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import './Header.css';
 
 const Header = () => {
-  const location = useLocation();
-  const isHome = location.pathname === '/';
+
   const headerRef = useRef(null);
   const logoRef = useRef(null);
   const navRef = useRef(null);
