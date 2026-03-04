@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import './FloatingCTA.css';
 import AdmissionModal from './AdmissionModal';
 
-const FloatingCTA = () => {
+const FloatingCTA = ({ isFaqPage = false }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        // Calculate if we're past the hero section explicitly using window height 
-        // to bypass any GSAP pin-spacer IntersectionObserver issues
         const handleScroll = () => {
-            if (window.scrollY > window.innerHeight * 8.5) {
-                setIsVisible(true);
+            if (isFaqPage) {
+                // On FAQ page, show after a small scroll (past the header)
+                setIsVisible(window.scrollY > 200);
             } else {
-                setIsVisible(false);
+                // On homepage, show after scrolling past the very long hero
+                setIsVisible(window.scrollY > window.innerHeight * 8.5);
             }
         };
 
@@ -35,7 +35,7 @@ const FloatingCTA = () => {
             window.removeEventListener('scroll', handleScroll);
             clearInterval(expandInterval);
         };
-    }, []);
+    }, [isFaqPage]);
 
     return (
         <>
@@ -60,3 +60,4 @@ const FloatingCTA = () => {
 };
 
 export default FloatingCTA;
+

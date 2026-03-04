@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Gallery.css';
 
 const Gallery = () => {
@@ -6,20 +7,24 @@ const Gallery = () => {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
+    const [viewedImages, setViewedImages] = useState(new Set([0]));
 
     const goTo = useCallback((newIndex) => {
         if (isTransitioning) return;
         setIsTransitioning(true);
         setCurrentIndex(newIndex);
+        setViewedImages(prev => new Set([...prev, newIndex]));
         setTimeout(() => setIsTransitioning(false), 700);
     }, [isTransitioning]);
 
     const slideNext = useCallback(() => {
-        goTo((currentIndex + 1) % galleryImages.length);
+        const nextIdx = (currentIndex + 1) % galleryImages.length;
+        goTo(nextIdx);
     }, [currentIndex, galleryImages.length, goTo]);
 
     const slidePrev = useCallback(() => {
-        goTo(currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1);
+        const prevIdx = currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1;
+        goTo(prevIdx);
     }, [currentIndex, galleryImages.length, goTo]);
 
     useEffect(() => {
@@ -63,6 +68,8 @@ const Gallery = () => {
         { imgIndex: currentIndex, role: 'active' },
         { imgIndex: nextIndex, role: 'next' },
     ];
+
+    const showSeeMore = viewedImages.size >= 6;
 
     return (
         <section id="gallery" className="gallery-section">
@@ -112,11 +119,13 @@ const Gallery = () => {
                         ))}
                     </div>
 
-                    <div className="gallery-cta-wrapper">
-                        <button className="gallery-see-more-btn">
-                            <span>SEE MORE</span>
-                        </button>
-                    </div>
+                    {showSeeMore && (
+                        <div className="gallery-cta-wrapper">
+                            <Link to="/gallery" className="gallery-see-more-btn">
+                                <span>SEE MORE</span>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
 

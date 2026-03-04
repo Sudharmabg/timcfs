@@ -16,6 +16,9 @@ import Footer from './components/Footer';
 import StickyFooter from './components/StickyFooter';
 import FloatingCTA from './components/FloatingCTA';
 import FAQPage from './pages/FAQPage';
+import GalleryPage from './pages/GalleryPage';
+import ContactPage from './pages/ContactPage';
+import TorchlightCursor from './components/TorchlightCursor';
 
 function HomePage() {
   return (
@@ -31,6 +34,8 @@ function HomePage() {
         <Testimonials />
       </div>
       <Footer />
+      <FloatingCTA />
+      <StickyFooter />
     </>
   );
 }
@@ -47,9 +52,12 @@ function App() {
     }
 
     gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(500, 16);
+    // Disable lag smoothing — with Lenis drive the ticker, any catch-up burst
+    // from lagSmoothing creates the visible 'stuck' freeze between pinned sections
+    gsap.ticker.lagSmoothing(0);
 
     ScrollTrigger.config({ ignoreMobileResize: true });
+    ScrollTrigger.normalizeScroll(false);
     ScrollTrigger.refresh();
 
     return () => {
@@ -58,13 +66,14 @@ function App() {
   }, []);
 
   return (
-    <ReactLenis root ref={lenisRef} autoRaf={false} options={{ smoothTouch: true, lerp: 0.15, infinite: false, syncTouch: true }}>
+    <ReactLenis root ref={lenisRef} autoRaf={false} options={{ smoothTouch: true, lerp: 0.08, infinite: false, syncTouch: true }}>
+      <TorchlightCursor />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/faq" element={<FAQPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
-      <FloatingCTA />
-      <StickyFooter />
     </ReactLenis>
   );
 }

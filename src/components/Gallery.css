@@ -23,6 +23,7 @@
     box-shadow: 0 20px 40px rgba(152, 197, 233, 0.5);
     transform: scale(0.95);
     animation: cardScaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards;
+    position: relative;
 }
 
 /* ── Title ── */
@@ -46,11 +47,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
     perspective: 1200px;
     opacity: 0;
     transform: translateY(30px);
     animation: fadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards;
+    position: relative;
 }
 
 /* ── The 3-card coverflow row ── */
@@ -139,12 +140,14 @@
 }
 
 /* ══════════════════════════════════════
-   ARROWS
+   ARROWS - POSITIONED AT CARD CORNERS
    ══════════════════════════════════════ */
 .gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     width: 50px;
     height: 50px;
-    flex-shrink: 0;
     border-radius: 50%;
     background: white;
     border: none;
@@ -155,6 +158,14 @@
     box-shadow: 0 4px 15px rgba(0, 40, 94, 0.2);
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 20;
+}
+
+.gallery-arrow-prev {
+    left: -10px;
+}
+
+.gallery-arrow-next {
+    right: -10px;
 }
 
 .gallery-arrow:hover {
@@ -247,6 +258,8 @@
     box-shadow: 0 4px 15px rgba(0, 40, 94, 0.3);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
                 background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    text-decoration: none;
+    display: inline-block;
 }
 
 .gallery-see-more-btn:hover {

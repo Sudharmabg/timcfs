@@ -30,9 +30,10 @@ const Hero = () => {
         trigger: imageWrapperRef.current,
         start: 'top top+=90',
         end: `+=${imgScrollDistance}`,
-        scrub: 1,
+        scrub: true,
         pin: true,
         anticipatePin: 1,
+        fastScrollEnd: true,
         invalidateOnRefresh: true,
       }
     });
@@ -68,9 +69,10 @@ const Hero = () => {
         trigger: videoWrapperRef.current,
         start: 'top top+=90',
         end: `+=${videoScrollDistance}`,
-        scrub: 1,
+        scrub: true,
         pin: true,
         anticipatePin: 1,
+        fastScrollEnd: true,
         invalidateOnRefresh: true,
       }
     });

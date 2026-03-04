@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './StickyFooter.css';
 
-const StickyFooter = () => {
+const StickyFooter = ({ isFaqPage = false }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [footerInView, setFooterInView] = useState(false);
     const [heroInView, setHeroInView] = useState(true);
@@ -21,13 +21,13 @@ const StickyFooter = () => {
         const siteFooter = document.querySelector('.site-footer');
         if (siteFooter) observer.observe(siteFooter);
 
-        // Calculate if we're past the hero section explicitly using window height 
-        // to bypass any GSAP pin-spacer IntersectionObserver issues
         const handleScroll = () => {
-            if (window.scrollY > window.innerHeight * 8.5) {
-                setHeroInView(false);
+            if (isFaqPage) {
+                // On FAQ page, show after a small scroll (past the header)
+                setHeroInView(window.scrollY <= 200);
             } else {
-                setHeroInView(true);
+                // On homepage, hide during the very long pinned hero section
+                setHeroInView(window.scrollY <= window.innerHeight * 8.5);
             }
         };
 
@@ -39,7 +39,7 @@ const StickyFooter = () => {
             if (siteFooter) observer.unobserve(siteFooter);
             window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [isFaqPage]);
 
     if (!isVisible || footerInView || heroInView) return null;
 
@@ -72,3 +72,4 @@ const StickyFooter = () => {
 };
 
 export default StickyFooter;
+

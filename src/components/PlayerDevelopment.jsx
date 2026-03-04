@@ -54,8 +54,11 @@ const PlayerDevelopment = () => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('animate-in');
                         if (entry.target === timelineRef.current) {
-                            // Show all items immediately
-                            setVisibleItems(milestones.map((_, index) => index));
+                            // Defer state update to next frame — avoids blocking
+                            // the scroll thread and causing a visible stutter
+                            requestAnimationFrame(() => {
+                                setVisibleItems(milestones.map((_, index) => index));
+                            });
                         }
                     }
                 });

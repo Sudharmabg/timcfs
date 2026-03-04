@@ -52,7 +52,7 @@ const Header = () => {
         <a href={isHome ? "#testimonials" : "/#testimonials"}>Testimonials</a>
         <a href={isHome ? "#gallery" : "/#gallery"}>Gallery</a>
         <Link to="/faq">FAQ</Link>
-        <a href={isHome ? "#contact" : "/#contact"}>Contact Us</a>
+        <Link to="/contact">Contact Us</Link>
         <button className="register-btn">Book Tryouts</button>
       </nav>
     </header>

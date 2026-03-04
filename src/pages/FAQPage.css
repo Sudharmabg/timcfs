@@ -1,106 +1,101 @@
 /* ── FAQ Page Hero ── */
 .faq-page-hero {
     position: relative;
-    background: linear-gradient(135deg, rgb(0, 40, 94) 0%, rgb(0, 60, 130) 50%, rgb(0, 80, 160) 100%);
-    padding: 120px 20px 80px;
+    height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     overflow: hidden;
 }
 
-.faq-page-hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 700px;
-    margin: 0 auto;
+/* Hero image */
+.faq-page-hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
 }
 
-.faq-page-hero-title {
-    color: white;
-    font-size: 3.5rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 16px;
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-}
-
-
-.faq-page-hero-subtitle {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 1.15rem;
-    line-height: 1.7;
-    margin: 0;
-    font-weight: 400;
-}
-
-/* Decorative background pattern */
-.faq-page-hero-pattern {
+/* Light neutral overlay — lets the image breathe */
+.faq-page-hero-overlay {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1;
-    background-image:
-        radial-gradient(circle at 20% 50%, rgba(152, 197, 233, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 30%, rgba(152, 197, 233, 0.1) 0%, transparent 40%),
-        radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.45) 0%,
+            rgba(0, 0, 0, 0.25) 50%,
+            rgba(0, 0, 0, 0.50) 100%);
 }
 
-/* Animated floating dots */
-.faq-page-hero-pattern::before,
-.faq-page-hero-pattern::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.15;
-    animation: faq-hero-float 6s infinite ease-in-out;
+
+
+.faq-page-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+    padding-top: 70px;
+    /* offset for fixed header */
 }
 
-.faq-page-hero-pattern::before {
-    width: 300px;
-    height: 300px;
-    background: rgb(152, 197, 233);
-    top: -80px;
-    right: -60px;
+.faq-page-hero-title {
+    color: #ffffff;
+    font-size: 4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    margin-bottom: 18px;
+    display: inline-block;
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.6);
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.9),
+        0 4px 16px rgba(0, 0, 0, 0.75),
+        0 8px 40px rgba(0, 0, 0, 0.6);
 }
 
-.faq-page-hero-pattern::after {
-    width: 200px;
-    height: 200px;
-    background: rgb(152, 197, 233);
-    bottom: -50px;
-    left: -40px;
-    animation-delay: -3s;
+.faq-page-hero-subtitle {
+    color: #ffffff;
+    font-size: 1.15rem;
+    line-height: 1.75;
+    margin: 0;
+    font-weight: 600;
+    text-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.95),
+        0 3px 12px rgba(0, 0, 0, 0.7);
 }
-
-@keyframes faq-hero-float {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
-}
-
 
 /* ── Responsive ── */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .faq-page-hero {
-        padding: 100px 16px 60px;
+        height: 420px;
     }
 
     .faq-page-hero-title {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+        letter-spacing: 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-page-hero {
+        height: 380px;
+    }
+
+    .faq-page-hero-title {
+        font-size: 2.2rem;
         letter-spacing: 2px;
     }
 
     .faq-page-hero-subtitle {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 }
