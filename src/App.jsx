@@ -56,8 +56,7 @@ function ScrollToHash() {
     window.scrollTo(0, 0);
     if (lenis) lenis.scrollTo(0, { immediate: true });
 
-    // Signal the Hero component to skip its auto-scroll tween
-    sessionStorage.setItem('hashNav', '1');
+
 
     // Stage 2: Wait generously for:
     //   - React to fully render all homepage components

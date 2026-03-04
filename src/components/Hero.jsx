@@ -86,53 +86,8 @@ const Hero = () => {
       { backgroundColor: 'rgba(0, 0, 0, 0)' },
       { backgroundColor: 'rgba(0, 0, 0, 0.4)', ease: 'none', duration: 10 }, 0);
 
-    // ==========================================================
-    // AUTOPLAY HYBRID LOGIC
-    // Automatically smoothly scrolls the page downward to play the intro like a movie,
-    // but instantly hands control back to the user seamlessly if they try to touch / scroll themselves.
-    // ==========================================================
-    let isInterrupted = false;
-    let autoScrollTween;
-
-    const interrupt = () => {
-      isInterrupted = true;
-      if (autoScrollTween) autoScrollTween.kill();
-      window.removeEventListener('wheel', interrupt);
-      window.removeEventListener('touchstart', interrupt);
-      window.removeEventListener('pointerdown', interrupt);
-      window.removeEventListener('keydown', interrupt);
-    };
-
-    // Listen for any kind of manual user interaction intended to scroll or touch the screen
-    window.addEventListener('wheel', interrupt, { passive: true });
-    window.addEventListener('touchstart', interrupt, { passive: true });
-    window.addEventListener('pointerdown', interrupt, { passive: true });
-    window.addEventListener('keydown', interrupt, { passive: true });
-
-    // Allow components to mount for 500ms before we begin moving the camera automatically
-    gsap.delayedCall(0.5, () => {
-      // Skip auto-scroll if user navigated here via a hash link (e.g., /#team from another page)
-      if (sessionStorage.getItem('hashNav')) {
-        sessionStorage.removeItem('hashNav');
-        return;
-      }
-      // Don't auto-scroll if the user has already scrolled or interrupted during the 500ms delay
-      if (isInterrupted || window.scrollY > 50) return;
-
-      const totalDistance = imgScrollDistance + videoScrollDistance;
-      const autoScrollObj = { y: window.scrollY };
-
-      // Total duration 20 seconds to match the requested relaxed pacing (5s image, 15s video)
-      autoScrollTween = gsap.to(autoScrollObj, {
-        y: totalDistance,
-        duration: 20,
-        ease: 'none',
-        onUpdate: () => window.scrollTo(0, autoScrollObj.y)
-      });
-    });
-
-    // Cleanup listeners upon navigating away
-    return () => interrupt();
+    // The hero animates purely on user scroll (scrub: true handles this).
+    // No auto-scroll — the image stays fully visible until the user scrolls.
 
   });
 
