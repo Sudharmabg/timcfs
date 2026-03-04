@@ -1,51 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './PlayerDevelopment.css';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const MILESTONES = [
+    { ageGroup: "U3-U4", title: "CITY MOVE TO PLAY", position: "bottom" },
+    { ageGroup: "U5-U17", title: "CITY FOOTBALL SCHOOL", position: "top" },
+    { ageGroup: "U8-U14", title: "CITY DEVELOPMENT SQUADS", position: "bottom" },
+    { ageGroup: "U6-U16", title: "CITY SELECT SQUADS", position: "top" },
+    { ageGroup: "U12-U14", title: "CITY TALENTED PLAYER PROGRAM", position: "bottom" },
+    { title: "WHO COULD YOU BECOME?", isEndGoal: true, position: "top" },
+];
 
 const PlayerDevelopment = () => {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const timelineRef = useRef(null);
     const [visibleItems, setVisibleItems] = useState([]);
-
-
-
-    const milestones = [
-        {
-            ageGroup: "U3-U4",
-            title: "CITY MOVE TO PLAY",
-            position: "bottom"
-        },
-        {
-            ageGroup: "U5-U17",
-            title: "CITY FOOTBALL SCHOOL",
-            position: "top"
-        },
-        {
-            ageGroup: "U8-U14",
-            title: "CITY DEVELOPMENT SQUADS",
-            position: "bottom"
-        },
-        {
-            ageGroup: "U6-U16",
-            title: "CITY SELECT SQUADS",
-            position: "top"
-        },
-        {
-            ageGroup: "U12-U14",
-            title: "CITY TALENTED PLAYER PROGRAM",
-            position: "bottom"
-        },
-        {
-            title: "WHO COULD YOU BECOME?",
-            isEndGoal: true,
-            position: "top"
-        }
-    ];
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -57,7 +30,7 @@ const PlayerDevelopment = () => {
                             // Defer state update to next frame — avoids blocking
                             // the scroll thread and causing a visible stutter
                             requestAnimationFrame(() => {
-                                setVisibleItems(milestones.map((_, index) => index));
+                                setVisibleItems(MILESTONES.map((_, index) => index));
                             });
                         }
                     }
@@ -70,7 +43,7 @@ const PlayerDevelopment = () => {
         if (timelineRef.current) observer.observe(timelineRef.current);
 
         return () => observer.disconnect();
-    }, [milestones.length]);
+    }, []);
 
     return (
         <section id="player-development-section" className="player-development-section" ref={sectionRef}>
@@ -90,11 +63,11 @@ const PlayerDevelopment = () => {
                         />
                     </svg>
 
-                    {milestones.map((milestone, index) => {
-                        const leftPosition = index === milestones.length - 1 ? 85 : 5 + index * 20;
+                    {MILESTONES.map((milestone, index) => {
+                        const leftPosition = index === MILESTONES.length - 1 ? 85 : 5 + index * 20;
                         // Heights roughly matching the SVG path points
                         const topPositions = [50, 25, 75, 25, 10];
-                        const topPosition = index === milestones.length - 1 ? 10 : topPositions[index];
+                        const topPosition = index === MILESTONES.length - 1 ? 10 : topPositions[index];
 
                         return (
                             <div

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import StickyFooter from '../components/StickyFooter';
@@ -54,8 +54,8 @@ const GalleryPage = () => {
 
     const openLightbox = (index) => { setLightboxIndex(index); setLightboxOpen(true); };
     const closeLightbox = () => setLightboxOpen(false);
-    const lbNext = () => setLightboxIndex(p => (p + 1) % filtered.length);
-    const lbPrev = () => setLightboxIndex(p => p === 0 ? filtered.length - 1 : p - 1);
+    const lbNext = useCallback(() => setLightboxIndex(p => (p + 1) % filtered.length), [filtered.length]);
+    const lbPrev = useCallback(() => setLightboxIndex(p => p === 0 ? filtered.length - 1 : p - 1), [filtered.length]);
 
     // Keyboard nav in lightbox
     useEffect(() => {
@@ -67,7 +67,7 @@ const GalleryPage = () => {
         };
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
-    }, [lightboxOpen, filtered.length]);
+    }, [lightboxOpen, lbNext, lbPrev]);
 
     return (
         <div className="gallery-page">

@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutUs from './components/AboutUs';
-import Founders from './components/Founders';
+
 import PlayerDevelopment from './components/PlayerDevelopment';
 import Gallery from './components/Gallery';
 import Programs from './components/Programs';
@@ -40,6 +40,62 @@ function HomePage() {
   );
 }
 
+function ScrollToHash() {
+  const { pathname, hash } = useLocation();
+  const lenis = useLenis();
+
+  useEffect(() => {
+    if (!hash) {
+      if (lenis) lenis.scrollTo(0, { immediate: true });
+      else window.scrollTo(0, 0);
+      return;
+    }
+
+    // Stage 1: Immediately jump to absolute top so GSAP pins initialize
+    // from a known position (avoids mid-animation state confusion).
+    window.scrollTo(0, 0);
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+
+    // Signal the Hero component to skip its auto-scroll tween
+    sessionStorage.setItem('hashNav', '1');
+
+    // Stage 2: Wait generously for:
+    //   - React to fully render all homepage components
+    //   - useGSAP hooks to register all ScrollTriggers
+    //   - GSAP to insert pin-spacer divs and calculate offsets
+    // The Hero alone needs ~500ms; we give 900ms to be safe across all devices.
+    const timer = setTimeout(() => {
+      // Force GSAP to recalculate every ScrollTrigger's start/end/pin positions
+      ScrollTrigger.refresh(true);
+
+      // After refresh, wait one paint cycle for spacer heights to settle in DOM
+      requestAnimationFrame(() => {
+        const target = document.querySelector(hash);
+        if (!target) return;
+
+        // getBoundingClientRect gives position relative to viewport.
+        // Adding window.scrollY gives the true absolute document offset.
+        // This is accurate even with GSAP pin spacers applied.
+        const rect = target.getBoundingClientRect();
+        const absoluteTop = rect.top + window.scrollY;
+        const scrollTarget = Math.max(0, absoluteTop - 90); // 90px = header height
+
+        if (lenis) {
+          lenis.scrollTo(scrollTarget, { duration: 1.5 });
+        } else {
+          window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+        }
+      });
+    }, 900);
+
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, hash]);
+
+  return null;
+}
+
+
 function App() {
   const lenisRef = useRef();
 
@@ -67,6 +123,7 @@ function App() {
 
   return (
     <ReactLenis root ref={lenisRef} autoRaf={false} options={{ smoothTouch: true, lerp: 0.08, infinite: false, syncTouch: true }}>
+      <ScrollToHash />
       <TorchlightCursor />
       <Routes>
         <Route path="/" element={<HomePage />} />

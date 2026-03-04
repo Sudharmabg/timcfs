@@ -41,7 +41,7 @@ const TEAM = [
 ];
 
 const Team = () => {
-    const [expandedCard, setExpandedCard] = useState(null);
+    const [expandedCard] = useState(null);
 
     return (
         <section id="team" className="team-section">

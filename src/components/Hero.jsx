@@ -111,6 +111,11 @@ const Hero = () => {
 
     // Allow components to mount for 500ms before we begin moving the camera automatically
     gsap.delayedCall(0.5, () => {
+      // Skip auto-scroll if user navigated here via a hash link (e.g., /#team from another page)
+      if (sessionStorage.getItem('hashNav')) {
+        sessionStorage.removeItem('hashNav');
+        return;
+      }
       // Don't auto-scroll if the user has already scrolled or interrupted during the 500ms delay
       if (isInterrupted || window.scrollY > 50) return;
 

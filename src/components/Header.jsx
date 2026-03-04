@@ -45,12 +45,12 @@ const Header = () => {
         </Link>
       </div>
       <nav className="nav" ref={navRef}>
-        <a href={isHome ? "#about" : "/#about"}>About Us</a>
-        <a href={isHome ? "#player-development-section" : "/#player-development-section"}>Pathways</a>
-        <a href={isHome ? "#programs" : "/#programs"}>Programs</a>
-        <a href={isHome ? "#team" : "/#team"}>Our Team</a>
-        <a href={isHome ? "#testimonials" : "/#testimonials"}>Testimonials</a>
-        <a href={isHome ? "#gallery" : "/#gallery"}>Gallery</a>
+        <Link to="/#about">About Us</Link>
+        <Link to="/#player-development-section">Pathways</Link>
+        <Link to="/#programs">Programs</Link>
+        <Link to="/#team">Our Team</Link>
+        <Link to="/#testimonials">Testimonials</Link>
+        <Link to="/#gallery">Gallery</Link>
         <Link to="/faq">FAQ</Link>
         <Link to="/contact">Contact Us</Link>
         <button className="register-btn">Book Tryouts</button>

@@ -1,19 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Footer.css';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Footer = () => {
-    const footerRef = useRef(null);
-
-
-
     return (
-        <footer className="site-footer" ref={footerRef}>
+        <footer className="site-footer">
             <div className="footer-main">
                 <div className="footer-info">
                     <div className="footer-logo-row">
@@ -29,7 +20,7 @@ const Footer = () => {
 
                 <div className="footer-actions">
                     <a href="mailto:info@tigmancity.com" className="footer-btn footer-btn-mail">Mail Us</a>
-                    <a href="/#contact" className="footer-btn footer-btn-connect">Connect With Us</a>
+                    <Link to="/contact" className="footer-btn footer-btn-connect">Connect With Us</Link>
                 </div>
 
                 <div className="footer-social">
