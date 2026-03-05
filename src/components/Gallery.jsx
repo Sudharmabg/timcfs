@@ -99,6 +99,9 @@ const Gallery = () => {
                                         alt={`Gallery ${imgIndex + 1}`}
                                         draggable={false}
                                     />
+                                    {role === 'active' && (
+                                        <div key={currentIndex} className="gallery-card-shimmer" />
+                                    )}
                                 </div>
                             ))}
                         </div>
