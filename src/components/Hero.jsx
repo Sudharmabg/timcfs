@@ -28,7 +28,7 @@ const Hero = () => {
     const tlImg = gsap.timeline({
       scrollTrigger: {
         trigger: imageWrapperRef.current,
-        start: 'top top+=90',
+        start: 'top top+=94',
         end: `+=${imgScrollDistance}`,
         scrub: true,
         pin: true,
@@ -62,14 +62,15 @@ const Hero = () => {
     // 4 -> 5: PURE IMAGE
 
     // --- Video Phase ---
-    const videoScrollDistance = window.innerHeight * 10 * timeScale; // 5 h
+    // ~700px scroll distance ≈ 7 mouse wheel ticks before releasing to next section
+    const videoScrollDistance = 700;
 
     const tlVid = gsap.timeline({
       scrollTrigger: {
         trigger: videoWrapperRef.current,
-        start: 'top top+=90',
+        start: 'top top+=94',
         end: `+=${videoScrollDistance}`,
-        scrub: true,
+        scrub: 1,          // slight smoothing makes the shrink feel fluid
         pin: true,
         anticipatePin: 1,
         fastScrollEnd: true,
@@ -77,17 +78,18 @@ const Hero = () => {
       }
     });
 
-    // 0 -> 10: Video Frame Shrinks over exactly 10 units
+    // Full-screen → shrinks to 85% card with rounded corners over 7 scrolls
     tlVid.fromTo(videoContainerRef.current,
       { scale: 1, borderRadius: '0px' },
-      { scale: 0.95, borderRadius: '35px', ease: 'none', duration: 10 }, 0);
+      { scale: 0.85, borderRadius: '24px', ease: 'power1.inOut', duration: 10 }, 0);
 
+    // Subtle dark overlay fades in as video shrinks
     tlVid.fromTo(overlayRef.current,
       { backgroundColor: 'rgba(0, 0, 0, 0)' },
-      { backgroundColor: 'rgba(0, 0, 0, 0.4)', ease: 'none', duration: 10 }, 0);
+      { backgroundColor: 'rgba(0, 0, 0, 0.25)', ease: 'none', duration: 10 }, 0);
 
-    // The hero animates purely on user scroll (scrub: true handles this).
-    // No auto-scroll — the image stays fully visible until the user scrolls.
+    // The hero animates purely on user scroll (scrub handles this).
+    // No auto-scroll — image and video stay fully visible until the user scrolls.
 
   });
 
@@ -108,11 +110,14 @@ const Hero = () => {
       </section>
 
       <section className="hero-wrapper" ref={videoWrapperRef}>
-        <div className="hero-video-container" ref={videoContainerRef}>
+        <div className="hero-video-container hero-video-container--vid" ref={videoContainerRef}>
           <video className="hero-video" autoPlay loop muted playsInline>
             <source src="/hero_video.mp4" type="video/mp4" />
           </video>
           <div className="hero-overlay" ref={overlayRef}></div>
+          <div className="hero-vid-logo">
+            <img src="/navlogo.png" alt="Football School Logo" />
+          </div>
         </div>
       </section>
     </>

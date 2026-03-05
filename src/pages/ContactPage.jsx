@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import StickyFooter from '../components/StickyFooter';
-import FloatingCTA from '../components/FloatingCTA';
 import './ContactPage.css';
 
 const ContactPage = () => {
@@ -35,7 +34,7 @@ const ContactPage = () => {
 
             {/* ── Hero ── */}
             <div className="contact-page-hero">
-                <img src="/gallery-4.jpeg" alt="Contact Hero" className="contact-page-hero-img" />
+                <img src="/faq-1.JPG" alt="Contact Hero" className="contact-page-hero-img" />
                 <div className="contact-page-hero-overlay"></div>
                 <div className="contact-page-hero-content">
                     <h1 className="contact-page-hero-title">Contact Us</h1>
@@ -277,7 +276,6 @@ const ContactPage = () => {
 
             <Footer />
             <StickyFooter isFaqPage />
-            <FloatingCTA isFaqPage />
         </div>
     );
 };

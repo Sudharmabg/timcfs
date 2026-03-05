@@ -5,7 +5,6 @@ const TorchlightCursor = () => {
     const [innerPosition, setInnerPosition] = useState({ x: 0, y: 0 });
     const [outerPosition, setOuterPosition] = useState({ x: 0, y: 0 });
     const [isHover, setIsHover] = useState(false);
-    const [isClick, setIsClick] = useState(false);
     const outerRef = useRef({ x: 0, y: 0 });
     const isMoving = useRef(false);
 
@@ -13,13 +12,13 @@ const TorchlightCursor = () => {
         const handleMouseMove = (e) => {
             // Inner dot follows immediately
             setInnerPosition({ x: e.clientX, y: e.clientY });
-            
+
             // Set moving state
             isMoving.current = true;
-            
+
             // Outer circle follows with delay when moving
             const lerp = (start, end, factor) => start + (end - start) * factor;
-            
+
             const updateOuter = () => {
                 if (isMoving.current) {
                     outerRef.current.x = lerp(outerRef.current.x, e.clientX, 0.1);
@@ -31,9 +30,9 @@ const TorchlightCursor = () => {
                 }
                 setOuterPosition({ x: outerRef.current.x, y: outerRef.current.y });
             };
-            
+
             requestAnimationFrame(updateOuter);
-            
+
             // Reset moving state after a delay
             setTimeout(() => {
                 isMoving.current = false;
@@ -51,22 +50,15 @@ const TorchlightCursor = () => {
             setIsHover(isInteractive);
         };
 
-        const handleMouseDown = () => setIsClick(true);
-        const handleMouseUp = () => setIsClick(false);
-
         const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
         if (isDesktop) {
             document.addEventListener('mousemove', handleMouseMove);
             document.addEventListener('mouseover', handleMouseOver);
-            document.addEventListener('mousedown', handleMouseDown);
-            document.addEventListener('mouseup', handleMouseUp);
         }
 
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseover', handleMouseOver);
-            document.removeEventListener('mousedown', handleMouseDown);
-            document.removeEventListener('mouseup', handleMouseUp);
         };
     }, []);
 
@@ -74,16 +66,16 @@ const TorchlightCursor = () => {
         <>
             {/* Inner dot - precise tracking */}
             <div
-                className={`cursor-inner ${isHover ? 'hover' : ''} ${isClick ? 'click' : ''}`}
+                className={`cursor-inner ${isHover ? 'hover' : ''}`}
                 style={{
                     left: innerPosition.x,
                     top: innerPosition.y
                 }}
             />
-            
+
             {/* Outer circle - trailing effect */}
             <div
-                className={`cursor-outer ${isHover ? 'hover' : ''} ${isClick ? 'click' : ''}`}
+                className={`cursor-outer ${isHover ? 'hover' : ''}`}
                 style={{
                     left: outerPosition.x,
                     top: outerPosition.y

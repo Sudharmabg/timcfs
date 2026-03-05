@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Testimonials.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const testimonialsData = [
   {
@@ -30,7 +35,11 @@ const testimonialsData = [
 
 function Testimonials() {
   const [startIndex, setStartIndex] = useState(0);
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const carouselRef = useRef(null);
 
+  // Auto-scroll carousel
   useEffect(() => {
     const interval = setInterval(() => {
       setStartIndex((prev) => (prev + 1) % testimonialsData.length);
@@ -38,13 +47,8 @@ function Testimonials() {
     return () => clearInterval(interval);
   }, []);
 
-  const handlePrev = () => {
-    setStartIndex((prev) => (prev - 1 + testimonialsData.length) % testimonialsData.length);
-  };
-
-  const handleNext = () => {
-    setStartIndex((prev) => (prev + 1) % testimonialsData.length);
-  };
+  const handlePrev = () => setStartIndex((prev) => (prev - 1 + testimonialsData.length) % testimonialsData.length);
+  const handleNext = () => setStartIndex((prev) => (prev + 1) % testimonialsData.length);
 
   const getVisibleCards = () => {
     const cards = [];
@@ -54,12 +58,41 @@ function Testimonials() {
     return cards;
   };
 
+  useGSAP(() => {
+    const tl = gsap.timeline({ paused: true });
+
+    // 1. Title drops in from top
+    tl.fromTo(
+      titleRef.current,
+      { y: -40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }
+    );
+
+    // 2. Entire carousel block fades up
+    tl.fromTo(
+      carouselRef.current,
+      { y: 60, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' },
+      '-=0.2'
+    );
+
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: 'top 80%',
+      end: 'bottom 10%',
+      onEnter: () => tl.play(),
+      onLeave: () => tl.reverse(),
+      onEnterBack: () => tl.play(),
+      onLeaveBack: () => tl.reverse(),
+    });
+  }, { scope: sectionRef });
+
   return (
-    <section id="testimonials" className="testimonials">
+    <section id="testimonials" className="testimonials" ref={sectionRef}>
       <div className="testimonials-container">
-        <h2 className="testimonials-title">PARENT'S TESTIMONIALS</h2>
-        
-        <div className="testimonials-carousel">
+        <h2 className="testimonials-title" ref={titleRef}>PARENT'S TESTIMONIALS</h2>
+
+        <div className="testimonials-carousel" ref={carouselRef}>
           <button className="carousel-arrow carousel-arrow-left" onClick={handlePrev}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M15 18l-6-6 6-6" />
@@ -68,8 +101,8 @@ function Testimonials() {
 
           <div className="testimonials-grid">
             {getVisibleCards().map((testimonial, index) => (
-              <div 
-                key={`${testimonial.id}-${startIndex}-${index}`} 
+              <div
+                key={`${testimonial.id}-${startIndex}-${index}`}
                 className="testimonial-card"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >

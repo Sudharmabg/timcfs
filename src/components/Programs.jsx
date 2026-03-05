@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Programs.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const PROGRAMS = [
     {
@@ -37,14 +42,49 @@ const PROGRAMS = [
 ];
 
 const Programs = () => {
+    const sectionRef = useRef(null);
+    const titleRef = useRef(null);
+    const cardsRef = useRef(null);
+
+    useGSAP(() => {
+        const cards = cardsRef.current.querySelectorAll('.program-card');
+
+        const tl = gsap.timeline({ paused: true });
+
+        // 1. Title drops in from top
+        tl.fromTo(
+            titleRef.current,
+            { y: -40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }
+        );
+
+        // 2. Cards fan up from bottom with stagger
+        tl.fromTo(
+            cards,
+            { y: 80, opacity: 0, scale: 0.95 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.55, ease: 'power3.out', stagger: 0.12 },
+            '-=0.2'
+        );
+
+        ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            end: 'bottom 10%',
+            onEnter: () => tl.play(),
+            onLeave: () => tl.reverse(),
+            onEnterBack: () => tl.play(),
+            onLeaveBack: () => tl.reverse(),
+        });
+    }, { scope: sectionRef });
+
     return (
-        <section id="programs" className="programs-section">
+        <section id="programs" className="programs-section" ref={sectionRef}>
             <div className="programs-container">
                 <div className="programs-header">
-                    <h2 className="programs-title">Our Programmes</h2>
+                    <h2 className="programs-title" ref={titleRef}>Our Programmes</h2>
                 </div>
 
-                <div className="programs-grid">
+                <div className="programs-grid" ref={cardsRef}>
                     {PROGRAMS.map((prog, i) => (
                         <div
                             key={prog.id}

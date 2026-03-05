@@ -24,9 +24,9 @@
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 0px;
+    /* initial hidden state — GSAP animates this in */
     opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+    transform: translateY(-40px);
 }
 
 /* ══════════════════════════════════════
@@ -50,11 +50,11 @@
     flex-direction: column;
     box-shadow: 0 6px 24px rgba(0, 40, 94, 0.25);
     cursor: pointer;
+    /* initial hidden state — GSAP animates this in */
     opacity: 0;
-    transform: translateY(50px) rotateX(10deg);
-    animation: teamCardSlideIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(80px) scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .team-card:hover {
@@ -106,9 +106,6 @@
     gap: 8px;
     flex-grow: 1;
     position: relative;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
 }
 
 .team-card-row {
@@ -175,9 +172,6 @@
     flex-wrap: wrap;
     gap: 4px;
     margin-top: 6px;
-    transform: translateY(10px);
-    opacity: 0;
-    animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
 }
 
 .team-cert-badge {
@@ -208,6 +202,7 @@
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -219,6 +214,7 @@
         opacity: 0;
         transform: translateY(50px) rotateX(10deg);
     }
+
     to {
         opacity: 1;
         transform: translateY(0) rotateX(0deg);

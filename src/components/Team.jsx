@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Team.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const TEAM = [
     {
@@ -41,18 +46,51 @@ const TEAM = [
 ];
 
 const Team = () => {
-    const [expandedCard] = useState(null);
+    const sectionRef = useRef(null);
+    const titleRef = useRef(null);
+    const gridRef = useRef(null);
+
+    useGSAP(() => {
+        const cards = gridRef.current.querySelectorAll('.team-card');
+
+        const tl = gsap.timeline({ paused: true });
+
+        // 1. Title slides down from top
+        tl.fromTo(
+            titleRef.current,
+            { y: -40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }
+        );
+
+        // 2. Cards rise up from bottom with stagger
+        tl.fromTo(
+            cards,
+            { y: 80, opacity: 0, scale: 0.95 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: 'power3.out', stagger: 0.12 },
+            '-=0.2'
+        );
+
+        ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            end: 'bottom 10%',
+            onEnter: () => tl.play(),
+            onLeave: () => tl.reverse(),
+            onEnterBack: () => tl.play(),
+            onLeaveBack: () => tl.reverse(),
+        });
+    }, { scope: sectionRef });
 
     return (
-        <section id="team" className="team-section">
+        <section id="team" className="team-section" ref={sectionRef}>
             <div className="team-container">
-                <h2 className="team-title">Our Team</h2>
+                <h2 className="team-title" ref={titleRef}>Our Team</h2>
 
-                <div className="team-grid">
+                <div className="team-grid" ref={gridRef}>
                     {TEAM.map((member, index) => (
                         <div
                             key={member.id}
-                            className={`team-card ${expandedCard === member.id ? 'expanded' : ''}`}
+                            className="team-card"
                             style={{ animationDelay: `${index * 0.15}s` }}
                         >
                             {/* Photo */}

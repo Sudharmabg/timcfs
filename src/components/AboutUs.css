@@ -14,8 +14,31 @@
   align-items: flex-start;
 }
 
+/* ── Initial states for scroll-driven animations ── */
 .about-image {
   flex: 1;
+  opacity: 0;
+  /* GSAP will animate this in */
+  transform: translateX(-120px);
+}
+
+.mask-word {
+  display: inline-block;
+  opacity: 0;
+  /* GSAP will cascade these up */
+  transform: translateY(110%);
+}
+
+.about-content p {
+  opacity: 0;
+  /* GSAP will fade these up */
+  transform: translateY(30px);
+}
+
+.read-more-btn {
+  opacity: 0;
+  /* GSAP pops this in last */
+  transform: translateY(20px) scale(0.92);
 }
 
 .about-image img {

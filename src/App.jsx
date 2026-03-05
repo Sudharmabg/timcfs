@@ -43,41 +43,57 @@ function HomePage() {
 function ScrollToHash() {
   const { pathname, hash } = useLocation();
   const lenis = useLenis();
+  const prevPathnameRef = useRef(null);
 
   useEffect(() => {
+    const prevPathname = prevPathnameRef.current;
+    prevPathnameRef.current = pathname;
+
     if (!hash) {
+      // Only scroll to top when navigating to a non-hash page
       if (lenis) lenis.scrollTo(0, { immediate: true });
       else window.scrollTo(0, 0);
       return;
     }
 
-    // Stage 1: Immediately jump to absolute top so GSAP pins initialize
-    // from a known position (avoids mid-animation state confusion).
+    const samePageNav = prevPathname === pathname; // already on '/', clicking another section
+
+    if (samePageNav) {
+      // ── Same-page navigation ──────────────────────────────────
+      // GSAP is already initialized, all pin spacers exist.
+      // Just scroll directly to the element — no reset needed.
+      requestAnimationFrame(() => {
+        const target = document.querySelector(hash);
+        if (!target) return;
+        const rect = target.getBoundingClientRect();
+        const absoluteTop = rect.top + window.scrollY;
+        const scrollTarget = Math.max(0, absoluteTop - 90);
+        if (lenis) {
+          lenis.scrollTo(scrollTarget, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+        }
+      });
+      return;
+    }
+
+    // ── Cross-page navigation (from /faq, /contact, /gallery → /#section) ──
+    // Stage 1: Reset to top so GSAP pin spacers initialize from position 0.
     window.scrollTo(0, 0);
     if (lenis) lenis.scrollTo(0, { immediate: true });
 
-
-
-    // Stage 2: Wait generously for:
-    //   - React to fully render all homepage components
-    //   - useGSAP hooks to register all ScrollTriggers
-    //   - GSAP to insert pin-spacer divs and calculate offsets
-    // The Hero alone needs ~500ms; we give 900ms to be safe across all devices.
+    // Stage 2: Wait for React + GSAP to mount and compute all pin spacer heights,
+    // then ScrollTrigger.refresh() to finalize positions, then scroll.
     const timer = setTimeout(() => {
-      // Force GSAP to recalculate every ScrollTrigger's start/end/pin positions
       ScrollTrigger.refresh(true);
 
-      // After refresh, wait one paint cycle for spacer heights to settle in DOM
       requestAnimationFrame(() => {
         const target = document.querySelector(hash);
         if (!target) return;
 
-        // getBoundingClientRect gives position relative to viewport.
-        // Adding window.scrollY gives the true absolute document offset.
-        // This is accurate even with GSAP pin spacers applied.
         const rect = target.getBoundingClientRect();
         const absoluteTop = rect.top + window.scrollY;
-        const scrollTarget = Math.max(0, absoluteTop - 90); // 90px = header height
+        const scrollTarget = Math.max(0, absoluteTop - 90);
 
         if (lenis) {
           lenis.scrollTo(scrollTarget, { duration: 1.5 });
