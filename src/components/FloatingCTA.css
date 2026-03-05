@@ -42,15 +42,25 @@
     flex-shrink: 0;
     position: relative;
     z-index: 2;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, font-size 0.3s ease;
     font-size: 48px;
+    line-height: 1;
     animation: footballBounce 1.5s ease-in-out infinite;
 }
 
+.floating-cta.expanded .cta-icon {
+    animation: none;
+    transform: translateY(0);
+    font-size: 28px;
+}
+
 @keyframes footballBounce {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-8px);
     }
@@ -68,6 +78,8 @@
     /* Hidden width initially */
     opacity: 0;
     padding-left: 0;
+    display: flex;
+    align-items: center;
     transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
 }
 

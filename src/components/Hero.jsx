@@ -1,123 +1,173 @@
-import React, { useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './Hero.css';
 
-gsap.registerPlugin(ScrollTrigger);
+const slides = [
+  { type: 'image', src: '/hero-img.jpg', duration: 5000 },
+  { type: 'video', src: '/hero_video.mp4', duration: 15000 },
+];
 
 const Hero = () => {
-  const imageWrapperRef = useRef(null);
-  const imageContainerRef = useRef(null);
-  const imageOverlayRef = useRef(null);
-  const textsRef = useRef(null);
+  const [current, setCurrent] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const rafRef = useRef(null);
+  const startRef = useRef(null);
+  const videoRef = useRef(null);
 
-  const videoWrapperRef = useRef(null);
-  const videoContainerRef = useRef(null);
-  const overlayRef = useRef(null);
+  // ── Navigation ────────────────────────────────────────────────
+  const goTo = useCallback((idx) => {
+    setCurrent(idx);
+    setProgress(0);
+  }, []);
 
-  useGSAP(() => {
-    // We map the requested 15 "seconds" into a reasonable scroll distance ratio.
-    // 5 "seconds" for Image = 2.5 window heights (0.5 height per second)
-    // 10 "seconds" for Video = 5 window heights (0.5 height per second)
-    const timeScale = 0.5;
+  const goPrev = useCallback(() => {
+    setCurrent((c) => (c - 1 + slides.length) % slides.length);
+    setProgress(0);
+  }, []);
 
-    // --- Image Phase ---
-    const imgScrollDistance = window.innerHeight * 5 * timeScale; // 2.5 h
+  const goNext = useCallback(() => {
+    setCurrent((c) => (c + 1) % slides.length);
+    setProgress(0);
+  }, []);
 
-    const tlImg = gsap.timeline({
-      scrollTrigger: {
-        trigger: imageWrapperRef.current,
-        start: 'top top+=94',
-        end: `+=${imgScrollDistance}`,
-        scrub: true,
-        pin: true,
-        anticipatePin: 1,
-        fastScrollEnd: true,
-        invalidateOnRefresh: true,
+  // ── Auto-advance with rAF progress ───────────────────────────
+  useEffect(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    startRef.current = null;
+
+    const tick = (timestamp) => {
+      if (!startRef.current) startRef.current = timestamp;
+      const elapsed = timestamp - startRef.current;
+      const currentDuration = slides[current].duration;
+      const pct = Math.min((elapsed / currentDuration) * 100, 100);
+      setProgress(pct);
+
+      if (pct < 100) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        // Auto-advance
+        setCurrent((c) => (c + 1) % slides.length);
+        setProgress(0);
       }
-    });
+    };
 
-    // Total Image Timeline Duration = 5 units
-    // 0 -> 5: Zoom image backwards gently over the entire 5 units
-    tlImg.to(imageContainerRef.current,
-      { scale: 0.95, borderRadius: '35px', ease: 'none', duration: 5 }, 0);
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [current]);
 
-    // 0 -> 2: PURE IMAGE
-
-    // 2 -> 2.5: Text and Overlay smoothly fade in
-    tlImg.to(imageOverlayRef.current,
-      { backgroundColor: 'rgba(0, 0, 0, 0.65)', duration: 0.5, ease: 'power1.inOut' }, 2);
-    tlImg.to(textsRef.current,
-      { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'power2.out' }, 2);
-
-    // 2.5 -> 3.5: Text holds visibly (combining fade + hold = 2 units total of text action)
-
-    // 3.5 -> 4: Text and overlay smoothly fade out
-    tlImg.to(textsRef.current,
-      { opacity: 0, y: -20, scale: 0.95, duration: 0.5, ease: 'power2.in' }, 3.5);
-    tlImg.to(imageOverlayRef.current,
-      { backgroundColor: 'rgba(0, 0, 0, 0)', duration: 0.5, ease: 'power1.inOut' }, 3.5);
-
-    // 4 -> 5: PURE IMAGE
-
-    // --- Video Phase ---
-    // ~700px scroll distance ≈ 7 mouse wheel ticks before releasing to next section
-    const videoScrollDistance = 700;
-
-    const tlVid = gsap.timeline({
-      scrollTrigger: {
-        trigger: videoWrapperRef.current,
-        start: 'top top+=94',
-        end: `+=${videoScrollDistance}`,
-        scrub: 1,          // slight smoothing makes the shrink feel fluid
-        pin: true,
-        anticipatePin: 1,
-        fastScrollEnd: true,
-        invalidateOnRefresh: true,
+  // ── Play/pause video based on active slide ────────────────────
+  useEffect(() => {
+    if (videoRef.current) {
+      if (current === 1) {
+        videoRef.current.play().catch(() => { });
+      } else {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
       }
-    });
+    }
+  }, [current]);
 
-    // Full-screen → shrinks to 85% card with rounded corners over 7 scrolls
-    tlVid.fromTo(videoContainerRef.current,
-      { scale: 1, borderRadius: '0px' },
-      { scale: 0.85, borderRadius: '24px', ease: 'power1.inOut', duration: 10 }, 0);
-
-    // Subtle dark overlay fades in as video shrinks
-    tlVid.fromTo(overlayRef.current,
-      { backgroundColor: 'rgba(0, 0, 0, 0)' },
-      { backgroundColor: 'rgba(0, 0, 0, 0.25)', ease: 'none', duration: 10 }, 0);
-
-    // The hero animates purely on user scroll (scrub handles this).
-    // No auto-scroll — image and video stay fully visible until the user scrolls.
-
-  });
+  // ── Keyboard navigation ───────────────────────────────────────
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'ArrowLeft') goPrev();
+      if (e.key === 'ArrowRight') goNext();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [goPrev, goNext]);
 
   return (
-    <>
-      <section className="hero-wrapper" ref={imageWrapperRef}>
-        <div className="hero-video-container" ref={imageContainerRef}>
-          <img className="hero-video" src="/hero-img.jpg" alt="Train the Manchester City Way" loading="eager" />
-          <div className="hero-overlay" ref={imageOverlayRef}></div>
+    <section className="hero-carousel" aria-label="Hero carousel">
 
-          <div className="hero-texts" ref={textsRef}>
-            <h1 className="hero-text">Train the Manchester City Way</h1>
-            <p className="hero-subtext">
-              Built on the philosophy and training methodology of the Manchester City Academy, Techno India Manchester City Football School offers boys and girls aged 6–17 the opportunity to develop their football skills, stay active, build friendships, and enjoy the game in a positive, supportive learning environment under the guidance of fully qualified Manchester City–trained coaches.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* ── Slide 1: Image ─────────────────────────────────── */}
+      <div className={`hero-slide ${current === 0 ? 'hero-slide--active' : ''}`}>
+        <img
+          className="hero-slide-media"
+          src="/hero-img.jpg"
+          alt="Train the Manchester City Way"
+          loading="eager"
+        />
+        {/* Gradient overlay for text readability (delayed) */}
+        <div className="hero-slide-overlay hero-slide-overlay--delayed" />
 
-      <section className="hero-wrapper" ref={videoWrapperRef}>
-        <div className="hero-video-container hero-video-container--vid" ref={videoContainerRef}>
-          <video className="hero-video" autoPlay loop muted playsInline>
-            <source src="/hero_video.mp4" type="video/mp4" />
-          </video>
-          <div className="hero-overlay" ref={overlayRef}></div>
+        {/* Text content (delayed) */}
+        <div className="hero-slide-content hero-slide-content--delayed">
+          <span className="hero-eyebrow">Manchester City Football School</span>
+          <h1 className="hero-heading">Train the<br />Manchester City Way</h1>
+          <p className="hero-subtext">
+            Built on the philosophy and training methodology of the Manchester City
+            Academy, Techno India Manchester City Football School offers boys and girls
+            aged 6–17 the opportunity to develop their football skills, stay active,
+            build friendships, and enjoy the game in a positive, supportive learning
+            environment under the guidance of fully qualified Manchester City–trained coaches.
+          </p>
         </div>
-      </section>
-    </>
+      </div>
+
+      {/* ── Slide 2: Video ─────────────────────────────────── */}
+      <div className={`hero-slide ${current === 1 ? 'hero-slide--active' : ''}`}>
+        <video
+          ref={videoRef}
+          className="hero-slide-media"
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src="/hero_video.mp4" type="video/mp4" />
+        </video>
+        {/* Light overlay so the video content is prominent */}
+        <div className="hero-slide-overlay hero-slide-overlay--video" />
+      </div>
+
+      {/* ── Arrow Navigation ────────────────────────────────── */}
+      <button
+        className="hero-arrow hero-arrow--prev"
+        onClick={goPrev}
+        aria-label="Previous slide"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+
+      <button
+        className="hero-arrow hero-arrow--next"
+        onClick={goNext}
+        aria-label="Next slide"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+
+      {/* ── Progress Bars ────────────────────────────────────── */}
+      <div className="hero-progress" role="tablist" aria-label="Slide progress">
+        {slides.map((_, idx) => (
+          <button
+            key={idx}
+            role="tab"
+            aria-selected={idx === current}
+            aria-label={`Slide ${idx + 1}`}
+            className="hero-progress-track"
+            onClick={() => goTo(idx)}
+          >
+            <span
+              className="hero-progress-fill"
+              style={{
+                width:
+                  idx < current ? '100%'
+                    : idx === current ? `${progress}%`
+                      : '0%',
+              }}
+            />
+          </button>
+        ))}
+      </div>
+
+    </section>
   );
 };
 

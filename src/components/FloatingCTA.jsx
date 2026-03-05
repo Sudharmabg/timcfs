@@ -14,8 +14,8 @@ const FloatingCTA = ({ isFaqPage = false }) => {
                 // On FAQ page, show after a small scroll (past the header)
                 setIsVisible(window.scrollY > 200);
             } else {
-                // On homepage, show after scrolling past the very long hero
-                setIsVisible(window.scrollY > window.innerHeight * 8.5);
+                // On homepage, show after scrolling past the hero
+                setIsVisible(window.scrollY > window.innerHeight * 0.8);
             }
         };
 
