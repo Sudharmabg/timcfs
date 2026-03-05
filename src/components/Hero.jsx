@@ -115,9 +115,6 @@ const Hero = () => {
             <source src="/hero_video.mp4" type="video/mp4" />
           </video>
           <div className="hero-overlay" ref={overlayRef}></div>
-          <div className="hero-vid-logo">
-            <img src="/navlogo.png" alt="Football School Logo" />
-          </div>
         </div>
       </section>
     </>
