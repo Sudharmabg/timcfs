@@ -50,6 +50,7 @@ const Header = () => {
         <Link to="/#team">Our Team</Link>
         <Link to="/#testimonials">Testimonials</Link>
         <Link to="/#gallery">Gallery</Link>
+        <Link to="/#social-media">Latest Updates</Link>
         <Link to="/faq">FAQ</Link>
         <Link to="/contact">Contact Us</Link>
         <button className="register-btn">Book Tryouts</button>

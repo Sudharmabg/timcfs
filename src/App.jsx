@@ -12,6 +12,7 @@ import Gallery from './components/Gallery';
 import Programs from './components/Programs';
 import Team from './components/Team';
 import Testimonials from './components/Testimonials';
+import SocialUpdates from './components/SocialUpdates';
 import Footer from './components/Footer';
 import StickyFooter from './components/StickyFooter';
 import FloatingCTA from './components/FloatingCTA';
@@ -31,6 +32,7 @@ function HomePage() {
         <Programs />
         <Team />
         <Gallery />
+        <SocialUpdates />
         <Testimonials />
       </div>
       <Footer />

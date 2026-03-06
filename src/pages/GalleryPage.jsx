@@ -37,7 +37,6 @@ const GalleryPage = () => {
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
-
     const filtered = activeCategory === 'all'
         ? GALLERY_ITEMS
         : GALLERY_ITEMS.filter(img => img.category === activeCategory);
@@ -75,10 +74,17 @@ const GalleryPage = () => {
 
             {/* ── Hero ── */}
             <div className="gallery-page-hero">
-                <img src="/gallery-2.jpeg" alt="Gallery Hero" className="gallery-page-hero-img" />
+                <img src="/gallery-2.jpeg" alt="Gallery Hero" className="gallery-page-hero-img ken-burns" />
                 <div className="gallery-page-hero-overlay"></div>
                 <div className="gallery-page-hero-content">
-                    <h1 className="gallery-page-hero-title">Gallery</h1>
+                    <h1 className="gallery-page-hero-title" style={{ fontSize: '3.2rem' }}>
+                        <span className="sparkle-text">
+                            Gallery
+                            <span className="sparkle s1">✨</span>
+                            <span className="sparkle s2">✨</span>
+                            <span className="sparkle s3">✨</span>
+                        </span>
+                    </h1>
                     <p className="gallery-page-hero-subtitle">
                         Explore moments from our Manchester City Football School —
                         training sessions, match days, and special events.
