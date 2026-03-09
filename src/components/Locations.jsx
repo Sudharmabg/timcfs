@@ -38,8 +38,8 @@ const Locations = () => {
 
     const scroll = (direction) => {
         if (cardsRef.current) {
-            const scrollAmount = window.innerWidth * 0.8;
-            cardsRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+            const scrollStep = window.innerWidth - 20;
+            cardsRef.current.scrollBy({ left: direction === 'left' ? -scrollStep : scrollStep, behavior: 'smooth' });
         }
     };
 
@@ -52,10 +52,10 @@ const Locations = () => {
                 const el = cardsRef.current;
                 const maxScroll = el.scrollWidth - el.clientWidth;
 
-                if (el.scrollLeft >= maxScroll - 20) {
+                if (el.scrollLeft >= maxScroll - 50) {
                     el.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
-                    el.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' });
+                    el.scrollBy({ left: window.innerWidth - 20, behavior: 'smooth' });
                 }
             }
         };

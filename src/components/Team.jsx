@@ -62,8 +62,8 @@ const Team = () => {
 
     const scroll = (direction) => {
         if (gridRef.current) {
-            const scrollAmount = window.innerWidth * 0.8;
-            gridRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+            const scrollStep = window.innerWidth - 20;
+            gridRef.current.scrollBy({ left: direction === 'left' ? -scrollStep : scrollStep, behavior: 'smooth' });
         }
     };
 
@@ -75,11 +75,12 @@ const Team = () => {
             if (gridRef.current) {
                 const el = gridRef.current;
                 const maxScroll = el.scrollWidth - el.clientWidth;
+                const scrollStep = window.innerWidth - 20;
 
-                if (el.scrollLeft >= maxScroll - 20) {
+                if (el.scrollLeft >= maxScroll - 50) {
                     el.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
-                    el.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' });
+                    el.scrollBy({ left: scrollStep, behavior: 'smooth' });
                 }
             }
         };

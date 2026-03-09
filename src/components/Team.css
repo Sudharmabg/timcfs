@@ -237,7 +237,7 @@
 
 @media (max-width: 520px) {
     .team-section {
-        padding: 50px 14px 60px;
+        padding: 50px 20px 60px;
     }
 
     .team-title {
@@ -281,12 +281,12 @@
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        gap: 12px;
-        padding-bottom: 20px;
-        margin-left: -14px;
-        margin-right: -14px;
-        padding-left: 14px;
-        padding-right: 14px;
+        gap: 20px;
+        padding-bottom: 30px;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
     }
@@ -296,8 +296,9 @@
     }
 
     .team-card {
-        flex: 0 0 calc(100vw - 28px);
+        flex: 0 0 calc(100vw - 40px);
         scroll-snap-align: center;
+        scroll-snap-stop: always;
     }
 }
 

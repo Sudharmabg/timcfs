@@ -252,7 +252,7 @@
 
 @media (max-width: 600px) {
     .programs-section {
-        padding: 60px 14px;
+        padding: 60px 20px;
     }
 
     .programs-card {
@@ -300,12 +300,12 @@
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        gap: 16px;
-        padding-bottom: 10px;
-        margin-left: -16px;
-        margin-right: -16px;
-        padding-left: 16px;
-        padding-right: 16px;
+        gap: 20px;
+        padding-bottom: 30px;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
     }
@@ -315,8 +315,9 @@
     }
 
     .program-card {
-        flex: 0 0 calc(100vw - 32px);
+        flex: 0 0 calc(100vw - 40px);
         scroll-snap-align: center;
+        scroll-snap-stop: always;
     }
 
     .program-card-body {
