@@ -613,3 +613,9 @@
         font-size: 1.8rem;
     }
 }
+
+@media (min-width: 1440px) {
+    .gallery-section {
+        padding: 100px 5vw;
+    }
+}

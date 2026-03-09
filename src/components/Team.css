@@ -29,6 +29,10 @@
     transform: translateY(-40px);
 }
 
+.mobile-nav-arrows {
+    display: none;
+}
+
 /* ══════════════════════════════════════
    4-COLUMN CARD GRID
    ══════════════════════════════════════ */
@@ -241,8 +245,64 @@
         margin-bottom: 24px;
     }
 
-    .team-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .team-header {
+        position: relative;
+    }
+
+    .mobile-nav-arrows {
+        display: flex;
+        justify-content: flex-end;
         gap: 12px;
+        margin-bottom: 20px;
+        margin-top: -15px;
+    }
+
+    .mobile-nav-arrow {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(0, 40, 94, 0.1);
+        border: 1px solid rgba(0, 40, 94, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgb(0, 40, 94);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .mobile-nav-arrow:active {
+        background: rgb(0, 40, 94);
+        color: white;
+        transform: scale(0.95);
+    }
+
+    .team-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 12px;
+        padding-bottom: 20px;
+        margin-left: -14px;
+        margin-right: -14px;
+        padding-left: 14px;
+        padding-right: 14px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .team-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .team-card {
+        flex: 0 0 calc(85% - 24px);
+        scroll-snap-align: center;
+    }
+}
+
+@media (min-width: 1440px) {
+    .team-section {
+        padding: 100px 5vw;
     }
 }

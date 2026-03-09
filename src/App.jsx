@@ -13,6 +13,7 @@ import Programs from './components/Programs';
 import Team from './components/Team';
 import Testimonials from './components/Testimonials';
 import SocialUpdates from './components/SocialUpdates';
+import Locations from './components/Locations';
 import Footer from './components/Footer';
 import StickyFooter from './components/StickyFooter';
 import FloatingCTA from './components/FloatingCTA';
@@ -34,6 +35,7 @@ function HomePage() {
         <Gallery />
         <SocialUpdates />
         <Testimonials />
+        <Locations />
       </div>
       <Footer />
       <FloatingCTA />

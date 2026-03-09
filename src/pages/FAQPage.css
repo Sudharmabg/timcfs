@@ -99,3 +99,9 @@
         font-size: 0.95rem;
     }
 }
+
+@media (min-width: 1440px) {
+    .faq-page-hero {
+        height: 600px;
+    }
+}

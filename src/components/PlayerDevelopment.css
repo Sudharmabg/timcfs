@@ -196,7 +196,12 @@
 
 @media (max-width: 900px) {
     .player-development-section {
-        padding: 40px 10px;
+        padding: 60px 20px;
+    }
+
+    .pd-title {
+        font-size: 1.9rem;
+        margin-bottom: 3rem;
     }
 
     .timeline-svg {
@@ -208,36 +213,67 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 40px;
+        gap: 50px;
+        position: relative;
+        padding-top: 10px;
+    }
+
+    /* Vertical line for mobile */
+    .timeline-container::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        bottom: 80px;
+        /* Stop before the last orange box */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        background-color: rgb(152, 197, 233);
+        z-index: 0;
+        border-radius: 4px;
     }
 
     .timeline-item {
-        position: relative;
+        position: relative !important;
         top: auto !important;
         left: auto !important;
         transform: none !important;
         width: 100%;
         align-items: center;
-        max-width: 300px;
+        max-width: 320px;
+        z-index: 2;
     }
 
     .timeline-item.end-goal {
-        transform: none;
-        margin-top: 0;
+        transform: none !important;
+        margin-top: 10px;
+    }
+
+    .timeline-item.end-goal .timeline-content {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
     .timeline-dot-wrapper {
         position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
         margin-bottom: 15px;
+        z-index: 3;
     }
 
     .timeline-item.top .timeline-content,
     .timeline-item.bottom .timeline-content {
         position: relative;
-        bottom: auto;
-        top: auto;
+        bottom: auto !important;
+        top: auto !important;
+        width: 100%;
+        box-shadow: 0 4px 20px rgba(0, 40, 94, 0.15);
+    }
+}
+
+@media (min-width: 1440px) {
+    .player-development-section {
+        padding: 100px 5vw;
     }
 }

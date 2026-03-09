@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './Hero.css';
 
 const slides = [
-  { type: 'image', src: '/hero-img.jpg', duration: 5000 },
   { type: 'video', src: '/hero_video.mp4', duration: 15000 },
+  { type: 'image', src: '/hero-img.jpg', duration: 5000 },
 ];
 
 const Hero = () => {
@@ -59,11 +59,11 @@ const Hero = () => {
   // ── Play/pause video based on active slide ────────────────────
   useEffect(() => {
     if (videoRef.current) {
-      if (current === 1) {
+      if (current === 0) {
         videoRef.current.play().catch(() => { });
+        videoRef.current.currentTime = 0;
       } else {
         videoRef.current.pause();
-        videoRef.current.currentTime = 0;
       }
     }
   }, [current]);
@@ -81,8 +81,24 @@ const Hero = () => {
   return (
     <section className="hero-carousel" aria-label="Hero carousel">
 
-      {/* ── Slide 1: Image ─────────────────────────────────── */}
+      {/* ── Slide 1: Video ─────────────────────────────────── */}
       <div className={`hero-slide ${current === 0 ? 'hero-slide--active' : ''}`}>
+        <video
+          ref={videoRef}
+          className="hero-slide-media"
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src="/hero_video.mp4" type="video/mp4" />
+        </video>
+        {/* Light overlay so the video content is prominent */}
+        <div className="hero-slide-overlay hero-slide-overlay--video" />
+      </div>
+
+      {/* ── Slide 2: Image ─────────────────────────────────── */}
+      <div className={`hero-slide ${current === 1 ? 'hero-slide--active' : ''}`}>
         <img
           className="hero-slide-media"
           src="/hero-img.jpg"
@@ -104,22 +120,6 @@ const Hero = () => {
             environment under the guidance of fully qualified Manchester City–trained coaches.
           </p>
         </div>
-      </div>
-
-      {/* ── Slide 2: Video ─────────────────────────────────── */}
-      <div className={`hero-slide ${current === 1 ? 'hero-slide--active' : ''}`}>
-        <video
-          ref={videoRef}
-          className="hero-slide-media"
-          loop
-          muted
-          playsInline
-          preload="auto"
-        >
-          <source src="/hero_video.mp4" type="video/mp4" />
-        </video>
-        {/* Light overlay so the video content is prominent */}
-        <div className="hero-slide-overlay hero-slide-overlay--video" />
       </div>
 
       {/* ── Arrow Navigation ────────────────────────────────── */}

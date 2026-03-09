@@ -209,3 +209,9 @@
         text-align: center;
     }
 }
+
+@media (min-width: 1440px) {
+    .site-footer {
+        padding: 0 5vw;
+    }
+}

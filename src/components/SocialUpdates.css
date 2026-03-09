@@ -34,43 +34,6 @@
     transform: translateY(-40px);
 }
 
-.social-carousel-nav {
-    display: flex;
-    gap: 12px;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.social-nav-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #fff;
-    border: 1px solid rgba(0, 40, 94, 0.15);
-    color: rgb(0, 40, 94);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: all 0.2s ease;
-}
-
-.social-nav-btn:hover {
-    background: rgb(0, 40, 94);
-    color: #fff;
-    border-color: rgb(0, 40, 94);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(0, 40, 94, 0.2);
-}
-
-.social-nav-btn:active {
-    transform: translateY(0);
-}
-
 .social-carousel-track-wrapper {
     position: relative;
     width: 100%;
@@ -275,10 +238,6 @@
         font-size: 1.9rem;
     }
 
-    .social-carousel-nav {
-        display: none;
-    }
-
     .social-carousel-card {
         flex: 0 0 calc(50% - 10px);
         min-width: 240px;
@@ -290,5 +249,11 @@
         flex: 0 0 85%;
         /* show preview of next card */
         min-width: 220px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .social-carousel-section {
+        padding: 100px 5vw;
     }
 }

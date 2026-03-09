@@ -82,29 +82,11 @@ const SocialUpdates = () => {
         };
     }, []);
 
-    const scrollSocialCarousel = (direction) => {
-        if (socialCarouselRef.current) {
-            const scrollAmount = 350;
-            socialCarouselRef.current.scrollBy({
-                left: direction === 'left' ? -scrollAmount : scrollAmount,
-                behavior: 'smooth'
-            });
-        }
-    };
-
     return (
         <div className="social-carousel-section" id="social-media" ref={sectionRef}>
             <div className="social-carousel-container">
                 <div className="social-carousel-header">
                     <h2 className="social-carousel-title" ref={titleRef}>Social Media</h2>
-                    <div className="social-carousel-nav">
-                        <button className="social-nav-btn" onClick={() => scrollSocialCarousel('left')} aria-label="Scroll Left">
-                            <i className="fa-solid fa-chevron-left"></i>
-                        </button>
-                        <button className="social-nav-btn" onClick={() => scrollSocialCarousel('right')} aria-label="Scroll Right">
-                            <i className="fa-solid fa-chevron-right"></i>
-                        </button>
-                    </div>
                 </div>
 
                 <div className="social-carousel-track-wrapper">

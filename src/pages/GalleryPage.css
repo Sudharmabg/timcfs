@@ -644,3 +644,13 @@
         grid-row: span 1;
     }
 }
+
+@media (min-width: 1440px) {
+    .gallery-page-container {
+        padding: 60px 5vw 100px;
+    }
+
+    .gallery-page-hero {
+        height: 600px;
+    }
+}

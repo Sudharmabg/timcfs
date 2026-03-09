@@ -50,6 +50,13 @@ const Team = () => {
     const titleRef = useRef(null);
     const gridRef = useRef(null);
 
+    const scroll = (direction) => {
+        if (gridRef.current) {
+            const scrollAmount = window.innerWidth * 0.8;
+            gridRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+        }
+    };
+
     useGSAP(() => {
         const cards = gridRef.current.querySelectorAll('.team-card');
 
@@ -84,7 +91,21 @@ const Team = () => {
     return (
         <section id="team" className="team-section" ref={sectionRef}>
             <div className="team-container">
-                <h2 className="team-title" ref={titleRef}>Our Team</h2>
+                <div className="team-header">
+                    <h2 className="team-title" ref={titleRef}>Our Team</h2>
+                    <div className="mobile-nav-arrows">
+                        <button className="mobile-nav-arrow" onClick={() => scroll('left')}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M15 18l-6-6 6-6" />
+                            </svg>
+                        </button>
+                        <button className="mobile-nav-arrow" onClick={() => scroll('right')}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M9 18l6-6-6-6" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
                 <div className="team-grid" ref={gridRef}>
                     {TEAM.map((member, index) => (

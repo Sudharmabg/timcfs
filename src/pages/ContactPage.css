@@ -596,3 +596,9 @@
         font-size: 1.7rem;
     }
 }
+
+@media (min-width: 1440px) {
+    .contact-main {
+        padding: 80px 5vw 100px;
+    }
+}

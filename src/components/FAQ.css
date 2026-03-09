@@ -162,3 +162,9 @@
         font-size: 0.95rem;
     }
 }
+
+@media (min-width: 1440px) {
+    .faq-section {
+        padding: 100px 5vw;
+    }
+}

@@ -90,43 +90,45 @@ function Testimonials() {
   return (
     <section id="testimonials" className="testimonials" ref={sectionRef}>
       <div className="testimonials-container">
-        <h2 className="testimonials-title" ref={titleRef}>PARENT'S TESTIMONIALS</h2>
+        <div className="testimonials-card">
+          <h2 className="testimonials-title" ref={titleRef}>PARENT'S TESTIMONIALS</h2>
 
-        <div className="testimonials-carousel" ref={carouselRef}>
-          <button className="carousel-arrow carousel-arrow-left" onClick={handlePrev}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
+          <div className="testimonials-carousel" ref={carouselRef}>
+            <button className="carousel-arrow carousel-arrow-left" onClick={handlePrev}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
 
-          <div className="testimonials-grid">
-            {getVisibleCards().map((testimonial, index) => (
-              <div
-                key={`${testimonial.id}-${startIndex}-${index}`}
-                className="testimonial-card"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="testimonial-image">
-                  <img src={testimonial.image} alt={testimonial.author} />
-                </div>
-                <div className="testimonial-content">
-                  <div className="quote-icon">"</div>
-                  <p className="testimonial-text">{testimonial.text}</p>
-                  <p className="testimonial-highlight">{testimonial.highlight}</p>
-                  <div className="testimonial-author">
-                    <h4>{testimonial.author}</h4>
-                    <p>{testimonial.role}</p>
+            <div className="testimonials-grid">
+              {getVisibleCards().map((testimonial, index) => (
+                <div
+                  key={`${testimonial.id}-${startIndex}-${index}`}
+                  className="testimonial-card"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="testimonial-image">
+                    <img src={testimonial.image} alt={testimonial.author} />
+                  </div>
+                  <div className="testimonial-content">
+                    <div className="quote-icon">"</div>
+                    <p className="testimonial-text">{testimonial.text}</p>
+                    <p className="testimonial-highlight">{testimonial.highlight}</p>
+                    <div className="testimonial-author">
+                      <h4>{testimonial.author}</h4>
+                      <p>{testimonial.role}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <button className="carousel-arrow carousel-arrow-right" onClick={handleNext}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 18l6-6-6-6" />
-            </svg>
-          </button>
+            <button className="carousel-arrow carousel-arrow-right" onClick={handleNext}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
