@@ -296,7 +296,7 @@
     }
 
     .team-card {
-        flex: 0 0 calc(85% - 24px);
+        flex: 0 0 calc(100vw - 28px);
         scroll-snap-align: center;
     }
 }

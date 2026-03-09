@@ -1,18 +1,21 @@
 .header {
-  display: flex;
-  align-items: center;
   background-color: rgb(152, 197, 233);
-  padding: 18px 30px;
-  overflow: visible;
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 40, 94, 0.05);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 18px 4vw;
 }
 
 .logo-container {
   display: flex;
   align-items: center;
-  padding-left: 30px;
 }
 
 .logo {
@@ -22,7 +25,7 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: clamp(12px, 1.8vw, 25px);
   margin-left: auto;
   padding-right: 0;
 }
@@ -31,7 +34,7 @@
   color: rgb(0, 40, 94);
   text-decoration: none;
   font-weight: 700;
-  font-size: 17px;
+  font-size: clamp(14px, 1.2vw, 17px);
   white-space: nowrap;
   transition: all 0.3s ease;
 }
@@ -45,9 +48,9 @@
   background-color: rgb(0, 40, 94);
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: clamp(8px, 0.8vw, 10px) clamp(15px, 1.5vw, 20px);
   font-weight: 700;
-  font-size: 16px;
+  font-size: clamp(14px, 1.1vw, 16px);
   border-radius: 5px;
   cursor: pointer;
   white-space: nowrap;
@@ -102,7 +105,7 @@
 }
 
 @media (max-width: 1200px) {
-  .header {
+  .header-container {
     padding: 15px 20px;
   }
 
@@ -141,7 +144,7 @@
 }
 
 @media (min-width: 1440px) {
-  .header {
-    padding: 18px 5vw;
+  .header-container {
+    padding: 22px 5vw;
   }
 }

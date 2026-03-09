@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -49,6 +49,16 @@ const Team = () => {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const gridRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const INFINITE_TEAM = [...TEAM, ...TEAM, ...TEAM, ...TEAM];
+    const displayTeam = isMobile ? INFINITE_TEAM : TEAM;
 
     const scroll = (direction) => {
         if (gridRef.current) {
@@ -56,6 +66,26 @@ const Team = () => {
             gridRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
         }
     };
+
+    // Auto-scroll logic for mobile
+    useEffect(() => {
+        if (!isMobile) return;
+        let interval;
+        const handleAutoScroll = () => {
+            if (gridRef.current) {
+                const el = gridRef.current;
+                const maxScroll = el.scrollWidth - el.clientWidth;
+
+                if (el.scrollLeft >= maxScroll - 20) {
+                    el.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    el.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' });
+                }
+            }
+        };
+        interval = setInterval(handleAutoScroll, 3500);
+        return () => clearInterval(interval);
+    }, [isMobile]);
 
     useGSAP(() => {
         const cards = gridRef.current.querySelectorAll('.team-card');
@@ -107,12 +137,12 @@ const Team = () => {
                     </div>
                 </div>
 
-                <div className="team-grid" ref={gridRef}>
-                    {TEAM.map((member, index) => (
+                <div className="team-grid" ref={gridRef} style={{ scrollBehavior: 'smooth' }}>
+                    {displayTeam.map((member, index) => (
                         <div
-                            key={member.id}
+                            key={`${member.id}-${index}`}
                             className="team-card"
-                            style={{ animationDelay: `${index * 0.15}s` }}
+                            style={{ animationDelay: `${(index % 4) * 0.15}s` }}
                         >
                             {/* Photo */}
                             <div className="team-card-photo">

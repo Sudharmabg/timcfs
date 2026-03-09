@@ -315,7 +315,7 @@
     }
 
     .program-card {
-        flex: 0 0 calc(100% - 32px);
+        flex: 0 0 calc(100vw - 32px);
         scroll-snap-align: center;
     }
 

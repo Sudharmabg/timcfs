@@ -10,24 +10,24 @@ const testimonialsData = [
   {
     id: 1,
     image: '/testimonials-1.jpg',
-    text: "The experience at MCFS began in March 2023. I reached out to the academy to understand the development program. What became evident was the implementation, care and flexibility of the staff. Mr. Gaurav Poddar, the Program Director, and his team of coaches, were carefully selected to ensure that the program was both fun and educational. The coaches were carefully selected to ensure that the program was both fun and educational.",
-    highlight: "The program has been so keen and well thought out and presented for my son's football development. As a parent, I feel this approach frees us to enjoy and not stress on the intricacies of my son's football development.",
+    text: "The MCFS coaches are brilliant and give personal attention to every child. Seeing my son's fitness, discipline, and focus improve so much in just a few months is a big relief.",
+    highlight: "Best decision for his overall growth and football development!",
     author: "MR. SANDEEP KUMAR",
     role: "PARENT"
   },
   {
     id: 2,
     image: '/testimonials-1.jpg',
-    text: "Enrolling my daughter at Manchester City Football School has been one of the best decisions. The structured training program and professional coaching staff have helped her develop not just as a player, but as a confident individual. The emphasis on both technical skills and character building is truly commendable.",
-    highlight: "The coaches understand each child's potential and work patiently to bring out their best. My daughter looks forward to every session with excitement and comes back with new learnings every time.",
+    text: "Such a safe and encouraging environment for girls! The structured City coaching method is amazing, and I love how much confidence my daughter has gained on and off the field.",
+    highlight: "She looks forward to practice every single week with so much excitement!",
     author: "MRS. PRIYA SHARMA",
     role: "PARENT"
   },
   {
     id: 3,
     image: '/testimonials-1.jpg',
-    text: "As a parent, I was looking for a football academy that would provide world-class training while maintaining Indian values. MCFS exceeded all expectations. The curriculum is well-designed, the facilities are excellent, and the coaching methodology is truly international standard.",
-    highlight: "What impressed me most is how the academy focuses on holistic development. My son has not only improved his football skills but has also learned valuable life lessons about teamwork, discipline, and perseverance.",
+    text: "Getting international level coaching right here in Kolkata is a dream come true. The emphasis on balancing studies alongside sports is exactly what a parent wants.",
+    highlight: "World-class facilities with a perfect focus on teamwork and values.",
     author: "MR. RAJESH PATEL",
     role: "PARENT"
   }
@@ -35,20 +35,59 @@ const testimonialsData = [
 
 function Testimonials() {
   const [startIndex, setStartIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const carouselRef = useRef(null);
+  const gridRef = useRef(null);
 
-  // Auto-scroll carousel
   useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Desktop Carousel Interval
+  useEffect(() => {
+    if (isMobile) return;
     const interval = setInterval(() => {
       setStartIndex((prev) => (prev + 1) % testimonialsData.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
 
-  const handlePrev = () => setStartIndex((prev) => (prev - 1 + testimonialsData.length) % testimonialsData.length);
-  const handleNext = () => setStartIndex((prev) => (prev + 1) % testimonialsData.length);
+  // Mobile Native Scroll Interval
+  useEffect(() => {
+    if (!isMobile) return;
+    const interval = setInterval(() => {
+      if (gridRef.current) {
+        const el = gridRef.current;
+        const maxScroll = el.scrollWidth - el.clientWidth;
+        if (el.scrollLeft >= maxScroll - 20) {
+          el.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          el.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' });
+        }
+      }
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [isMobile]);
+
+  const handlePrev = () => {
+    if (isMobile && gridRef.current) {
+      gridRef.current.scrollBy({ left: -(window.innerWidth * 0.8), behavior: 'smooth' });
+    } else {
+      setStartIndex((prev) => (prev - 1 + testimonialsData.length) % testimonialsData.length);
+    }
+  };
+
+  const handleNext = () => {
+    if (isMobile && gridRef.current) {
+      gridRef.current.scrollBy({ left: window.innerWidth * 0.8, behavior: 'smooth' });
+    } else {
+      setStartIndex((prev) => (prev + 1) % testimonialsData.length);
+    }
+  };
 
   const getVisibleCards = () => {
     const cards = [];
@@ -57,6 +96,10 @@ function Testimonials() {
     }
     return cards;
   };
+
+  const cardsToRender = isMobile
+    ? [...testimonialsData, ...testimonialsData, ...testimonialsData, ...testimonialsData]
+    : getVisibleCards();
 
   useGSAP(() => {
     const tl = gsap.timeline({ paused: true });
@@ -91,7 +134,21 @@ function Testimonials() {
     <section id="testimonials" className="testimonials" ref={sectionRef}>
       <div className="testimonials-container">
         <div className="testimonials-card">
-          <h2 className="testimonials-title" ref={titleRef}>PARENT'S TESTIMONIALS</h2>
+          <div className="testimonials-header">
+            <h2 className="testimonials-title" ref={titleRef}>TESTIMONIALS</h2>
+            <div className="mobile-nav-arrows">
+              <button className="mobile-nav-arrow" onClick={handlePrev}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button className="mobile-nav-arrow" onClick={handleNext}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
 
           <div className="testimonials-carousel" ref={carouselRef}>
             <button className="carousel-arrow carousel-arrow-left" onClick={handlePrev}>
@@ -100,12 +157,12 @@ function Testimonials() {
               </svg>
             </button>
 
-            <div className="testimonials-grid">
-              {getVisibleCards().map((testimonial, index) => (
+            <div className="testimonials-grid" ref={gridRef} style={{ scrollBehavior: 'smooth' }}>
+              {cardsToRender.map((testimonial, index) => (
                 <div
-                  key={`${testimonial.id}-${startIndex}-${index}`}
+                  key={isMobile ? `${testimonial.id}-${index}` : `${testimonial.id}-${startIndex}-${index}`}
                   className="testimonial-card"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  style={{ animationDelay: `${(index % 3) * 0.1}s` }}
                 >
                   <div className="testimonial-image">
                     <img src={testimonial.image} alt={testimonial.author} />

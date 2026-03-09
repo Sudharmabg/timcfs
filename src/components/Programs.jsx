@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -41,6 +41,17 @@ const Programs = () => {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const cardsRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Duplicate array multiple times to create a long "infinite" visual track
+    const INFINITE_PROGRAMS = [...PROGRAMS, ...PROGRAMS, ...PROGRAMS];
+    const displayPrograms = isMobile ? INFINITE_PROGRAMS : PROGRAMS;
 
     const scroll = (direction) => {
         if (cardsRef.current) {
@@ -48,6 +59,27 @@ const Programs = () => {
             cardsRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
         }
     };
+
+    // Auto-scroll logic for mobile
+    useEffect(() => {
+        if (!isMobile) return;
+        let interval;
+        const handleAutoScroll = () => {
+            if (cardsRef.current) {
+                const el = cardsRef.current;
+                const maxScroll = el.scrollWidth - el.clientWidth;
+
+                // Rewind seamlessly or smoothly when nearing the end
+                if (el.scrollLeft >= maxScroll - 20) {
+                    el.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    el.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' });
+                }
+            }
+        };
+        interval = setInterval(handleAutoScroll, 3500);
+        return () => clearInterval(interval);
+    }, [isMobile]);
 
     useGSAP(() => {
         const cards = cardsRef.current.querySelectorAll('.program-card');
@@ -100,12 +132,12 @@ const Programs = () => {
                         </div>
                     </div>
 
-                    <div className="programs-grid" ref={cardsRef}>
-                        {PROGRAMS.map((prog, i) => (
+                    <div className="programs-grid" ref={cardsRef} style={{ scrollBehavior: 'smooth' }}>
+                        {displayPrograms.map((prog, i) => (
                             <div
-                                key={prog.id}
+                                key={`${prog.id}-${i}`}
                                 className="program-card"
-                                style={{ animationDelay: `${i * 0.1}s` }}
+                                style={{ animationDelay: `${(i % 4) * 0.1}s` }}
                             >
                                 <div className="program-card-image">
                                     <img src={prog.image} alt={prog.title} />

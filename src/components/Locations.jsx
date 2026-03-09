@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -6,10 +6,35 @@ import './Locations.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const LOCATIONS_DATA = [
+    {
+        title: "Center 1",
+        address: "Sportsplex - 63/1, 46, Christopher Rd, opposite Altius Project, Brindaban Garden, Seal Lane, Tangra, Kolkata, West Bengal 700046",
+        mapLink: "https://maps.google.com/?q=Sportsplex+-+63/1,+46,+Christopher+Rd,+opposite+Altius+Project,+Brindaban+Garden,+Seal+Lane,+Tangra,+Kolkata,+West+Bengal+700046",
+        iframeSrc: "https://maps.google.com/maps?q=Sportsplex%20-%2063/1,%2046,%20Christopher%20Rd,%20Kolkata&t=&z=13&ie=UTF8&iwloc=&output=embed"
+    },
+    {
+        title: "Center 2",
+        address: "Garia - Techno City, Ranabhutia, West Bengal 700152 (Tentative)",
+        mapLink: "https://maps.google.com/?q=Techno+City,+Ranabhutia,+West+Bengal+700152",
+        iframeSrc: "https://maps.google.com/maps?q=Techno%20City,%20Ranabhutia,%20West%20Bengal%20700152&t=&z=13&ie=UTF8&iwloc=&output=embed"
+    }
+];
+
 const Locations = () => {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
     const cardsRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const INFINITE_LOCATIONS = [...LOCATIONS_DATA, ...LOCATIONS_DATA, ...LOCATIONS_DATA, ...LOCATIONS_DATA];
+    const displayData = isMobile ? INFINITE_LOCATIONS : LOCATIONS_DATA;
 
     const scroll = (direction) => {
         if (cardsRef.current) {
@@ -17,6 +42,26 @@ const Locations = () => {
             cardsRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
         }
     };
+
+    // Auto-scroll logic for mobile
+    useEffect(() => {
+        if (!isMobile) return;
+        let interval;
+        const handleAutoScroll = () => {
+            if (cardsRef.current) {
+                const el = cardsRef.current;
+                const maxScroll = el.scrollWidth - el.clientWidth;
+
+                if (el.scrollLeft >= maxScroll - 20) {
+                    el.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    el.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' });
+                }
+            }
+        };
+        interval = setInterval(handleAutoScroll, 3500);
+        return () => clearInterval(interval);
+    }, [isMobile]);
 
     useGSAP(() => {
         const cards = cardsRef.current.querySelectorAll('.location-card');
@@ -54,24 +99,25 @@ const Locations = () => {
                         </button>
                     </div>
                 </div>
-                <div className="locations-grid" ref={cardsRef}>
-
-                    <div className="location-card">
-                        <div className="location-card-content">
-                            <h3>Center 1</h3>
-                            <p>Sportsplex - 63/1, 46, Christopher Rd, opposite Altius Project, Brindaban Garden, Seal Lane, Tangra, Kolkata, West Bengal 700046</p>
-                            <a href="https://maps.google.com/?q=Sportsplex+-+63/1,+46,+Christopher+Rd,+opposite+Altius+Project,+Brindaban+Garden,+Seal+Lane,+Tangra,+Kolkata,+West+Bengal+700046" target="_blank" rel="noopener noreferrer" className="location-btn">Get Directions</a>
+                <div className="locations-grid" ref={cardsRef} style={{ scrollBehavior: 'smooth' }}>
+                    {displayData.map((loc, index) => (
+                        <div key={`${loc.title}-${index}`} className="location-card" style={{ animationDelay: `${(index % 2) * 0.2}s` }}>
+                            <div className="location-map">
+                                <iframe
+                                    src={loc.iframeSrc}
+                                    title={`Map to ${loc.address}`}
+                                    style={{ border: 0, width: '100%', height: '100%' }}
+                                    allowFullScreen=""
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </div>
+                            <div className="location-card-content">
+                                <p>{loc.address}</p>
+                                <a href={loc.mapLink} target="_blank" rel="noopener noreferrer" className="location-btn">Get Directions</a>
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="location-card">
-                        <div className="location-card-content">
-                            <h3>Center 2</h3>
-                            <p>Garia - Techno City, Ranabhutia, West Bengal 700152 (Tentative)</p>
-                            <a href="https://maps.google.com/?q=Techno+City,+Ranabhutia,+West+Bengal+700152" target="_blank" rel="noopener noreferrer" className="location-btn">Get Directions</a>
-                        </div>
-                    </div>
-
+                    ))}
                 </div>
             </div>
         </section>
