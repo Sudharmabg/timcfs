@@ -1,22 +1,29 @@
-@font-face {
-  font-family: 'Kippax Modern Cnd Blk';
-  src: url('./assets/KippaxModern-CndBlk.otf') format('opentype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
 body {
-  font-family: 'Kippax Modern Cnd Blk', 'Kippax Condensed', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 400;
+  /* Regular Condensed for Text */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  /* Bold Condensed for Headings */
+}
+
+h4,
+h5,
+h6 {
+  font-weight: 500;
+  /* Medium Condensed for Sub-headings */
 }
 
 /* Lenis Recommended setup */
