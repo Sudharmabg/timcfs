@@ -46,7 +46,7 @@ const Header = () => {
     <header className="header" ref={headerRef}>
       <div className="header-container">
         <div className="logo-container" ref={logoRef}>
-          <Link to="/">
+          <Link to="/" aria-label="Home">
             <img src="/navlogo.png" alt="Football School Logo" className="logo" />
           </Link>
         </div>
