@@ -67,7 +67,7 @@ const Header = () => {
           <Link to="/#gallery" onClick={handleLinkClick}>Gallery</Link>
           <Link to="/faq" onClick={handleLinkClick}>FAQ</Link>
           <Link to="/contact" onClick={handleLinkClick}>Contact Us</Link>
-          <button className="register-btn" onClick={handleLinkClick}>Book Tryouts</button>
+          <Link to="/contact" className="register-btn" onClick={handleLinkClick}>Book Tryouts</Link>
         </nav>
       </div>
     </header>

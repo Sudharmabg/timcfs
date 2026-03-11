@@ -13,7 +13,7 @@ const Founders = () => {
                     <a href="/about" className="find-out-more"><span>FIND OUT MORE</span></a>
                 </div>
                 <div className="founders-image">
-                    <img src="/founders.jpg" alt="Our Founders" />
+                    <img src="/founders.jpg" alt="Our Founders" loading="lazy" />
                 </div>
             </div>
         </section>

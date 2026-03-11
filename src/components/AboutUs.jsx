@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -68,7 +69,7 @@ const AboutUs = () => {
 
         {/* Image — slides in from left */}
         <div className="about-image" ref={imageRef}>
-          <img src="/about-us.jpeg" alt="Football School Students" />
+          <img src="/about-us.jpeg" alt="Football School Students" loading="lazy" />
         </div>
 
         <div className="about-content">
@@ -103,9 +104,9 @@ const AboutUs = () => {
           </p>
 
           {/* CTA — pops in last */}
-          <button className="read-more-btn" ref={btnRef}>
+          <Link to="/faq" className="read-more-btn" ref={btnRef}>
             <span>Read More</span>
-          </button>
+          </Link>
         </div>
 
       </div>

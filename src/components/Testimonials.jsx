@@ -165,7 +165,7 @@ function Testimonials() {
                   style={{ animationDelay: `${(index % 3) * 0.1}s` }}
                 >
                   <div className="testimonial-image">
-                    <img src={testimonial.image} alt={testimonial.author} />
+                    <img src={testimonial.image} alt={testimonial.author} loading="lazy" />
                   </div>
                   <div className="testimonial-content">
                     <div className="quote-icon">"</div>

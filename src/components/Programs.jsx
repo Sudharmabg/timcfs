@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -141,7 +142,7 @@ const Programs = () => {
                                 style={{ animationDelay: `${(i % 4) * 0.1}s` }}
                             >
                                 <div className="program-card-image">
-                                    <img src={prog.image} alt={prog.title} />
+                                    <img src={prog.image} alt={prog.title} loading="lazy" />
                                     <div className="program-card-image-overlay" />
                                 </div>
 
@@ -150,9 +151,9 @@ const Programs = () => {
                                     <p className="program-card-desc">{prog.description}</p>
 
                                     <div className="program-card-footer">
-                                        <a href="#contact" className="program-book-btn">
+                                        <Link to="/contact" className="program-book-btn">
                                             Book Now
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

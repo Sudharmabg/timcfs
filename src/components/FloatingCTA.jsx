@@ -50,7 +50,7 @@ const FloatingCTA = ({ isFaqPage = false }) => {
                 </div>
 
                 <div className="cta-text">
-                    <span>Enquiry</span>
+                    <span>Enquire now</span>
                 </div>
             </div>
 

@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.be54f7b6.css",
+    "main.js": "/static/js/main.7b66d127.js",
+    "static/media/KippaxModern-CndBd.otf": "/static/media/KippaxModern-CndBd.8957d8d287562d443253.otf",
+    "static/media/KippaxModern-CndMd.otf": "/static/media/KippaxModern-CndMd.ed366377f2da45c30f68.otf",
+    "static/media/KippaxModern-CndRg.otf": "/static/media/KippaxModern-CndRg.d1a1c7dca2d8785eee45.otf",
+    "index.html": "/index.html",
+    "main.be54f7b6.css.map": "/static/css/main.be54f7b6.css.map",
+    "main.7b66d127.js.map": "/static/js/main.7b66d127.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.be54f7b6.css",
+    "static/js/main.7b66d127.js"
+  ]
+}

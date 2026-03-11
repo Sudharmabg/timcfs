@@ -147,7 +147,7 @@ const Team = () => {
                         >
                             {/* Photo */}
                             <div className="team-card-photo">
-                                <img src={member.image} alt={member.name} />
+                                <img src={member.image} alt={member.name} loading="lazy" />
                                 <div className="team-card-bg-pattern" />
                             </div>
 
@@ -172,6 +172,7 @@ const Team = () => {
                                                 src={`https://flagcdn.com/w20/${member.countryCode}.png`}
                                                 alt={member.nationality}
                                                 className="team-info-flag-img"
+                                                loading="lazy"
                                             />
                                             <span className="team-info-value">{member.nationality}</span>
                                         </span>

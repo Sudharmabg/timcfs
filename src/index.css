@@ -1,3 +1,27 @@
+@font-face {
+  font-family: 'Kippax Modern Cnd';
+  src: url('./assets/KippaxModern-CndRg.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kippax Modern Cnd';
+  src: url('./assets/KippaxModern-CndMd.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kippax Modern Cnd';
+  src: url('./assets/KippaxModern-CndBd.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,9 +29,13 @@
 }
 
 body {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Kippax Modern Cnd', sans-serif;
   font-weight: 400;
   /* Regular Condensed for Text */
+  letter-spacing: 0.05em;
+  /* Spacing out the condensed letters */
+  word-spacing: 0.1em;
+  /* Slight bump between words */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
