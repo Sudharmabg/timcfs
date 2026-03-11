@@ -69,7 +69,7 @@ const AboutUs = () => {
 
         {/* Image — slides in from left */}
         <div className="about-image" ref={imageRef}>
-          <img src="/about-us.jpeg" alt="Football School Students" loading="lazy" />
+          <img src="/about-us.webp" alt="Football School Students" loading="lazy" width="800" height="600" />
         </div>
 
         <div className="about-content">
@@ -104,7 +104,7 @@ const AboutUs = () => {
           </p>
 
           {/* CTA — pops in last */}
-          <Link to="/faq" className="read-more-btn" ref={btnRef}>
+          <Link to="/faq" className="read-more-btn" ref={btnRef} aria-label="Read more frequently asked questions">
             <span>Read More</span>
           </Link>
         </div>

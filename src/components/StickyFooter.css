@@ -6,7 +6,7 @@
     background: rgb(152, 197, 233);
     padding: 10px 15px;
     box-shadow: 0 -4px 20px rgba(0, 40, 94, 0.2);
-    z-index: 999;
+    z-index: 9999;
     animation: slideFooterUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 

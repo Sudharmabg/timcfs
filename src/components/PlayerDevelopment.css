@@ -185,7 +185,7 @@
 }
 
 .timeline-item.end-goal .timeline-milestone-title {
-    color: white;
+    color: rgb(0, 40, 94);
     font-size: 1.1rem;
     margin: 0;
     white-space: pre-wrap;

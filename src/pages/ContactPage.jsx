@@ -34,7 +34,7 @@ const ContactPage = () => {
 
             {/* ── Hero ── */}
             <div className="contact-page-hero">
-                <img src="/faq-1.JPG" alt="Contact Hero" className="contact-page-hero-img" />
+                <img src="/faq-1.webp" alt="Contact Hero" className="contact-page-hero-img" width="1920" height="600" />
                 <div className="contact-page-hero-overlay"></div>
                 <div className="contact-page-hero-content">
                     <h1 className="contact-page-hero-title">Contact Us</h1>

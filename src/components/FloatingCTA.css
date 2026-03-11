@@ -80,17 +80,17 @@
 .cta-text {
     overflow: hidden;
     white-space: nowrap;
-    width: 0;
+    max-width: 0;
     /* Hidden width initially */
     opacity: 0;
     padding-left: 0;
     display: flex;
     align-items: center;
-    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    transition: max-width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
 }
 
 .floating-cta.expanded .cta-text {
-    width: 150px;
+    max-width: 150px;
     opacity: 1;
     padding-left: 6px;
     display: flex;

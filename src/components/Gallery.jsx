@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Gallery.css';
 
 const Gallery = () => {
-    const galleryImages = Array.from({ length: 7 }, (_, i) => `/gallery-${i + 1}.jpeg`);
+    const galleryImages = Array.from({ length: 7 }, (_, i) => `/gallery-${i + 1}.webp`);
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);

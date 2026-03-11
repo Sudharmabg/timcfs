@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const TEAM = [
     {
         id: 1,
-        image: '/team-1.jpg',
+        image: '/team-1.webp',
         name: 'SCOTT DAVIES',
         jobTitle: 'LEAD COACH',
         nationality: 'England',
@@ -18,7 +18,7 @@ const TEAM = [
     },
     {
         id: 2,
-        image: '/team-1.jpg',
+        image: '/team-1.webp',
         name: 'JASON GOODISON',
         jobTitle: 'COACH',
         nationality: 'England',
@@ -27,7 +27,7 @@ const TEAM = [
     },
     {
         id: 3,
-        image: '/team-1.jpg',
+        image: '/team-1.webp',
         name: 'OMAR BELLANFANTE-SINCLAIR',
         jobTitle: 'COACH',
         nationality: 'England',
@@ -36,7 +36,7 @@ const TEAM = [
     },
     {
         id: 4,
-        image: '/team-1.jpg',
+        image: '/team-1.webp',
         name: 'LEWIS WAINRIGHT',
         jobTitle: 'COACH',
         nationality: 'England',

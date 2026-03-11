@@ -8,7 +8,7 @@ const Footer = () => {
             <div className="footer-main">
                 <div className="footer-info">
                     <div className="footer-logo-row">
-                        <img src="/navlogo.png" alt="Football School Logo" className="footer-logo" />
+                        <img src="/navlogo.webp" alt="Football School Logo" className="footer-logo" width="200" height="60" loading="lazy" />
                     </div>
                     <p className="footer-tagline">Empowering Innovation and excellence.</p>
                     <p className="footer-address">

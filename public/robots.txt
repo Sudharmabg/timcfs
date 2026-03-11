@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://timcfs.com/sitemap.xml

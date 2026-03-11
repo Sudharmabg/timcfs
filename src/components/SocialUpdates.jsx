@@ -95,7 +95,7 @@ const SocialUpdates = () => {
                         <div className="social-carousel-card">
                             <div className="social-card-img-wrapper">
                                 <i className="fa-brands fa-instagram social-brand-icon"></i>
-                                <img src="/gallery-1.jpeg" alt="Update 1" />
+                                <img src="/gallery-1.webp" alt="Update 1" />
                                 <div className="social-card-duration-overlay">
                                     <div className="social-play-btn"><i className="fa-solid fa-play"></i></div>
                                     <span className="social-duration">02:04</span>
@@ -114,7 +114,7 @@ const SocialUpdates = () => {
                         <div className="social-carousel-card">
                             <div className="social-card-img-wrapper">
                                 <i className="fa-brands fa-youtube social-brand-icon youtube"></i>
-                                <img src="/gallery-2.jpeg" alt="Update 2" />
+                                <img src="/gallery-2.webp" alt="Update 2" />
                                 <div className="social-card-duration-overlay">
                                     <div className="social-play-btn"><i className="fa-solid fa-play"></i></div>
                                     <span className="social-duration">01:45</span>
@@ -133,7 +133,7 @@ const SocialUpdates = () => {
                         <div className="social-carousel-card">
                             <div className="social-card-img-wrapper">
                                 <i className="fa-brands fa-tiktok social-brand-icon tiktok"></i>
-                                <img src="/gallery-3.jpeg" alt="Update 3" />
+                                <img src="/gallery-3.webp" alt="Update 3" />
                                 <div className="social-card-duration-overlay">
                                     <div className="social-play-btn"><i className="fa-solid fa-play"></i></div>
                                     <span className="social-duration">03:12</span>
@@ -152,7 +152,7 @@ const SocialUpdates = () => {
                         <div className="social-carousel-card">
                             <div className="social-card-img-wrapper">
                                 <i className="fa-brands fa-instagram social-brand-icon"></i>
-                                <img src="/gallery-4.jpeg" alt="Update 4" />
+                                <img src="/gallery-4.webp" alt="Update 4" />
                                 <div className="social-card-duration-overlay">
                                     <div className="social-play-btn"><i className="fa-solid fa-play"></i></div>
                                     <span className="social-duration">02:30</span>
@@ -171,7 +171,7 @@ const SocialUpdates = () => {
                         <div className="social-carousel-card">
                             <div className="social-card-img-wrapper">
                                 <i className="fa-brands fa-youtube social-brand-icon youtube"></i>
-                                <img src="/gallery-5.jpeg" alt="Update 5" />
+                                <img src="/gallery-5.webp" alt="Update 5" />
                                 <div className="social-card-duration-overlay">
                                     <div className="social-play-btn"><i className="fa-solid fa-play"></i></div>
                                     <span className="social-duration">01:15</span>

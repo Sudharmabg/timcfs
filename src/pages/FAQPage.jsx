@@ -11,7 +11,7 @@ const FAQPage = () => {
         <div className="faq-page">
             <Header />
             <div className="faq-page-hero">
-                <img src="/faq-1.JPG" alt="FAQ Hero" className="faq-page-hero-img" />
+                <img src="/faq-1.webp" alt="FAQ Hero" className="faq-page-hero-img" width="1920" height="600" />
                 <div className="faq-page-hero-overlay"></div>
                 <div className="faq-page-hero-content">
                     <h1 className="faq-page-hero-title">FAQ</h1>

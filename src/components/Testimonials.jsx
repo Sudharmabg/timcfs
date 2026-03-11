@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const testimonialsData = [
   {
     id: 1,
-    image: '/testimonials-1.jpg',
+    image: '/testimonials-1.webp',
     text: "The MCFS coaches are brilliant and give personal attention to every child. Seeing my son's fitness, discipline, and focus improve so much in just a few months is a big relief.",
     highlight: "Best decision for his overall growth and football development!",
     author: "MR. SANDEEP KUMAR",
@@ -17,7 +17,7 @@ const testimonialsData = [
   },
   {
     id: 2,
-    image: '/testimonials-1.jpg',
+    image: '/testimonials-1.webp',
     text: "Such a safe and encouraging environment for girls! The structured City coaching method is amazing, and I love how much confidence my daughter has gained on and off the field.",
     highlight: "She looks forward to practice every single week with so much excitement!",
     author: "MRS. PRIYA SHARMA",
@@ -25,7 +25,7 @@ const testimonialsData = [
   },
   {
     id: 3,
-    image: '/testimonials-1.jpg',
+    image: '/testimonials-1.webp',
     text: "Getting international level coaching right here in Kolkata is a dream come true. The emphasis on balancing studies alongside sports is exactly what a parent wants.",
     highlight: "World-class facilities with a perfect focus on teamwork and values.",
     author: "MR. RAJESH PATEL",
@@ -137,12 +137,12 @@ function Testimonials() {
           <div className="testimonials-header">
             <h2 className="testimonials-title" ref={titleRef}>TESTIMONIALS</h2>
             <div className="mobile-nav-arrows">
-              <button className="mobile-nav-arrow" onClick={handlePrev}>
+              <button className="mobile-nav-arrow" onClick={handlePrev} aria-label="Previous testimonial">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M15 18l-6-6 6-6" />
                 </svg>
               </button>
-              <button className="mobile-nav-arrow" onClick={handleNext}>
+              <button className="mobile-nav-arrow" onClick={handleNext} aria-label="Next testimonial">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M9 18l6-6-6-6" />
                 </svg>
@@ -151,7 +151,7 @@ function Testimonials() {
           </div>
 
           <div className="testimonials-carousel" ref={carouselRef}>
-            <button className="carousel-arrow carousel-arrow-left" onClick={handlePrev}>
+            <button className="carousel-arrow carousel-arrow-left" onClick={handlePrev} aria-label="Previous testimonial">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
@@ -172,7 +172,7 @@ function Testimonials() {
                     <p className="testimonial-text">{testimonial.text}</p>
                     <p className="testimonial-highlight">{testimonial.highlight}</p>
                     <div className="testimonial-author">
-                      <h4>{testimonial.author}</h4>
+                      <h3>{testimonial.author}</h3>
                       <p>{testimonial.role}</p>
                     </div>
                   </div>
@@ -180,7 +180,7 @@ function Testimonials() {
               ))}
             </div>
 
-            <button className="carousel-arrow carousel-arrow-right" onClick={handleNext}>
+            <button className="carousel-arrow carousel-arrow-right" onClick={handleNext} aria-label="Next testimonial">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M9 18l6-6-6-6" />
               </svg>

@@ -4,7 +4,6 @@ import './StickyFooter.css';
 const StickyFooter = ({ isFaqPage = false }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [footerInView, setFooterInView] = useState(false);
-    const [heroInView, setHeroInView] = useState(true);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -21,27 +20,12 @@ const StickyFooter = ({ isFaqPage = false }) => {
         const siteFooter = document.querySelector('.site-footer');
         if (siteFooter) observer.observe(siteFooter);
 
-        const handleScroll = () => {
-            if (isFaqPage) {
-                // On FAQ page, show after a small scroll (past the header)
-                setHeroInView(window.scrollY <= 200);
-            } else {
-                // On homepage, hide during the very long pinned hero section
-                setHeroInView(window.scrollY <= window.innerHeight * 8.5);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        // Initial check
-        handleScroll();
-
         return () => {
             if (siteFooter) observer.unobserve(siteFooter);
-            window.removeEventListener('scroll', handleScroll);
         };
-    }, [isFaqPage]);
+    }, []);
 
-    if (!isVisible || footerInView || heroInView) return null;
+    if (!isVisible || footerInView) return null;
 
     return (
         <div className="sticky-footer">
@@ -49,7 +33,7 @@ const StickyFooter = ({ isFaqPage = false }) => {
                 &times;
             </button>
             <div className="sticky-footer-content">
-                <span className="sticky-footer-text">Let's secure your child's future</span>
+                <span className="sticky-footer-text">Who could you become</span>
                 <div className="arrow-animation">⚽</div>
                 <div className="sticky-footer-contacts">
                     <a href="tel:+917603046111" className="sticky-footer-contact-item pulse-phone" aria-label="Call +91 76030 46111">

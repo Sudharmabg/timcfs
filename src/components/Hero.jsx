@@ -3,7 +3,7 @@ import './Hero.css';
 
 const slides = [
   { type: 'video', src: '/hero_video.mp4', duration: 15000 },
-  { type: 'image', src: '/hero-img.jpg', duration: 5000 },
+  { type: 'image', src: '/hero-img.webp', duration: 5000 },
 ];
 
 const Hero = () => {
@@ -101,7 +101,7 @@ const Hero = () => {
       <div className={`hero-slide ${current === 1 ? 'hero-slide--active' : ''}`}>
         <img
           className="hero-slide-media"
-          src="/hero-img.jpg"
+          src="/hero-img.webp"
           alt="Train the Manchester City Way"
           loading="eager"
         />

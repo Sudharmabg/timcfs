@@ -276,25 +276,31 @@
 
 /* Enhancement 7: Pill/line style dots */
 .gallery-dot {
-    width: 20px;
+    width: 44px;
+    /* base width equal to max width */
     height: 4px;
     border-radius: 4px;
     border: none;
     background: rgba(0, 40, 94, 0.3);
     cursor: pointer;
     padding: 0;
-    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform: scaleX(0.45);
+    /* 20px / 44px */
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
         background 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .gallery-dot.active {
-    width: 44px;
+    transform: scaleX(1);
+    /* 44px */
     background: rgb(0, 40, 94);
 }
 
 .gallery-dot:hover:not(.active) {
     background: rgba(0, 40, 94, 0.55);
-    width: 28px;
+    transform: scaleX(0.63);
+    /* 28px / 44px */
 }
 
 /* ══════════════════════════════════════

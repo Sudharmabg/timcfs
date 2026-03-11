@@ -8,20 +8,20 @@ import './GalleryPage.css';
 // ── Image catalogue ──────────────────────────────────────────────
 // Each image tagged with a category and a bento span size
 const GALLERY_ITEMS = [
-    { id: 1, src: '/gallery-1.jpeg', category: 'training', alt: 'Training session on the pitch', span: 'large' },
-    { id: 2, src: '/gallery-2.jpeg', category: 'matches', alt: 'Match day action', span: 'normal' },
-    { id: 3, src: '/gallery-3.jpeg', category: 'events', alt: 'School event highlights', span: 'normal' },
-    { id: 4, src: '/gallery-4.jpeg', category: 'training', alt: 'Coach working with players', span: 'wide' },
-    { id: 5, src: '/gallery-5.jpeg', category: 'matches', alt: 'Goal celebration', span: 'tall' },
-    { id: 6, src: '/gallery-6.jpeg', category: 'events', alt: 'Award ceremony moment', span: 'normal' },
-    { id: 7, src: '/gallery-7.jpeg', category: 'training', alt: 'Skills drill session', span: 'normal' },
-    { id: 8, src: '/gallery-1.jpeg', category: 'matches', alt: 'Team huddle before kick-off', span: 'normal' },
-    { id: 9, src: '/gallery-2.jpeg', category: 'training', alt: 'Passing drills', span: 'large' },
-    { id: 10, src: '/gallery-3.jpeg', category: 'events', alt: 'Parents and coaches day', span: 'normal' },
-    { id: 11, src: '/gallery-4.jpeg', category: 'matches', alt: 'Penalty shootout', span: 'normal' },
-    { id: 12, src: '/gallery-5.jpeg', category: 'training', alt: 'Goalkeeper training', span: 'wide' },
-    { id: 13, src: '/gallery-6.jpeg', category: 'events', alt: 'End of season celebration', span: 'tall' },
-    { id: 14, src: '/gallery-7.jpeg', category: 'matches', alt: 'Inter-squad tournament', span: 'normal' },
+    { id: 1, src: '/gallery-1.webp', category: 'training', alt: 'Training session on the pitch', span: 'large' },
+    { id: 2, src: '/gallery-2.webp', category: 'matches', alt: 'Match day action', span: 'normal' },
+    { id: 3, src: '/gallery-3.webp', category: 'events', alt: 'School event highlights', span: 'normal' },
+    { id: 4, src: '/gallery-4.webp', category: 'training', alt: 'Coach working with players', span: 'wide' },
+    { id: 5, src: '/gallery-5.webp', category: 'matches', alt: 'Goal celebration', span: 'tall' },
+    { id: 6, src: '/gallery-6.webp', category: 'events', alt: 'Award ceremony moment', span: 'normal' },
+    { id: 7, src: '/gallery-7.webp', category: 'training', alt: 'Skills drill session', span: 'normal' },
+    { id: 8, src: '/gallery-1.webp', category: 'matches', alt: 'Team huddle before kick-off', span: 'normal' },
+    { id: 9, src: '/gallery-2.webp', category: 'training', alt: 'Passing drills', span: 'large' },
+    { id: 10, src: '/gallery-3.webp', category: 'events', alt: 'Parents and coaches day', span: 'normal' },
+    { id: 11, src: '/gallery-4.webp', category: 'matches', alt: 'Penalty shootout', span: 'normal' },
+    { id: 12, src: '/gallery-5.webp', category: 'training', alt: 'Goalkeeper training', span: 'wide' },
+    { id: 13, src: '/gallery-6.webp', category: 'events', alt: 'End of season celebration', span: 'tall' },
+    { id: 14, src: '/gallery-7.webp', category: 'matches', alt: 'Inter-squad tournament', span: 'normal' },
 ];
 
 const CATEGORIES = [
@@ -74,7 +74,7 @@ const GalleryPage = () => {
 
             {/* ── Hero ── */}
             <div className="gallery-page-hero">
-                <img src="/gallery-2.jpeg" alt="Gallery Hero" className="gallery-page-hero-img ken-burns" />
+                <img src="/gallery-2.webp" alt="Gallery Hero" className="gallery-page-hero-img ken-burns" width="1920" height="600" />
                 <div className="gallery-page-hero-overlay"></div>
                 <div className="gallery-page-hero-content">
                     <h1 className="gallery-page-hero-title" style={{ fontSize: '3.2rem' }}>

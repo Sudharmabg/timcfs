@@ -112,6 +112,8 @@
   overflow: hidden;
   margin-top: 10px;
   transition: transform 0.3s ease, background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .read-more-btn:hover {

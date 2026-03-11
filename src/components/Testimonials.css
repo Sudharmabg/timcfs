@@ -186,7 +186,7 @@
   animation: fadeInUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
 }
 
-.testimonial-author h4 {
+.testimonial-author h3 {
   font-size: 0.9rem;
   font-weight: 800;
   color: rgb(0, 40, 94);
@@ -196,7 +196,7 @@
   transition: color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.testimonial-card:hover .testimonial-author h4 {
+.testimonial-card:hover .testimonial-author h3 {
   color: rgb(152, 197, 233);
 }
 

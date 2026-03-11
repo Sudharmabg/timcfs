@@ -27,15 +27,17 @@ function HomePage() {
     <>
       <div className="main-content-wrapper">
         <Header />
-        <Hero />
-        <AboutUs />
-        <PlayerDevelopment />
-        <Programs />
-        <Team />
-        <Gallery />
-        <SocialUpdates />
-        <Testimonials />
-        <Locations />
+        <main>
+          <Hero />
+          <AboutUs />
+          <PlayerDevelopment />
+          <Programs />
+          <Team />
+          <Gallery />
+          <SocialUpdates />
+          <Testimonials />
+          <Locations />
+        </main>
       </div>
       <Footer />
       <FloatingCTA />

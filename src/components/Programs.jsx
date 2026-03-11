@@ -10,28 +10,28 @@ gsap.registerPlugin(ScrollTrigger);
 const PROGRAMS = [
     {
         id: 1,
-        image: '/programs-1.jpg',
+        image: '/programs-1.webp',
         title: 'PLAY FOR FUN',
         description:
             'Designed for beginners, this programme focuses on fun and confidence, helping players enjoy football in a safe environment while building strong fundamentals and a lifelong love for the game.',
     },
     {
         id: 2,
-        image: '/programs-2.jpg',
+        image: '/programs-2.webp',
         title: 'PLAY TO LEARN',
         description:
             'Ideal for players with some football experience, this programme introduces structured learning and teamwork, helping players build a strong team mentality, play like their heroes, and deepen their understanding of the game.',
     },
     {
         id: 3,
-        image: '/programs-3.jpg',
+        image: '/programs-3.webp',
         title: 'PLAY TO PROGRESS',
         description:
             'Tailored for experienced players, this programme focuses on growth within the game, improving overall performance while developing key technical and tactical skills needed for the next level.',
     },
     {
         id: 4,
-        image: '/programs-4.jpg',
+        image: '/programs-4.webp',
         title: 'PLAY TO PERFORM',
         description:
             'Designed for experienced players, this programme prepares them to compete at higher levels while showcasing talent, sharing passion, and maturing into confident, complete footballers.',

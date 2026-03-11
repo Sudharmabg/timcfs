@@ -1,20 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.384e9568.css",
-    "main.js": "/static/js/main.059135f1.js",
+    "main.css": "/static/css/main.038a21af.css",
+    "main.js": "/static/js/main.ebc6ce58.js",
     "static/media/KippaxModern-CndBd.otf": "/static/media/KippaxModern-CndBd.8957d8d287562d443253.otf",
     "static/media/KippaxModern-CndMd.otf": "/static/media/KippaxModern-CndMd.ed366377f2da45c30f68.otf",
     "static/media/KippaxModern-CndRg.otf": "/static/media/KippaxModern-CndRg.d1a1c7dca2d8785eee45.otf",
-    "static/media/fa-solid-900.woff2": "/static/media/fa-solid-900.ce9a3fa740bd60b4ac3b.woff2",
-    "static/media/fa-brands-400.woff2": "/static/media/fa-brands-400.f276979f97f1cf375d23.woff2",
-    "static/media/fa-regular-400.woff2": "/static/media/fa-regular-400.cfbad32c79d9dda6af4a.woff2",
-    "static/media/fa-v4compatibility.woff2": "/static/media/fa-v4compatibility.296da06936a3373940c8.woff2",
     "index.html": "/index.html",
-    "main.384e9568.css.map": "/static/css/main.384e9568.css.map",
-    "main.059135f1.js.map": "/static/js/main.059135f1.js.map"
+    "main.038a21af.css.map": "/static/css/main.038a21af.css.map",
+    "main.ebc6ce58.js.map": "/static/js/main.ebc6ce58.js.map"
   },
   "entrypoints": [
-    "static/css/main.384e9568.css",
-    "static/js/main.059135f1.js"
+    "static/css/main.038a21af.css",
+    "static/js/main.ebc6ce58.js"
   ]
 }

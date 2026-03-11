@@ -47,7 +47,7 @@ const Header = () => {
       <div className="header-container">
         <div className="logo-container" ref={logoRef}>
           <Link to="/" aria-label="Home">
-            <img src="/navlogo.png" alt="Football School Logo" className="logo" />
+            <img src="/navlogo.webp" alt="Football School Logo" className="logo" />
           </Link>
         </div>
         <div
