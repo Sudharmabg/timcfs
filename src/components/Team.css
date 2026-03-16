@@ -38,8 +38,10 @@
    ══════════════════════════════════════ */
 .team-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    max-width: 820px;
+    margin: 0 auto;
 }
 
 /* ══════════════════════════════════════
@@ -229,12 +231,7 @@
 /* ══════════════════════════════════════
    RESPONSIVE
    ══════════════════════════════════════ */
-@media (max-width: 1024px) {
-    .team-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-}
+
 
 @media (max-width: 520px) {
     .team-section {

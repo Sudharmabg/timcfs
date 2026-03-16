@@ -18,30 +18,12 @@ const TEAM = [
     },
     {
         id: 2,
-        image: '/team-1.webp',
-        name: 'JASON GOODISON',
-        jobTitle: 'COACH',
-        nationality: 'England',
-        countryCode: 'gb',
-        certifications: ['UEFA B License', 'FA Level 2', 'MCFC Methodology'],
-    },
-    {
-        id: 3,
-        image: '/team-1.webp',
-        name: 'OMAR BELLANFANTE-SINCLAIR',
-        jobTitle: 'COACH',
-        nationality: 'England',
-        countryCode: 'gb',
-        certifications: ['UEFA B License', 'FA Level 2', 'Sports Science Diploma'],
-    },
-    {
-        id: 4,
-        image: '/team-1.webp',
-        name: 'LEWIS WAINRIGHT',
-        jobTitle: 'COACH',
-        nationality: 'England',
-        countryCode: 'gb',
-        certifications: ['UEFA B License', 'FA Level 2', 'Goalkeeping Badge'],
+        image: '/team-2.webp',
+        name: 'TUHIN LAHA',
+        jobTitle: 'ASSISTANT COACH',
+        nationality: 'India',
+        countryCode: 'in',
+        certifications: [],
     },
 ];
 
@@ -57,8 +39,7 @@ const Team = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const INFINITE_TEAM = [...TEAM, ...TEAM, ...TEAM, ...TEAM];
-    const displayTeam = isMobile ? INFINITE_TEAM : TEAM;
+    const displayTeam = TEAM;
 
     const scroll = (direction) => {
         if (gridRef.current) {
@@ -143,7 +124,7 @@ const Team = () => {
                         <div
                             key={`${member.id}-${index}`}
                             className="team-card"
-                            style={{ animationDelay: `${(index % 4) * 0.15}s` }}
+                            style={{ animationDelay: `${(index % 2) * 0.15}s` }}
                         >
                             {/* Photo */}
                             <div className="team-card-photo">

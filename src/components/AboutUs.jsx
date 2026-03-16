@@ -104,8 +104,8 @@ const AboutUs = () => {
           </p>
 
           {/* CTA — pops in last */}
-          <Link to="/faq" className="read-more-btn" ref={btnRef} aria-label="Read more frequently asked questions">
-            <span>Read More</span>
+          <Link to="/faq" className="read-more-btn" ref={btnRef} aria-label="Explore our frequently asked questions">
+            <span>Explore FAQs</span>
           </Link>
         </div>
 

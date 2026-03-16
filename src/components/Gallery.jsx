@@ -124,8 +124,8 @@ const Gallery = () => {
 
                     {showSeeMore && (
                         <div className="gallery-cta-wrapper">
-                            <Link to="/gallery" className="gallery-see-more-btn">
-                                <span>SEE MORE</span>
+                            <Link to="/gallery" className="gallery-see-more-btn" aria-label="Explore the full gallery">
+                                <span>VIEW FULL GALLERY</span>
                             </Link>
                         </div>
                     )}

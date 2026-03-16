@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { submitForm } from '../utils/submitForm';
 import './AdmissionModal.css';
 
 const AdmissionModal = ({ isOpen, onClose }) => {
@@ -7,21 +8,28 @@ const AdmissionModal = ({ isOpen, onClose }) => {
     });
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
+        setError('');
+        try {
+            await submitForm('modal', form);
             setSubmitted(true);
-        }, 1400);
+        } catch (err) {
+            setError('Something went wrong. Please try again or email tigmcfs@gmail.com');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const resetForm = () => {
         setSubmitted(false);
         setLoading(false);
+        setError('');
         setForm({ name: '', email: '', phone: '', subject: '', message: '' });
     };
 
@@ -153,6 +161,11 @@ const AdmissionModal = ({ isOpen, onClose }) => {
                             />
                         </div>
 
+                        {error && (
+                            <p className="modal-error-msg">
+                                <i className="fa-solid fa-triangle-exclamation"></i> {error}
+                            </p>
+                        )}
                         {/* Submit */}
                         <button type="submit" className="modal-submit-btn" disabled={loading}>
                             {loading ? (

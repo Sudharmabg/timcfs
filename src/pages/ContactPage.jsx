@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import StickyFooter from '../components/StickyFooter';
+import { submitForm } from '../utils/submitForm';
 import './ContactPage.css';
 
 const ContactPage = () => {
@@ -14,18 +15,24 @@ const ContactPage = () => {
     });
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
+        setError('');
+        try {
+            await submitForm('contact', form);
             setSubmitted(true);
-        }, 1400);
+        } catch (err) {
+            setError('Something went wrong. Please try again or email us directly at tigmcfs@gmail.com');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -72,7 +79,7 @@ const ContactPage = () => {
                         </div>
                         <div className="cic-text">
                             <span className="cic-label">Email Us</span>
-                            <span className="cic-value">info@tigmancity.com</span>
+                            <span className="cic-value">tigmcfs@gmail.com</span>
                         </div>
                     </div>
                     <div className="contact-info-card">
@@ -109,7 +116,7 @@ const ContactPage = () => {
                             </div>
                             <h3>Message Sent!</h3>
                             <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
-                            <button className="contact-success-reset" onClick={() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', subject: '', message: '' }); }}>
+                            <button className="contact-success-reset" onClick={() => { setSubmitted(false); setError(''); setForm({ name: '', email: '', phone: '', subject: '', message: '' }); }}>
                                 Send Another Message
                             </button>
                         </div>
@@ -196,6 +203,11 @@ const ContactPage = () => {
                                 />
                             </div>
 
+                            {error && (
+                                <p className="contact-error-msg">
+                                    <i className="fa-solid fa-triangle-exclamation"></i> {error}
+                                </p>
+                            )}
                             <button type="submit" className="contact-submit-btn" disabled={loading}>
                                 {loading ? (
                                     <><i className="fa-solid fa-spinner fa-spin"></i> Sending…</>
@@ -256,17 +268,14 @@ const ContactPage = () => {
                     <div className="contact-social-row">
                         <span className="contact-social-label">Follow Us</span>
                         <div className="contact-social-links">
-                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="contact-social-btn">
-                                <i className="fa-brands fa-facebook-f"></i>
-                            </a>
-                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="contact-social-btn">
+                            <a href="https://www.instagram.com/mcfs.technoindia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="contact-social-btn">
                                 <i className="fa-brands fa-instagram"></i>
                             </a>
-                            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="contact-social-btn">
-                                <i className="fa-brands fa-youtube"></i>
+                            <a href="https://www.facebook.com/p/Techno-India-Group-Manchester-City-Football-School-61565804545240/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="contact-social-btn">
+                                <i className="fa-brands fa-facebook-f"></i>
                             </a>
-                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="X" className="contact-social-btn">
-                                <i className="fa-brands fa-x-twitter"></i>
+                            <a href="https://www.youtube.com/@TIMCFS" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="contact-social-btn">
+                                <i className="fa-brands fa-youtube"></i>
                             </a>
                         </div>
                     </div>

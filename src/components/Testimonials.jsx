@@ -17,7 +17,7 @@ const testimonialsData = [
   },
   {
     id: 2,
-    image: '/testimonials-1.webp',
+    image: '/testimonials-2.webp',
     text: "Such a safe and encouraging environment for girls! The structured City coaching method is amazing, and I love how much confidence my daughter has gained on and off the field.",
     highlight: "She looks forward to practice every single week with so much excitement!",
     author: "MRS. PRIYA SHARMA",
@@ -25,7 +25,7 @@ const testimonialsData = [
   },
   {
     id: 3,
-    image: '/testimonials-1.webp',
+    image: '/testimonials-3.webp',
     text: "Getting international level coaching right here in Kolkata is a dream come true. The emphasis on balancing studies alongside sports is exactly what a parent wants.",
     highlight: "World-class facilities with a perfect focus on teamwork and values.",
     author: "MR. RAJESH PATEL",

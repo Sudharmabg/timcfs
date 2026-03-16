@@ -33,7 +33,7 @@ const StickyFooter = ({ isFaqPage = false }) => {
                 &times;
             </button>
             <div className="sticky-footer-content">
-                <span className="sticky-footer-text">Who could you become</span>
+                <span className="sticky-footer-text">Who could you become ? </span>
                 <div className="arrow-animation">⚽</div>
                 <div className="sticky-footer-contacts">
                     <a href="tel:+917603046111" className="sticky-footer-contact-item pulse-phone" aria-label="Call +91 76030 46111">
@@ -43,11 +43,11 @@ const StickyFooter = ({ isFaqPage = false }) => {
                         </svg>
                         <span className="sticky-footer-contact-text">+91 76030 46111</span>
                     </a>
-                    <a href="mailto:info@tigmancity.com" className="sticky-footer-contact-item pulse-email" aria-label="Email info@tigmancity.com">
+                    <a href="mailto:tigmcfs@gmail.com" className="sticky-footer-contact-item pulse-email" aria-label="Email tigmcfs@gmail.com">
                         <svg className="sticky-footer-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                         </svg>
-                        <span className="sticky-footer-contact-text">info@tigmancity.com</span>
+                        <span className="sticky-footer-contact-text">tigmcfs@gmail.com</span>
                     </a>
                 </div>
             </div>
