@@ -46,7 +46,7 @@
     padding-bottom: 24px;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    scroll-snap-type: x mandatory;
+    /* Removed scroll-snap for smooth programmatic scrolling */
 }
 
 /* Hide scrollbar for Webkit */
@@ -54,9 +54,11 @@
     display: none;
 }
 
-.social-carousel-card {
-    flex: 0 0 calc(25% - 15px);
-    min-width: 290px;
+.social-carousel-card,
+.social-embed-card {
+    flex: 0 0 auto;
+    min-width: 360px;
+    height: 680px;
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
@@ -69,6 +71,20 @@
     /* initial hidden state — GSAP animates this in */
     opacity: 0;
     transform: translateY(80px) scale(0.95);
+}
+
+.social-embed-card {
+    cursor: default;
+    background: #fff;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-embed-card blockquote {
+    min-width: 320px !important;
+    margin: 0 !important;
+    border-radius: 12px !important;
 }
 
 .social-carousel-card:hover {
@@ -238,17 +254,18 @@
         font-size: 1.9rem;
     }
 
-    .social-carousel-card {
+    .social-carousel-card,
+    .social-embed-card {
         flex: 0 0 calc(50% - 10px);
-        min-width: 240px;
+        min-width: 280px;
     }
 }
 
 @media (max-width: 480px) {
-    .social-carousel-card {
-        flex: 0 0 85%;
-        /* show preview of next card */
-        min-width: 220px;
+    .social-carousel-card,
+    .social-embed-card {
+        flex: 0 0 88%;
+        min-width: 310px;
     }
 }
 
