@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import { supabase } from '../lib/supabase';
 import './Header.css';
 
 const Header = () => {
@@ -10,6 +11,27 @@ const Header = () => {
   const logoRef = useRef(null);
   const navRef = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showLatestUpdates, setShowLatestUpdates] = useState(false);
+
+  // Fetch visibility toggle from Supabase
+  useEffect(() => {
+    const fetchConfig = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('site_config')
+          .select('config_value')
+          .eq('config_key', 'latest_updates_visible')
+          .single();
+
+        if (data && !error) {
+          setShowLatestUpdates(data.config_value === 'true');
+        }
+      } catch (err) {
+        console.error('Error fetching site config:', err);
+      }
+    };
+    fetchConfig();
+  }, []);
 
   // Close menu when a link is clicked
   const handleLinkClick = () => {
@@ -65,6 +87,9 @@ const Header = () => {
           <Link to="/#team" onClick={handleLinkClick}>Our Team</Link>
           <Link to="/#testimonials" onClick={handleLinkClick}>Testimonials</Link>
           <Link to="/#gallery" onClick={handleLinkClick}>Gallery</Link>
+          {showLatestUpdates && (
+            <Link to="/latest-updates" onClick={handleLinkClick}>Latest Updates</Link>
+          )}
           <Link to="/faq" onClick={handleLinkClick}>FAQ</Link>
           <Link to="/contact" onClick={handleLinkClick}>Contact Us</Link>
           <Link to="/contact" className="register-btn" onClick={handleLinkClick}>Book Tryouts</Link>

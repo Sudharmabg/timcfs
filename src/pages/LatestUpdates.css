@@ -1,0 +1,302 @@
+.updates-page {
+  background-color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.updates-container {
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 140px 20px 80px;
+}
+
+/* THE BLUE CARD CONTAINER */
+.updates-main-card {
+  background: linear-gradient(135deg, #6eb5e4, #98c5e9, #4a9fd4, #b8d8f0);
+  background-size: 300% 300%;
+  animation: gradientShift 8s ease infinite;
+  border-radius: 40px;
+  padding: 60px 20px;
+  box-shadow: 0 30px 60px rgba(152, 197, 233, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dot pattern texture */
+.updates-main-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0, 40, 94, 0.08) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.updates-header {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+  z-index: 1;
+}
+
+.updates-eyebrow {
+  color: #1c2c5b;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.updates-page-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin: 0;
+  color: #1c2c5b;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+/* CAROUSEL WRAPPER & ARROWS */
+.updates-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  padding: 0;
+}
+
+.updates-nav-arrows {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none; /* Let clicks pass through to carousel except on arrows */
+  z-index: 10;
+  padding: 0 50px;
+}
+
+.updates-arrow {
+  pointer-events: auto; /* Enable clicks back for arrows */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #1c2c5b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 20px rgba(0, 40, 94, 0.15);
+}
+
+.updates-arrow:hover {
+  background: #1c2c5b;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 12px 25px rgba(28, 44, 91, 0.3);
+}
+
+.updates-arrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* TRACK - SINGLE CARD FOCUS */
+.updates-scroll-track {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  padding: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  cursor: grab;
+}
+
+.updates-scroll-track::-webkit-scrollbar {
+  display: none;
+}
+
+.update-carousel-card {
+  flex: 0 0 100%;
+  padding: 0 40px;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  box-sizing: border-box;
+}
+
+.card-inner-wrapper {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 30px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 15px 45px rgba(0, 40, 94, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image-container {
+  position: relative;
+  width: 100%;
+  height: 450px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  background: rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.card-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.8s ease;
+  display: block;
+}
+
+.update-carousel-card:hover .card-img {
+  transform: scale(1.02);
+}
+
+.card-date-badge {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: #1c2c5b;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  box-shadow: 0 10px 25px rgba(28, 44, 91, 0.4);
+}
+
+.card-text-content {
+  padding: 40px;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 2.2rem;
+  color: #1c2c5b;
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+}
+
+.card-desc {
+  font-size: 1.15rem;
+  color: #2b3648;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* LOADER & UTILS */
+.updates-loader-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 100px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(105, 193, 255, 0.1);
+  border-top-color: #69c1ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE OPTIMIZATIONS */
+@media (max-width: 1440px) {
+  .updates-container { padding: 120px 20px 60px; }
+  .updates-page-title { font-size: 3rem; }
+  .card-image-container { height: 380px; }
+  .card-title { font-size: 1.8rem; }
+  .updates-nav-arrows { padding: 0 20px; }
+}
+
+@media (max-width: 1100px) {
+  .updates-container { padding: 100px 15px 40px; }
+  .updates-main-card { border-radius: 30px; padding: 40px 10px; }
+  .updates-page-title { font-size: 2.5rem; }
+  .updates-nav-arrows { padding: 0 5px; }
+}
+
+@media (max-width: 768px) {
+  .updates-container { padding: 80px 10px 40px; }
+  .card-inner-wrapper { border-radius: 20px; }
+  .card-image-container { height: 280px; padding-top: 20px; }
+  .card-date-badge { top: 20px; right: 20px; font-size: 0.8rem; padding: 8px 15px; }
+  .card-text-content { padding: 25px 15px; }
+  .card-title { font-size: 1.5rem; margin-bottom: 15px; }
+  .card-desc { 
+    font-size: 1rem; 
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .update-carousel-card { padding: 0 10px; }
+  .updates-page-title { font-size: 2.1rem; }
+
+  /* MOBILE ARROWS (Programmes Style) */
+  .updates-nav-arrows {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px 0 0;
+    pointer-events: auto;
+  }
+
+  .updates-arrow {
+    width: 44px;
+    height: 44px;
+    background: rgba(0, 40, 94, 0.1);
+    border: 1px solid rgba(0, 40, 94, 0.2);
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .updates-arrow:active {
+    background: #1c2c5b;
+    color: white;
+    transform: scale(0.92);
+  }
+}

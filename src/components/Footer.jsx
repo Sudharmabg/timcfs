@@ -19,7 +19,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer-actions">
-                    <a href="mailto:tigmcfs@gmail.com" className="footer-btn footer-btn-mail">Mail Us</a>
+                    <Link to="/contact" className="footer-btn footer-btn-mail">Mail Us</Link>
                     <Link to="/contact" className="footer-btn footer-btn-connect">Connect With Us</Link>
                 </div>
 

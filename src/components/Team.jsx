@@ -14,7 +14,7 @@ const TEAM = [
         jobTitle: 'LEAD COACH',
         nationality: 'England',
         countryCode: 'gb',
-        certifications: ['UEFA A License', 'Man City Coaching Diploma', 'FA Youth Award'],
+        certifications: ['UEFA A License'],
     },
     {
         id: 2,
@@ -23,7 +23,7 @@ const TEAM = [
         jobTitle: 'ASSISTANT COACH',
         nationality: 'India',
         countryCode: 'in',
-        certifications: [],
+        certifications: ['AFC B License'],
     },
 ];
 

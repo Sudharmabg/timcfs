@@ -20,6 +20,8 @@ import FloatingCTA from './components/FloatingCTA';
 import FAQPage from './pages/FAQPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
+import LatestUpdates from './pages/LatestUpdates';
+import Admin from './pages/Admin';
 import TorchlightCursor from './components/TorchlightCursor';
 
 function HomePage() {
@@ -150,6 +152,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/latest-updates" element={<LatestUpdates />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
     </ReactLenis>

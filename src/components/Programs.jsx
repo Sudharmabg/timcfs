@@ -56,7 +56,7 @@ const Programs = () => {
 
     const scroll = (direction) => {
         if (cardsRef.current) {
-            const scrollStep = window.innerWidth - 20;
+            const scrollStep = cardsRef.current.clientWidth;
             cardsRef.current.scrollBy({ left: direction === 'left' ? -scrollStep : scrollStep, behavior: 'smooth' });
         }
     };
@@ -69,13 +69,12 @@ const Programs = () => {
             if (cardsRef.current) {
                 const el = cardsRef.current;
                 const maxScroll = el.scrollWidth - el.clientWidth;
-                const scrollStep = window.innerWidth - 20;
 
                 // Rewind seamlessly or smoothly when nearing the end
                 if (el.scrollLeft >= maxScroll - 50) {
                     el.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
-                    el.scrollBy({ left: scrollStep, behavior: 'smooth' });
+                    el.scrollBy({ left: el.clientWidth, behavior: 'smooth' });
                 }
             }
         };

@@ -66,7 +66,7 @@ function Testimonials() {
         if (el.scrollLeft >= maxScroll - 50) {
           el.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-          el.scrollBy({ left: window.innerWidth - 20, behavior: 'smooth' });
+          el.scrollBy({ left: el.clientWidth, behavior: 'smooth' });
         }
       }
     }, 3500);
@@ -75,7 +75,7 @@ function Testimonials() {
 
   const handlePrev = () => {
     if (isMobile && gridRef.current) {
-      gridRef.current.scrollBy({ left: -(window.innerWidth - 20), behavior: 'smooth' });
+      gridRef.current.scrollBy({ left: -(gridRef.current.clientWidth), behavior: 'smooth' });
     } else {
       setStartIndex((prev) => (prev - 1 + testimonialsData.length) % testimonialsData.length);
     }
@@ -83,7 +83,7 @@ function Testimonials() {
 
   const handleNext = () => {
     if (isMobile && gridRef.current) {
-      gridRef.current.scrollBy({ left: window.innerWidth - 20, behavior: 'smooth' });
+      gridRef.current.scrollBy({ left: gridRef.current.clientWidth, behavior: 'smooth' });
     } else {
       setStartIndex((prev) => (prev + 1) % testimonialsData.length);
     }

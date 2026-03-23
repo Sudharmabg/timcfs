@@ -252,11 +252,11 @@
 
 @media (max-width: 600px) {
     .programs-section {
-        padding: 60px 20px;
+        padding: 60px 8px;
     }
 
     .programs-card {
-        padding: 22px 16px 28px;
+        padding: 22px 0 28px;
         border-radius: 20px;
     }
 
@@ -266,6 +266,7 @@
 
     .programs-header {
         position: relative;
+        padding: 0 16px;
     }
 
     .mobile-nav-arrows {
@@ -274,6 +275,7 @@
         gap: 12px;
         margin-bottom: 20px;
         margin-top: -10px;
+        padding: 0 16px;
     }
 
     .mobile-nav-arrow {
@@ -297,17 +299,19 @@
     }
 
     .programs-grid {
-        display: flex;
+        display: flex !important;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: 100%;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        gap: 20px;
+        gap: 0;
         padding-bottom: 30px;
-        margin-left: -20px;
-        margin-right: -20px;
-        padding-left: 20px;
-        padding-right: 20px;
+        margin: 0;
+        padding: 0;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+        box-sizing: border-box;
     }
 
     .programs-grid::-webkit-scrollbar {
@@ -315,9 +319,13 @@
     }
 
     .program-card {
-        flex: 0 0 calc(100vw - 40px);
-        scroll-snap-align: center;
+        flex: 0 0 100%;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        scroll-snap-align: start;
         scroll-snap-stop: always;
+        box-sizing: border-box;
     }
 
     .program-card-body {
