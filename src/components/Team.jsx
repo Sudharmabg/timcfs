@@ -10,11 +10,11 @@ const TEAM = [
     {
         id: 1,
         image: '/team-1.webp',
-        name: 'SCOTT DAVIES',
+        name: 'CONRAD CLARKE',
         jobTitle: 'LEAD COACH',
         nationality: 'England',
         countryCode: 'gb',
-        certifications: ['UEFA A License'],
+        certifications: ['UEFA B License'],
     },
     {
         id: 2,

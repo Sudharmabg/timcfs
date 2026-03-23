@@ -1,17 +1,47 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { supabase } from '../lib/supabase';
 import './Hero.css';
 
-const slides = [
+const DEFAULT_SLIDES = [
   { type: 'video', src: '/hero_video.mp4', duration: 15000 },
   { type: 'image', src: '/hero-img.webp', duration: 5000 },
 ];
 
 const Hero = () => {
+  const [slides, setSlides] = useState(DEFAULT_SLIDES);
   const [current, setCurrent] = useState(0);
   const [progress, setProgress] = useState(0);
   const rafRef = useRef(null);
   const startRef = useRef(null);
   const videoRef = useRef(null);
+
+  // ── Fetch Dynamic Slide ───────────────────────────────────────
+  useEffect(() => {
+    const fetchHeroConfig = async () => {
+      try {
+        const { data: enabled } = await supabase
+          .from('site_config')
+          .select('config_value')
+          .eq('config_key', 'hero_slide_3_enabled')
+          .single();
+        
+        const { data: url } = await supabase
+          .from('site_config')
+          .select('config_value')
+          .eq('config_key', 'hero_slide_3_url')
+          .single();
+
+        if (enabled?.config_value === 'true' && url?.config_value) {
+          setSlides([...DEFAULT_SLIDES, { type: 'image', src: url.config_value, duration: 5000 }]);
+        } else {
+          setSlides(DEFAULT_SLIDES);
+        }
+      } catch (err) {
+        console.error("Hero config error:", err);
+      }
+    };
+    fetchHeroConfig();
+  }, []);
 
   // ── Navigation ────────────────────────────────────────────────
   const goTo = useCallback((idx) => {
@@ -22,12 +52,12 @@ const Hero = () => {
   const goPrev = useCallback(() => {
     setCurrent((c) => (c - 1 + slides.length) % slides.length);
     setProgress(0);
-  }, []);
+  }, [slides.length]);
 
   const goNext = useCallback(() => {
     setCurrent((c) => (c + 1) % slides.length);
     setProgress(0);
-  }, []);
+  }, [slides.length]);
 
   // ── Auto-advance with rAF progress ───────────────────────────
   useEffect(() => {
@@ -37,14 +67,13 @@ const Hero = () => {
     const tick = (timestamp) => {
       if (!startRef.current) startRef.current = timestamp;
       const elapsed = timestamp - startRef.current;
-      const currentDuration = slides[current].duration;
+      const currentDuration = slides[current]?.duration || 5000;
       const pct = Math.min((elapsed / currentDuration) * 100, 100);
       setProgress(pct);
 
       if (pct < 100) {
         rafRef.current = requestAnimationFrame(tick);
       } else {
-        // Auto-advance
         setCurrent((c) => (c + 1) % slides.length);
         setProgress(0);
       }
@@ -54,7 +83,7 @@ const Hero = () => {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [current]);
+  }, [current, slides]);
 
   // ── Play/pause video based on active slide ────────────────────
   useEffect(() => {
@@ -93,7 +122,6 @@ const Hero = () => {
         >
           <source src="/hero_video.mp4" type="video/mp4" />
         </video>
-        {/* Light overlay so the video content is prominent */}
         <div className="hero-slide-overlay hero-slide-overlay--video" />
       </div>
 
@@ -105,10 +133,7 @@ const Hero = () => {
           alt="Train the Manchester City Way"
           loading="eager"
         />
-        {/* Gradient overlay for text readability (delayed) */}
         <div className="hero-slide-overlay hero-slide-overlay--delayed" />
-
-        {/* Text content (delayed) */}
         <div className="hero-slide-content hero-slide-content--delayed">
           <span className="hero-eyebrow">Manchester City Football School</span>
           <h1 className="hero-heading">Train the<br />Manchester City Way</h1>
@@ -122,22 +147,26 @@ const Hero = () => {
         </div>
       </div>
 
+      {/* ── Slide 3: Dynamic Image ─────────────────────────── */}
+      {slides.length > 2 && (
+        <div className={`hero-slide ${current === 2 ? 'hero-slide--active' : ''}`}>
+          <img
+            className="hero-slide-media"
+            src={slides[2].src}
+            alt="Academy Excellence"
+            loading="lazy"
+          />
+        </div>
+      )}
+
       {/* ── Arrow Navigation ────────────────────────────────── */}
-      <button
-        className="hero-arrow hero-arrow--prev"
-        onClick={goPrev}
-        aria-label="Previous slide"
-      >
+      <button className="hero-arrow hero-arrow--prev" onClick={goPrev} aria-label="Previous slide">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="15 18 9 12 15 6" />
         </svg>
       </button>
 
-      <button
-        className="hero-arrow hero-arrow--next"
-        onClick={goNext}
-        aria-label="Next slide"
-      >
+      <button className="hero-arrow hero-arrow--next" onClick={goNext} aria-label="Next slide">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="9 18 15 12 9 6" />
         </svg>
@@ -166,7 +195,6 @@ const Hero = () => {
           </button>
         ))}
       </div>
-
     </section>
   );
 };
