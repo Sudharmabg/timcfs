@@ -11,11 +11,32 @@ const SocialUpdates = () => {
     const titleRef = useRef(null);
     const socialCarouselRef = useRef(null);
 
-    // Re-process Instagram embeds on mount
+    // Lazy load Instagram script only when in view
     useEffect(() => {
-        if (window.instgrm) {
-            window.instgrm.Embeds.process();
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                // Check if script already exists
+                if (!document.getElementById('instagram-embed-script')) {
+                    const script = document.createElement('script');
+                    script.id = 'instagram-embed-script';
+                    script.src = 'https://www.instagram.com/embed.js';
+                    script.async = true;
+                    script.onload = () => {
+                        if (window.instgrm) window.instgrm.Embeds.process();
+                    };
+                    document.body.appendChild(script);
+                } else if (window.instgrm) {
+                    window.instgrm.Embeds.process();
+                }
+                observer.disconnect();
+            }
+        }, { threshold: 0.1 });
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
         }
+
+        return () => observer.disconnect();
     }, []);
 
     useGSAP(() => {

@@ -1,13 +1,12 @@
 /**
  * Submits form data to the Google Apps Script web app endpoint.
  * The script saves to Google Sheets and sends an email notification.
- *
+ * 
  * HOW TO SET UP:
  * 1. Go to https://script.google.com and create a new project.
- * 2. Paste the Apps Script code from the setup guide.
+ * 2. Paste the Apps Script code from the setup guide (google_apps_script_setup.md).
  * 3. Deploy as a Web App (Execute as: Me, Who has access: Anyone).
- * 4. Copy the deployment URL and paste it as VITE_GAS_ENDPOINT in your .env file.
- *    Example: VITE_GAS_ENDPOINT=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
+ * 4. Copy the deployment URL and paste it as REACT_APP_GAS_ENDPOINT in your .env file.
  */
 
 const GAS_ENDPOINT = process.env.REACT_APP_GAS_ENDPOINT;
@@ -19,9 +18,9 @@ const GAS_ENDPOINT = process.env.REACT_APP_GAS_ENDPOINT;
  */
 export async function submitForm(source, data) {
     if (!GAS_ENDPOINT) {
-        throw new Error(
-            'VITE_GAS_ENDPOINT is not set. Please add it to your .env file.'
-        );
+        const errorMsg = 'REACT_APP_GAS_ENDPOINT is not set in .env. Form submission is disabled.';
+        console.error(errorMsg);
+        throw new Error(errorMsg);
     }
 
     const payload = {
@@ -34,20 +33,25 @@ export async function submitForm(source, data) {
         timestamp: new Date().toISOString(),
     };
 
-    // Apps Script Web Apps require a no-redirect fetch with text/plain to avoid CORS preflight issues.
-    const res = await fetch(GAS_ENDPOINT, {
-        method: 'POST',
-        // Note: Using 'text/plain' content-type avoids CORS preflight for Apps Script.
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload),
-    });
+    try {
+        // Apps Script Web Apps require a no-redirect fetch with text/plain to avoid CORS preflight issues.
+        const res = await fetch(GAS_ENDPOINT, {
+            method: 'POST',
+            // Note: Using 'text/plain' content-type avoids CORS preflight for Apps Script.
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(payload),
+        });
 
-    if (!res.ok) {
-        throw new Error(`Server responded with status ${res.status}`);
-    }
+        if (!res.ok) {
+            throw new Error(`Server responded with status ${res.status}`);
+        }
 
-    const json = await res.json();
-    if (json.status !== 'ok') {
-        throw new Error(json.message || 'Submission failed');
+        const json = await res.json();
+        if (json.status !== 'ok') {
+            throw new Error(json.message || 'Submission failed');
+        }
+    } catch (error) {
+        console.error('Form submission error:', error);
+        throw error;
     }
 }

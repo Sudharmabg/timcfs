@@ -29,6 +29,7 @@ const ContactPage = () => {
             await submitForm('contact', form);
             setSubmitted(true);
         } catch (err) {
+            console.error('Contact form submission failed:', err);
             setError('Something went wrong. Please try again or email us directly at tigmcfs@gmail.com');
         } finally {
             setLoading(false);

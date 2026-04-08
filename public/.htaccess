@@ -1,6 +1,9 @@
 <IfModule mod_expires.c>
   ExpiresActive On
 
+  # Default to 0 (no cache)
+  ExpiresDefault "access plus 0 seconds"
+
   # Images
   ExpiresByType image/jpeg "access plus 1 year"
   ExpiresByType image/jpg "access plus 1 year"
@@ -13,11 +16,14 @@
   # Video
   ExpiresByType video/mp4 "access plus 1 year"
   ExpiresByType video/webm "access plus 1 year"
+  ExpiresByType video/mpeg "access plus 1 year"
+  ExpiresByType video/quicktime "access plus 1 year"
 
   # CSS, JavaScript
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType text/javascript "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
 
   # Fonts
   ExpiresByType font/ttf "access plus 1 year"
@@ -25,10 +31,23 @@
   ExpiresByType font/woff "access plus 1 year"
   ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType application/font-woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+  ExpiresByType application/x-font-ttf "access plus 1 year"
+  ExpiresByType application/x-font-opentype "access plus 1 year"
 </IfModule>
 
 <IfModule mod_headers.c>
-  <FilesMatch "\.(jpeg|jpg|png|webp|gif|svg|css|js|mp4|otf|ttf|woff|woff2|ico)$">
+  <FilesMatch "\.(jpeg|jpg|png|webp|gif|svg|css|js|mp4|webm|otf|ttf|woff|woff2|ico|eot)$">
     Header set Cache-Control "max-age=31536000, public, immutable"
   </FilesMatch>
+  
+  # Remove ETag to avoid double validation if using Last-Modified
+  Header unset ETag
+  FileETag None
+</IfModule>
+
+# Enable Gzip compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json
 </IfModule>

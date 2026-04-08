@@ -20,6 +20,7 @@ const AdmissionModal = ({ isOpen, onClose }) => {
             await submitForm('modal', form);
             setSubmitted(true);
         } catch (err) {
+            console.error('Admission modal submission failed:', err);
             setError('Something went wrong. Please try again or email tigmcfs@gmail.com');
         } finally {
             setLoading(false);

@@ -1,26 +1,4 @@
-@font-face {
-  font-family: 'Kippax Modern Cnd';
-  src: url('./assets/KippaxModern-CndRg.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Kippax Modern Cnd';
-  src: url('./assets/KippaxModern-CndMd.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Kippax Modern Cnd';
-  src: url('./assets/KippaxModern-CndBd.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* Font-face moved to index.html for stable static preloading */
 
 * {
   margin: 0;

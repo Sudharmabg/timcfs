@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, Suspense, lazy } from 'react';
 import { ReactLenis, useLenis } from '@studio-freight/react-lenis';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
@@ -17,12 +17,30 @@ import Locations from './components/Locations';
 import Footer from './components/Footer';
 import StickyFooter from './components/StickyFooter';
 import FloatingCTA from './components/FloatingCTA';
-import FAQPage from './pages/FAQPage';
-import GalleryPage from './pages/GalleryPage';
-import ContactPage from './pages/ContactPage';
-import LatestUpdates from './pages/LatestUpdates';
-import Admin from './pages/Admin';
 import TorchlightCursor from './components/TorchlightCursor';
+
+// Lazy load pages to reduce initial bundle size and split CSS
+const FAQPage = lazy(() => import('./pages/FAQPage'));
+const GalleryPage = lazy(() => import('./pages/GalleryPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const LatestUpdates = lazy(() => import('./pages/LatestUpdates'));
+const Admin = lazy(() => import('./pages/Admin'));
+
+// Loading fallback
+const PageLoader = () => (
+  <div style={{ 
+    height: '100vh', 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    background: '#fff',
+    color: '#00285e',
+    fontSize: '1.2rem',
+    fontWeight: 'bold'
+  }}>
+    Loading...
+  </div>
+);
 
 function HomePage() {
   return (
@@ -148,14 +166,16 @@ function App() {
     <ReactLenis root ref={lenisRef} autoRaf={false} options={{ smoothTouch: true, lerp: 0.08, infinite: false, syncTouch: true }}>
       <ScrollToHash />
       <TorchlightCursor />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/faq" element={<FAQPage />} />
-        <Route path="/gallery" element={<GalleryPage />} />
-        <Route path="/latest-updates" element={<LatestUpdates />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/contact" element={<ContactPage />} />
-      </Routes>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/latest-updates" element={<LatestUpdates />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </Suspense>
     </ReactLenis>
   );
 }
