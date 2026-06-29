@@ -12,8 +12,8 @@ const TEAM = [
         image: '/team-1.webp',
         name: 'CONRAD CLARKE',
         jobTitle: 'LEAD COACH',
-        nationality: 'England',
-        countryCode: 'gb',
+        nationality: 'Ireland',
+        countryCode: 'ie',
         certifications: ['UEFA B License'],
     },
     {
